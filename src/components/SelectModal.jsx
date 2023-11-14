@@ -1,4 +1,6 @@
 import { useState, useRef } from "react";
+import { setChartType } from "../store/reducer/reducer.chart";
+import { useDispatch } from "react-redux";
 // component
 import {
   HStack,
@@ -13,9 +15,9 @@ import {
   Text,
   Button,
 } from "@chakra-ui/react";
-export default function SelectModal({ setChartType }) {
+export default function SelectModal() {
   const [isOpen, setIsOpen] = useState(true);
-  const [value, setValue] = useState(() => "pie");
+  const dispatch = useDispatch();
   const selectRef = useRef();
   const Overlay = () => (
     <ModalOverlay
@@ -24,7 +26,7 @@ export default function SelectModal({ setChartType }) {
     />
   );
   const onSubmit = () => {
-    setChartType(value);
+    dispatch(setChartType({ data: selectRef.current.value }));
     setIsOpen(false);
   };
   const onClose = () => {
