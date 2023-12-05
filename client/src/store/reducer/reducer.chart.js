@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   chartType: "pie",
+  startTime: "",
+  endTime: "",
+  step: "", // daily, weekly, monthly
+  category: [], // x-axis column names
+  tabs: [[{ itemName: "something", data: ["something", "something"] }]],
 };
 const chartSlice = createSlice({
   name: "chart",

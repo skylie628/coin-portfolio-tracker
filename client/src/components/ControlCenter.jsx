@@ -13,9 +13,10 @@ import {
   Divider,
   Checkbox,
 } from "@chakra-ui/react";
-import React from "react";
+import { useSelector } from "react-redux";
 
 export default function ControlCenter() {
+  const chartType = useSelector((state) => state.chart.chartType);
   return (
     <Stack p="8" gap="5" className="bg-slate-900  w-1/3 h-full">
       <Grid
@@ -47,13 +48,60 @@ export default function ControlCenter() {
           </option>
         </Select>
       </HStack>
-      <Input
-        className="bg-blackest"
-        bg={"halfblack"}
-        placeholder="Select Date and Time"
-        size="md"
-        type="datetime-local"
-      />
+      {chartType == "pie" ? (
+        <Input
+          className="bg-blackest"
+          bg={"halfblack"}
+          placeholder="Select Date and Time"
+          size="md"
+          type="datetime-local"
+        />
+      ) : (
+        <>
+          <Input
+            className="bg-blackest"
+            bg={"halfblack"}
+            placeholder="Select Date and Time"
+            size="md"
+            type="datetime-local"
+          />
+          <Input
+            className="bg-blackest"
+            bg={"halfblack"}
+            placeholder="Select Date and Time"
+            size="md"
+            type="datetime-local"
+          />
+          <Select size="md" borderRadius="5">
+            <option
+              className="!border-1 text-black !bg-silver hover:text-white"
+              value="pie"
+            >
+              Select Step
+            </option>
+            <option
+              className="!border-1 text-black !bg-silver hover:text-white"
+              value="pie"
+            >
+              Daily
+            </option>
+
+            <option
+              className="!border-1 text-black !bg-silver hover:text-white"
+              value="pie"
+            >
+              Weekly
+            </option>
+
+            <option
+              className="!border-1 text-black !bg-silver hover:text-white"
+              value="pie"
+            >
+              Monthly
+            </option>
+          </Select>
+        </>
+      )}
       <HStack gap="3">
         <Button className="!bg-orange">Apply</Button>
         <Button>Reset</Button>
