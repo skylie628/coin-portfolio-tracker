@@ -42,8 +42,8 @@ export default function QueryCenter() {
     const keyword = e.target.value;
     dispatch(setFilterVariabels({ type: "keyword", value: keyword }));
   };
-  const handleToggleVariable = (id) => {
-    dispatch(toggleVariable({ id }));
+  const handleToggleVariable = (variable) => {
+    dispatch(toggleVariable({ variable }));
   };
   return (
     <Stack p="8" gap="5" className="bg-slate-900  w-1/3 h-full">
@@ -106,7 +106,7 @@ export default function QueryCenter() {
               <Checkbox
                 defaultChecked={selectedVariables[x._id]}
                 className="group-hover:border-black"
-                onChange={() => handleToggleVariable(x._id)}
+                onChange={() => handleToggleVariable(x)}
                 _checked={{
                   "& .chakra-checkbox__control": {
                     background: "orange",

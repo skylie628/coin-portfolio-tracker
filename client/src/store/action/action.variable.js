@@ -44,15 +44,20 @@ export const setFilterVariabels = (payload) => (dispatch, getState) => {
 
 export const toggleVariable = (payload) => (dispatch, getState) => {
   const { selectedVariables } = getState().variable;
-  const { id } = payload;
+  const { variable } = payload;
+  const { id } = variable;
   let newSelectedVariables = {};
   if (selectedVariables[id]) {
-    const { id, ...SelectedVariablesWithoutId } = selectedVariables;
-    newSelectedVariables = SelectedVariablesWithoutId;
+    newSelectedVariables = { ...selectedVariables };
+    delete newSelectedVariables[id];
   } else {
     newSelectedVariables = {
       ...selectedVariables,
-      id: { color: Math.floor(Math.random() * 16777215).toString(16) },
+      [id]: {
+        color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+        value: Math.floor(Math.random() * 10),
+        ...variable,
+      },
     };
   }
   dispatch(toggle({ selectedVariables: newSelectedVariables }));

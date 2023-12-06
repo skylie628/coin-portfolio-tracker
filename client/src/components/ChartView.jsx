@@ -3,7 +3,8 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useSelector } from "react-redux";
 export default function ChartView() {
-  const chartType = useSelector((state) => state.chart.chartType);
+  const { chartType, chartValues } = useSelector((state) => state.chart);
+  console.log(chartValues);
   let averageVoltage = [];
   for (var i = 0; i < 10; i++) {
     averageVoltage.push({ x: new Date(Date.now).getTime(), y: 1 });
@@ -23,28 +24,11 @@ export default function ChartView() {
           },
           series: [
             {
-              data: [
-                {
-                  name: "Chicken",
-                  y: 23,
-                },
-                {
-                  name: "Vegetable",
-                  y: 35,
-                },
-                {
-                  name: "Fish",
-                  y: 46,
-                },
-                {
-                  name: "Steak",
-                  y: 117,
-                },
-                {
-                  name: "Other",
-                  y: 5,
-                },
-              ],
+              data: chartValues.map((value) => ({
+                name: value.full_name,
+                y: value.value,
+                color: value.color,
+              })),
               dataLabels: {
                 style: {
                   color: "orange",
@@ -123,7 +107,9 @@ export default function ChartView() {
 
   return (
     <Flex className="bg-slate-800 h-full w-full justify-center items-center">
-      <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+      {chartValues.length > 0 && (
+        <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+      )}
     </Flex>
   );
 }

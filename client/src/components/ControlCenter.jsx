@@ -13,10 +13,17 @@ import {
   Divider,
   Checkbox,
 } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import { setChartValuesAction } from "../store/action/action.chart";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function ControlCenter() {
+  const dispatch = useDispatch();
   const chartType = useSelector((state) => state.chart.chartType);
+  const selectedVariables =
+    useSelector((state) => state.variable.selectedVariables) || {};
+  const handleDrawChart = () => {
+    dispatch(setChartValuesAction());
+  };
   return (
     <Stack p="8" gap="5" className="bg-slate-900  w-1/3 h-full">
       <Grid
@@ -103,48 +110,35 @@ export default function ControlCenter() {
         </>
       )}
       <HStack gap="3">
-        <Button className="!bg-orange">Apply</Button>
+        <Button className="!bg-orange" onClick={handleDrawChart}>
+          Apply
+        </Button>
         <Button>Reset</Button>
       </HStack>
       <Divider />
       <VStack gap="3">
         <Text className="text-left w-full">Selected Variables / Sections</Text>
 
-        <Box
-          sx={{
-            background: `repeating-linear-gradient(
+        {Object.values(selectedVariables).map((variable) => (
+          <Box
+            key={variable.id}
+            sx={{
+              background: `repeating-linear-gradient(
             45deg,
             #000,
             #000 10px,
-            #465298 10px,
-            #465298 20px
+            ${variable.color} 10px,
+            ${variable.color} 20px
           )`,
-          }}
-          className="w-full rounded-lg "
-        >
-          <Flex gap="3" p="2" className="bg-black w-2/3 ">
-            <Checkbox />
-            <Text className="flex-1 text-left">Something</Text>
-          </Flex>
-        </Box>
-
-        <Box
-          sx={{
-            background: `repeating-linear-gradient(
-            45deg,
-            #000,
-            #000 10px,
-            #fc3503 10px,
-            #fc3503 20px
-          )`,
-          }}
-          className="w-full rounded-lg  "
-        >
-          <Flex gap="3" p="2" className="bg-black w-2/3 ">
-            <Checkbox />
-            <Text className="flex-1 text-left">Something</Text>
-          </Flex>
-        </Box>
+            }}
+            className="w-full rounded-lg "
+          >
+            <Flex gap="3" p="2" className="bg-black w-2/3 ">
+              <Checkbox />
+              <Text className="flex-1 text-left">{variable.full_name}</Text>
+            </Flex>
+          </Box>
+        ))}
       </VStack>
     </Stack>
   );

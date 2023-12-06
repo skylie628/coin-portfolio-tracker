@@ -5,7 +5,7 @@ const initialState = {
   fetchedVariables: [],
   queriedVariables: [],
   filterCriteria: {}, //{keyword:String,type:String}
-  selectedVariables: {}, //if a variable is selected, add it to object with random color
+  selectedVariables: [{}], //if a variable is selected, add it to object with random color
 };
 const variableSlice = createSlice({
   name: "variable",

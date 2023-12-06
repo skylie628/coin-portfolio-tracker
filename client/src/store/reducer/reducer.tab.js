@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import uuidv4 from "uuid/v4";
 const initialState = {
-  chartType: "pie",
-  chartValues: [],
+  tabs: [{ id: uuidv4(), name: "New tabs", chartValues: [] }],
+  activeTab: 0,
 };
 const chartSlice = createSlice({
-  name: "chart",
+  name: "tab",
   initialState,
   reducers: {
     setChartType: (state, action) => {
