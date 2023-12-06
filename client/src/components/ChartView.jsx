@@ -26,19 +26,19 @@ export default function ChartView() {
               data: [
                 {
                   name: "Chicken",
-                  y: 40,
+                  y: 23,
                 },
                 {
                   name: "Vegetable",
-                  y: 30,
+                  y: 35,
                 },
                 {
                   name: "Fish",
-                  y: 20,
+                  y: 46,
                 },
                 {
                   name: "Steak",
-                  y: 5,
+                  y: 117,
                 },
                 {
                   name: "Other",
