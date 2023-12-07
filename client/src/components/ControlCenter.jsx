@@ -25,7 +25,7 @@ export default function ControlCenter() {
     dispatch(setChartValuesAction());
   };
   return (
-    <Stack p="8" gap="5" className="bg-slate-900  w-1/3 h-full">
+    <Stack p="8" gap="5" className="bg-slate-900  w-1/4 h-full">
       <Grid
         templateColumns="1fr auto 1fr"
         alignItems="center"

@@ -1,4 +1,5 @@
 import axiosConfig from "../../lib/axios/axiosConfig";
+import { genMockData } from "../../utils/genMockData";
 import {
   fetchVariables,
   fetchVariablesSuccess,
@@ -43,6 +44,7 @@ export const setFilterVariabels = (payload) => (dispatch, getState) => {
 };
 
 export const toggleVariable = (payload) => (dispatch, getState) => {
+  const { chartType } = getState().chart;
   const { selectedVariables } = getState().variable;
   const { variable } = payload;
   const { id } = variable;
@@ -51,13 +53,10 @@ export const toggleVariable = (payload) => (dispatch, getState) => {
     newSelectedVariables = { ...selectedVariables };
     delete newSelectedVariables[id];
   } else {
+    const mockData = genMockData(variable, chartType);
     newSelectedVariables = {
       ...selectedVariables,
-      [id]: {
-        color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
-        value: Math.floor(Math.random() * 10),
-        ...variable,
-      },
+      [id]: mockData,
     };
   }
   dispatch(toggle({ selectedVariables: newSelectedVariables }));

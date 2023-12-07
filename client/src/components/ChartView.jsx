@@ -3,12 +3,12 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useSelector } from "react-redux";
 export default function ChartView() {
-  const { chartType, chartValues } = useSelector((state) => state.chart);
-  console.log(chartValues);
-  let averageVoltage = [];
-  for (var i = 0; i < 10; i++) {
-    averageVoltage.push({ x: new Date(Date.now).getTime(), y: 1 });
-  }
+  const { chartType, chartValues: preChartValues } = useSelector(
+    (state) => state.chart
+  );
+  //high chart mutate redux state causing error
+  const chartValues = JSON.parse(JSON.stringify(preChartValues));
+  console.log("reder chart");
   const chartOptions =
     chartType == "pie"
       ? {
@@ -45,34 +45,52 @@ export default function ChartView() {
             type: "line",
             backgroundColor: "rgb(30 41 59)",
           },
+          labels: {
+            formatter() {
+              return `<span style="color: orange">${this.value}</span>`;
+            },
+          },
           title: {
             text: "Line chart",
             style: {
-              display: "none",
+              color: "orange",
             },
           },
           legend: {
             align: "right",
             verticalAlign: "top",
+            itemStyle: { color: "orange", fontSize: "11px" },
             symbolWidth: 5,
             symbolHeight: 8,
           },
           xAxis: {
-            tickColor: "#FFFFFF",
+            tickColor: "orange",
+            gridLineColor: "orange",
+            lineColor: "orange",
             categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-          },
-          yAxis: {
-            tickColor: "#FFFFFF",
-            gridLineColor: "#FFFFFF",
             title: {
               style: {
-                display: "none",
+                color: "orange",
               },
             },
-            labels: {},
+            labels: { style: { color: "orange" } },
+          },
+          yAxis: {
+            tickColor: "orange",
+            lineColor: "orange",
+            gridLineColor: "orange",
+            labels: { style: { color: "orange" } },
+            title: {
+              style: {
+                color: "orange",
+              },
+            },
           },
           plotOptions: {
             series: {
+              dataLabels: {
+                color: "orange",
+              },
               marker: {
                 symbol: "circle",
               },
@@ -81,30 +99,16 @@ export default function ChartView() {
           tooltip: {
             shared: true,
           },
-          series: [
-            {
-              type: "line",
-              name: "Bar",
-              color: "#6a6a6a",
-              pointPadding: 0,
-              groupPadding: 0,
-              data: averageVoltage,
-            },
-            {
-              type: "line",
-              name: "Foo",
-              color: "#0071ce",
-              data: averageVoltage,
-            },
-            {
-              type: "line",
-              name: "Line 2",
-              color: "#ff671b",
-              data: averageVoltage,
-            },
-          ],
+          series: chartValues.map((variable) => ({
+            type: "line",
+            name: variable.full_name,
+            color: variable.color,
+            pointPadding: 0,
+            groupPadding: 0,
+            data: variable.value,
+          })),
         };
-
+  console.log("options", chartOptions);
   return (
     <Flex className="bg-slate-800 h-full w-full justify-center items-center">
       {chartValues.length > 0 && (

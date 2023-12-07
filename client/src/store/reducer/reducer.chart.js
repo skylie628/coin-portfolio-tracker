@@ -8,13 +8,16 @@ const chartSlice = createSlice({
   initialState,
   reducers: {
     setChartType: (state, action) => {
-      console.log(action);
       return { ...state, chartType: action.payload.data };
     },
-    setChartValue: (state, action) => {
+    setChartValues: (state, action) => {
       return { ...state, chartValues: action.payload.chartValues };
+    },
+    resetChartValues: (state, action) => {
+      return { ...state, chartValues: [] };
     },
   },
 });
-export const { setChartType, setChartValue } = chartSlice.actions;
+export const { setChartType, setChartValues, resetChartValues } =
+  chartSlice.actions;
 export default chartSlice.reducer;

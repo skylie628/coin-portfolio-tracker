@@ -5,7 +5,7 @@ const initialState = {
   fetchedVariables: [],
   queriedVariables: [],
   filterCriteria: {}, //{keyword:String,type:String}
-  selectedVariables: [{}], //if a variable is selected, add it to object with random color
+  selectedVariables: {}, //if a variable is selected, add it to object with random color
 };
 const variableSlice = createSlice({
   name: "variable",
@@ -54,6 +54,20 @@ const variableSlice = createSlice({
         filter: {},
       };
     },
+    resetVariable: (state, action) => {
+      return {
+        ...state,
+        queriedVariables: state.fetchedVariables,
+        selectedVariables: {},
+      };
+    },
+    switchSelectedVariables: (state, action) => {
+      console.log("action", action);
+      return {
+        ...state,
+        selectedVariables: action.payload.selectedVariables,
+      };
+    },
   },
 });
 export const {
@@ -63,5 +77,7 @@ export const {
   setFilter,
   toggle,
   resetFilter,
+  resetVariable,
+  switchSelectedVariables,
 } = variableSlice.actions;
 export default variableSlice.reducer;

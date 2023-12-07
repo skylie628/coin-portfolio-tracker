@@ -1,21 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-import uuidv4 from "uuid/v4";
+import { v4 as uuidv4 } from "uuid";
+const id = uuidv4();
 const initialState = {
-  tabs: [{ id: uuidv4(), name: "New tabs", chartValues: [] }],
-  activeTab: 0,
+  tabs: {
+    [id]: { id, name: "New tabs", chartValues: [], selectedVariables: {} },
+  },
+  activeTab: id,
 };
-const chartSlice = createSlice({
+const tabSlice = createSlice({
   name: "tab",
   initialState,
   reducers: {
-    setChartType: (state, action) => {
-      console.log(action);
-      return { ...state, chartType: action.payload.data };
+    addTab: (state, action) => {
+      return { ...action.payload };
     },
-    setChartValue: (state, action) => {
-      return { ...state, chartValues: action.payload.chartValues };
+    switchTab: (state, action) => {
+      return { ...action.payload };
     },
   },
 });
-export const { setChartType, setChartValue } = chartSlice.actions;
-export default chartSlice.reducer;
+export const { addTab, switchTab } = tabSlice.actions;
+export default tabSlice.reducer;

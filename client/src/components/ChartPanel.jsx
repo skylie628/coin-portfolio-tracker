@@ -3,7 +3,7 @@ import ChartTabs from "./ChartTabs";
 import ChartView from "./ChartView";
 export default function ChartPanel() {
   return (
-    <VStack className=" flex-1 " spacing="0">
+    <VStack className=" flex-1 w-1/2 " spacing="0">
       <ChartTabs />
       <Divider colorScheme="gray" opacity="0.5" />
       <ChartView />

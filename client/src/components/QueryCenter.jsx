@@ -27,9 +27,9 @@ export default function QueryCenter() {
     selectedVariables,
     isLoading,
   } = useSelector((state) => {
-    console.log("state la", state);
     return state.variable;
   });
+  console.log("rerender", selectedVariables);
   const types = useMemo(() => {
     return [...new Set(fetchedVariables.map((x) => x.type))];
   }, [fetchedVariables]);
@@ -46,7 +46,7 @@ export default function QueryCenter() {
     dispatch(toggleVariable({ variable }));
   };
   return (
-    <Stack p="8" gap="5" className="bg-slate-900  w-1/3 h-full">
+    <Stack p="8" gap="5" className="bg-slate-900  w-1/4 h-full">
       <Grid
         templateColumns="1fr auto 1fr"
         alignItems="center"
@@ -94,19 +94,20 @@ export default function QueryCenter() {
       <Divider />
       <VStack gap="3">
         <Text className="text-left w-full">Selected Variables / Sections</Text>
-        {variables.map((x) => {
+        {variables.map((variable) => {
+          console.log("select", selectedVariables[variable.id]);
           return (
             <Flex
-              key={x._id}
+              key={variable.id}
               gap="3"
               as="label"
               p="2"
               className=" group hover:bg-silver hover:text-black w-full rounded-lg cursor-pointer "
             >
               <Checkbox
-                defaultChecked={selectedVariables[x._id]}
+                isChecked={selectedVariables[variable.id] ? true : false}
                 className="group-hover:border-black"
-                onChange={() => handleToggleVariable(x)}
+                onChange={() => handleToggleVariable(variable)}
                 _checked={{
                   "& .chakra-checkbox__control": {
                     background: "orange",
@@ -116,7 +117,7 @@ export default function QueryCenter() {
                 }}
               />
 
-              <Text className="flex-1 text-left">{x.full_name}</Text>
+              <Text className="flex-1 text-left">{variable.full_name}</Text>
             </Flex>
           );
         })}
