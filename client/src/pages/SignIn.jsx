@@ -1,3 +1,4 @@
+//component
 import {
   Box,
   Button,
@@ -6,6 +7,7 @@ import {
   Divider,
   FormControl,
   FormLabel,
+  FormErrorMessage,
   Heading,
   HStack,
   Input,
@@ -15,58 +17,99 @@ import {
 } from "@chakra-ui/react";
 import { OAuthButtonGroup } from "../components/ui/OAuthButtonGroup";
 import { PasswordField } from "../components/ui/PasswordField";
-const Signin = () => (
-  <Container
-    maxW="lg"
-    py={{ base: "12", md: "24" }}
-    px={{ base: "0", sm: "8" }}
-  >
-    <Stack spacing="8">
-      <Stack spacing="6">
-        <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
-          <Heading size={{ base: "xs", md: "sm" }}>
-            Log in to your account
-          </Heading>
-          <Text color="fg.muted">
-            Don't have an account? <Link href="#">Sign up</Link>
-          </Text>
-        </Stack>
-      </Stack>
-      <Box
-        py={{ base: "0", sm: "8" }}
-        px={{ base: "4", sm: "10" }}
-        bg={{ base: "transparent", sm: "bg.surface" }}
-        boxShadow={{ base: "none", sm: "md" }}
-        borderRadius={{ base: "none", sm: "xl" }}
+import { signinService } from "../store/action/action.user";
+//use hook
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+//other
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+const Signin = () => {
+  const scheme = yup.object().shape({
+    email: yup.string().required().email("Email invalid"),
+    password: yup
+      .string()
+      .min(6, "Password length can't be less than 6 characters")
+      .max(50, "Password length can't be more than 50 characters")
+      .required(),
+  });
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors = {} },
+  } = useForm({ resolver: yupResolver(scheme) });
+  const onSubmitSignin = (data) => {
+    signinService({ data }).then((rs) => {
+      console.log(rs);
+      const { refreshToken, accessToken } = rs?.data?.data || {};
+      if (!refreshToken || !accessToken) {
+        return;
+      }
+      window.localStorage.setItem("refreshToken", refreshToken);
+      window.localStorage.setItem("accessToken", accessToken);
+      navigate("/");
+    });
+  };
+  return (
+    <form onSubmit={handleSubmit(onSubmitSignin)}>
+      <Container
+        maxW="lg"
+        py={{ base: "12", md: "24" }}
+        px={{ base: "0", sm: "8" }}
       >
-        <Stack spacing="6">
-          <Stack spacing="5">
-            <FormControl>
-              <FormLabel htmlFor="email">Email</FormLabel>
-              <Input id="email" type="email" />
-              <PasswordField />
-            </FormControl>
-          </Stack>
-          <HStack justify="space-between">
-            <Checkbox defaultChecked>Remember me</Checkbox>
-            <Button variant="text" size="sm">
-              Forgot password?
-            </Button>
-          </HStack>
+        <Stack spacing="8">
           <Stack spacing="6">
-            <Button>Sign in</Button>
-            <HStack>
-              <Divider />
-              <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
-                or continue with
+            <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
+              <Heading size={{ base: "xs", md: "sm" }}>
+                Log in to your account
+              </Heading>
+              <Text color="fg.muted">
+                Don't have an account? <Link href="/sign-up">Sign up</Link>
               </Text>
-              <Divider />
-            </HStack>
-            <OAuthButtonGroup />
+            </Stack>
           </Stack>
+          <Box
+            py={{ base: "0", sm: "8" }}
+            px={{ base: "4", sm: "10" }}
+            bg={{ base: "transparent", sm: "bg.surface" }}
+            boxShadow={{ base: "none", sm: "md" }}
+            borderRadius={{ base: "none", sm: "xl" }}
+          >
+            <Stack spacing="6">
+              <Stack spacing="5">
+                <FormControl isInvalid={errors.email}>
+                  <FormLabel htmlFor="email">Email</FormLabel>
+                  <Input {...register("email")} id="email" />
+                  <FormErrorMessage color="red.700">
+                    {errors.email && errors.email.message.toString()}
+                  </FormErrorMessage>
+                </FormControl>
+                <PasswordField {...register("password")} errors={errors} />
+              </Stack>
+              <HStack justify="space-between">
+                <Checkbox defaultChecked>Remember me</Checkbox>
+                <Button variant="text" size="sm">
+                  Forgot password?
+                </Button>
+              </HStack>
+              <Stack spacing="6">
+                <Button type="submit">Sign in</Button>
+                <HStack>
+                  <Divider />
+                  <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
+                    or continue with
+                  </Text>
+                  <Divider />
+                </HStack>
+                <OAuthButtonGroup />
+              </Stack>
+            </Stack>
+          </Box>
         </Stack>
-      </Box>
-    </Stack>
-  </Container>
-);
+      </Container>
+    </form>
+  );
+};
 export default Signin;

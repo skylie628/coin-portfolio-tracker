@@ -17,7 +17,7 @@ import {
 import { SearchIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilterVariabels } from "../store/action/action.variable";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { toggleVariable } from "../store/action/action.variable";
 export default function QueryCenter() {
   const dispatch = useDispatch();
@@ -29,7 +29,6 @@ export default function QueryCenter() {
   } = useSelector((state) => {
     return state.variable;
   });
-  console.log("rerender", selectedVariables);
   const types = useMemo(() => {
     return [...new Set(fetchedVariables.map((x) => x.type))];
   }, [fetchedVariables]);

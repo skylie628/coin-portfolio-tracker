@@ -1,3 +1,4 @@
+import React from "react";
 import {
   FormControl,
   FormLabel,
@@ -6,37 +7,43 @@ import {
   InputGroup,
   InputRightElement,
   useDisclosure,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 /* eslint-disable-next-line padded-blocks */
-export const PasswordField = () => {
-  const { isOpen, onToggle } = useDisclosure();
-  const onClickReveal = () => {
-    onToggle();
-  };
+export const PasswordField = React.forwardRef(
+  ({ name = "password", label = "Password", ...props }, ref) => {
+    const { isOpen, onToggle } = useDisclosure();
+    const onClickReveal = () => {
+      onToggle();
+    };
 
-  return (
-    <FormControl>
-      <FormLabel htmlFor="password">Password</FormLabel>
-      <InputGroup>
-        <InputRightElement>
-          <IconButton
-            variant="text"
-            aria-label={isOpen ? "Mask password" : "Reveal password"}
-            icon={isOpen ? <HiEyeOff /> : <HiEye />}
-            onClick={onClickReveal}
+    return (
+      <FormControl isInvalid={props.errors.password}>
+        <FormLabel htmlFor={name}>{label}</FormLabel>
+        <InputGroup>
+          <InputRightElement>
+            <IconButton
+              variant="text"
+              aria-label={isOpen ? "Mask password" : "Reveal password"}
+              icon={isOpen ? <HiEyeOff /> : <HiEye />}
+              onClick={onClickReveal}
+            />
+          </InputRightElement>
+          <Input
+            ref={ref}
+            {...props}
+            name={name}
+            type={isOpen ? "text" : "password"}
+            autoComplete="current-password"
+            required
           />
-        </InputRightElement>
-        <Input
-          id="password"
-          name="password"
-          type={isOpen ? "text" : "password"}
-          autoComplete="current-password"
-          required
-        />
-      </InputGroup>
-    </FormControl>
-  );
-};
-
+        </InputGroup>
+        <FormErrorMessage color="red.700">
+          {props.errors.password && props.errors.password.message}
+        </FormErrorMessage>
+      </FormControl>
+    );
+  }
+);
 PasswordField.displayName = "PasswordField";

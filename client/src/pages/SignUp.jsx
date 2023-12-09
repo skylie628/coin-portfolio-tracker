@@ -1,11 +1,11 @@
 import {
   Box,
   Button,
-  Checkbox,
   Container,
   Divider,
   FormControl,
   FormLabel,
+  FormErrorMessage,
   Heading,
   HStack,
   Input,
@@ -15,60 +15,107 @@ import {
 } from "@chakra-ui/react";
 import { OAuthButtonGroup } from "../components/ui/OAuthButtonGroup";
 import { PasswordField } from "../components/ui/PasswordField";
-const Signin = () => (
-  <Container
-    maxW="lg"
-    py={{ base: "12", md: "24" }}
-    px={{ base: "0", sm: "8" }}
-  >
-    <Stack spacing="8">
-      <Stack spacing="6">
-        <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
-          <Heading size={{ base: "xs", md: "sm" }}>
-            Log in to your account
-          </Heading>
-          <Text color="fg.muted">
-            Don't have an account? <Link href="#">Sign up</Link>
-          </Text>
-        </Stack>
-      </Stack>
-      <Box
-        py={{ base: "0", sm: "8" }}
-        px={{ base: "4", sm: "10" }}
-        bg={{ base: "transparent", sm: "bg.surface" }}
-        boxShadow={{ base: "none", sm: "md" }}
-        borderRadius={{ base: "none", sm: "xl" }}
+//use hook
+import { useForm } from "react-hook-form";
+//other
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { signupService } from "../store/action/action.user";
+import { useNavigate } from "react-router-dom";
+const Signup = () => {
+  const navigate = useNavigate();
+  const scheme = yup.object().shape({
+    name: yup.string().required(),
+    email: yup.string().required().email("Email invalid"),
+    password: yup
+      .string()
+      .min(6, "Password length can't be less than 6 characters")
+      .max(50, "Password length can't be more than 50 characters")
+      .required(),
+    confirmPassword: yup
+      .string()
+      .min(6, "Password length can't be less than 6 characters")
+      .max(50, "Password length can't be more than 50 characters")
+      .required(),
+  });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors = {} },
+  } = useForm({ resolver: yupResolver(scheme) });
+  const onSubmitSignup = (data) => {
+    console.log(data);
+    signupService({ data }).then((res) => navigate("/sign-in"));
+  };
+  return (
+    <form onSubmit={handleSubmit(onSubmitSignup)}>
+      <Container
+        maxW="lg"
+        py={{ base: "12", md: "24" }}
+        px={{ base: "0", sm: "8" }}
       >
-        <Stack spacing="6">
-          <Stack spacing="5">
-            <FormControl>
-              {" "}
-              <FormLabel htmlFor="name">name</FormLabel>
-              <Input id="name" type="text" />
-            </FormControl>
-            <FormControl>
-              {" "}
-              <FormLabel htmlFor="email">Email</FormLabel>
-              <Input id="email" type="text" />
-            </FormControl>
-            <PasswordField />
-            <PasswordField />
-          </Stack>
-          <HStack justify="space-between"></HStack>
+        <Stack spacing="8">
           <Stack spacing="6">
-            <Button>Sign in</Button>
-            <HStack>
-              <Divider />
-              <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
-                or continue with
+            <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
+              <Heading size={{ base: "xs", md: "sm" }}>
+                Log in to your account
+              </Heading>
+              <Text color="fg.muted">
+                Don't have an account? <Link href="#">Sign up</Link>
               </Text>
-              <Divider />
-            </HStack>
-            <OAuthButtonGroup />
+            </Stack>
           </Stack>
+          <Box
+            py={{ base: "0", sm: "8" }}
+            px={{ base: "4", sm: "10" }}
+            bg={{ base: "transparent", sm: "bg.surface" }}
+            boxShadow={{ base: "none", sm: "md" }}
+            borderRadius={{ base: "none", sm: "xl" }}
+          >
+            <Stack spacing="6">
+              <Stack spacing="5">
+                <FormControl isInvalid={errors.name}>
+                  {" "}
+                  <FormLabel htmlFor="name">name</FormLabel>
+                  <Input {...register("name")} id="name" type="text" />
+                  <FormErrorMessage color="red.700">
+                    {errors.name && errors.name.message.toString()}
+                  </FormErrorMessage>
+                </FormControl>
+                <FormControl isInvalid={errors.email}>
+                  {" "}
+                  <FormLabel htmlFor="email">Email</FormLabel>
+                  <Input {...register("email")} id="email" type="text" />
+                  <FormErrorMessage color="red.700">
+                    {errors.email && errors.email.message.toString()}
+                  </FormErrorMessage>
+                </FormControl>
+                <PasswordField {...register("password")} errors={errors} />
+                <PasswordField
+                  {...register("confirmPassword")}
+                  name="confirmPassword"
+                  label="Confirm Password"
+                  errors={errors}
+                />
+              </Stack>
+              <HStack justify="space-between"></HStack>
+              <Stack spacing="6">
+                <Button type="submit">Sign Up</Button>
+                <HStack>
+                  <Divider />
+                  <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
+                    or continue with
+                  </Text>
+                  <Divider />
+                </HStack>
+                <OAuthButtonGroup />
+              </Stack>
+            </Stack>
+          </Box>
         </Stack>
-      </Box>
-    </Stack>
-  </Container>
-);
-export default Signin;
+      </Container>
+    </form>
+  );
+};
+export default Signup;
