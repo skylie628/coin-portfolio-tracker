@@ -9,7 +9,7 @@ function generateAccessToken(payload = {}) {
 
 function generateRefreshToken(payload = {}) {
   const result = jwt.sign(payload, process.env.SECRET_TOKEN, {
-    expiresIn: 3600,
+    expiresIn: "1d",
   });
   return result;
 }

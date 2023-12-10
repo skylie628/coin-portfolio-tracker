@@ -6,14 +6,17 @@ import ChartPanel from "../components/ChartPanel";
 import QueryCenter from "../components/QueryCenter";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchVariablesAction } from "../store/action/action.variable";
+import { fetchVariablesThunk } from "../store/action/action.variable";
 export default function DashBoard() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchVariablesAction());
+    dispatch(fetchVariablesThunk());
   }, []);
   return (
-    <Stack className="text-lightstar bg-blackest h-screen w-screen" spacing={0}>
+    <Stack
+      className="text-lightstar bg-blackest h-screen w-screen max-w-screen-2xl m-auto"
+      spacing={0}
+    >
       <Header />
       <Divider colorScheme="gray" size="1" variant="dashed" />
       <Flex className="h-full">

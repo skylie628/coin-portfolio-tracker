@@ -10,14 +10,14 @@ import {
 const apiFetchVariables = async () => {
   return axiosConfig.get("/variable/variables");
 };
-export const fetchVariablesAction = () => async (dispatch) => {
+export const fetchVariablesThunk = () => async (dispatch) => {
   dispatch(fetchVariables());
   apiFetchVariables()
     .then((rs) => dispatch(fetchVariablesSuccess(rs.data)))
     .catch((err) => dispatch(fetchVariablesFail(err)));
 };
 
-export const setFilterVariabels = (payload) => (dispatch, getState) => {
+export const setFilterThunk = (payload) => (dispatch, getState) => {
   const { fetchedVariables, filterCriteria } = getState().variable;
   let queriedVariables = fetchedVariables;
   switch (payload.type) {
@@ -43,19 +43,18 @@ export const setFilterVariabels = (payload) => (dispatch, getState) => {
   );
 };
 
-export const toggleVariable = (payload) => (dispatch, getState) => {
+export const toggleVariableThunk = (payload) => (dispatch, getState) => {
   const { chartType } = getState().chart;
   const { selectedVariables } = getState().variable;
   const { variable } = payload;
   const { id } = variable;
-  let newSelectedVariables = {};
+  let newSelectedVariables = JSON.parse(JSON.stringify(selectedVariables));
   if (selectedVariables[id]) {
-    newSelectedVariables = { ...selectedVariables };
     delete newSelectedVariables[id];
   } else {
     const mockData = genMockData(variable, chartType);
     newSelectedVariables = {
-      ...selectedVariables,
+      ...newSelectedVariables,
       [id]: mockData,
     };
   }

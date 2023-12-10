@@ -3,7 +3,6 @@ const initialState = {
   isLoading: false,
   errors: null,
   isLogged: false,
-  userInfo: {},
 };
 const userSlice = createSlice({
   name: "user",
@@ -25,12 +24,10 @@ const userSlice = createSlice({
     },
 
     signinSuccess: (state, action) => {
-      console.log(action.payload.data);
       return {
         ...state,
         isLogged: true,
         isLoading: false,
-        userInfo: action.payload.data,
         errors: null,
       };
     },
@@ -44,7 +41,7 @@ const userSlice = createSlice({
     signout: (state, action) => {
       return {
         ...state,
-        islogged: false,
+        isLogged: false,
         errors: null,
         action: null,
       };

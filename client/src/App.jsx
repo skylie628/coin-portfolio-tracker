@@ -8,7 +8,18 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import PublicRoute from "./routes/PublicRoute";
 import PrivateRoute from "./routes/privateRoute";
+//use hook
+import { useDispatch } from "react-redux";
+//other
+import { signinSuccess } from "./store/reducer/reducer.user";
 export default function App() {
+  //option 1: mapping data from local storage to redux state
+  //option 2: using redux persits?
+  const dispatch = useDispatch();
+  const isLogged = window.localStorage.getItem("refreshToken");
+  if (isLogged) {
+    dispatch(signinSuccess());
+  }
   return (
     <BrowserRouter>
       <Routes>

@@ -1,8 +1,6 @@
 import {
-  Box,
   Stack,
   Text,
-  Flex,
   Grid,
   GridItem,
   Button,
@@ -11,18 +9,20 @@ import {
   HStack,
   VStack,
   Divider,
-  Checkbox,
 } from "@chakra-ui/react";
-import { setChartValuesAction } from "../store/action/action.chart";
+import SelectedVariableList from "./SelectedVariableList";
+import { setChartValuesThunk } from "../store/action/action.chart";
 import { useSelector, useDispatch } from "react-redux";
+import { resetTabThunk } from "../store/action/action.tab";
 
 export default function ControlCenter() {
   const dispatch = useDispatch();
   const chartType = useSelector((state) => state.chart.chartType);
-  const selectedVariables =
-    useSelector((state) => state.variable.selectedVariables) || {};
   const handleDrawChart = () => {
-    dispatch(setChartValuesAction());
+    dispatch(setChartValuesThunk());
+  };
+  const handleReset = () => {
+    dispatch(resetTabThunk());
   };
   return (
     <Stack p="8" gap="5" className="bg-slate-900  w-1/4 h-full">
@@ -113,32 +113,12 @@ export default function ControlCenter() {
         <Button className="!bg-orange" onClick={handleDrawChart}>
           Apply
         </Button>
-        <Button>Reset</Button>
+        <Button onClick={handleReset}>Reset</Button>
       </HStack>
       <Divider />
       <VStack gap="3">
         <Text className="text-left w-full">Selected Variables / Sections</Text>
-
-        {Object.values(selectedVariables).map((variable) => (
-          <Box
-            key={variable.id}
-            sx={{
-              background: `repeating-linear-gradient(
-            45deg,
-            #000,
-            #000 10px,
-            ${variable.color} 10px,
-            ${variable.color} 20px
-          )`,
-            }}
-            className="w-full rounded-lg "
-          >
-            <Flex gap="3" p="2" className="bg-black w-2/3 ">
-              <Checkbox />
-              <Text className="flex-1 text-left">{variable.full_name}</Text>
-            </Flex>
-          </Box>
-        ))}
+        <SelectedVariableList />
       </VStack>
     </Stack>
   );

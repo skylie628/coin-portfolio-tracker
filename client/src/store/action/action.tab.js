@@ -1,9 +1,9 @@
-import { addTab, switchTab } from "../reducer/reducer.tab";
+import { addTab, switchTab, resetTab } from "../reducer/reducer.tab";
 import { resetVariable } from "../reducer/reducer.variable";
 import { resetChartValues, setChartValues } from "../reducer/reducer.chart";
 import { switchSelectedVariables } from "../reducer/reducer.variable";
 import { v4 as uuidv4 } from "uuid";
-export const switchTabAction =
+export const switchTabThunk =
   ({ tabId }) =>
   (dispatch, getState) => {
     const { tabs, activeTab } = getState().tab;
@@ -11,7 +11,7 @@ export const switchTabAction =
       return;
     }
     const newTabs = JSON.parse(JSON.stringify(tabs));
-    const { chartValues: currentChartValues = [] } = getState().chart;
+    const { chartValues: currentChartValues = [] } = getState().chart || {};
     const { selectedVariables: currentSelectedVariables = {} } =
       getState().variable;
     //save current tab status (including selected variables and chart values)
@@ -23,7 +23,6 @@ export const switchTabAction =
     const switchedTab = newTabs[tabId];
     if (!switchedTab) return;
     const { chartValues, selectedVariables } = switchedTab;
-    console.log("switch value", selectedVariables);
     //switch new chart values
     dispatch(
       setChartValues({ chartValues: JSON.parse(JSON.stringify(chartValues)) })
@@ -38,11 +37,10 @@ export const switchTabAction =
     console.log("switch", tabId);
     dispatch(switchTab({ activeTab: tabId, tabs: newTabs }));
   };
-export const addTabAction = () => (dispatch, getState) => {
+export const addTabThunk = () => (dispatch, getState) => {
   const { tabs, activeTab } = getState().tab;
   const { chartValues } = getState().chart;
   const { selectedVariables } = getState().variable;
-  console.log(tabs, activeTab);
   const newTabId = uuidv4();
   const newTabs = JSON.parse(JSON.stringify(tabs));
   //save current status to active tab:
@@ -67,4 +65,16 @@ export const addTabAction = () => (dispatch, getState) => {
       activeTab: newTabId,
     })
   );
+};
+
+export const resetTabThunk = () => (dispatch, getState) => {
+  const { tabs, activeTab } = getState().tab;
+  const newTabs = JSON.parse(JSON.stringify(tabs));
+  if (tabs && activeTab) {
+    const currentTab = newTabs[activeTab];
+    currentTab.chartValues = [];
+  }
+  dispatch(resetChartValues());
+  dispatch(resetVariable());
+  dispatch(resetTab({ activeTab, tabs: newTabs }));
 };

@@ -17,13 +17,16 @@ import { OAuthButtonGroup } from "../components/ui/OAuthButtonGroup";
 import { PasswordField } from "../components/ui/PasswordField";
 //use hook
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 //other
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { signupService } from "../store/action/action.user";
-import { useNavigate } from "react-router-dom";
+import { signupThunk } from "../store/action/action.user";
+//react hook
 const Signup = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const scheme = yup.object().shape({
     name: yup.string().required(),
     email: yup.string().required().email("Email invalid"),
@@ -41,12 +44,10 @@ const Signup = () => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors = {} },
   } = useForm({ resolver: yupResolver(scheme) });
   const onSubmitSignup = (data) => {
-    console.log(data);
-    signupService({ data }).then((res) => navigate("/sign-in"));
+    dispatch(signupThunk({ data: { data }, navigate }));
   };
   return (
     <form onSubmit={handleSubmit(onSubmitSignup)}>
@@ -59,10 +60,11 @@ const Signup = () => {
           <Stack spacing="6">
             <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
               <Heading size={{ base: "xs", md: "sm" }}>
-                Log in to your account
+                Sign up to your account
               </Heading>
               <Text color="fg.muted">
-                Don't have an account? <Link href="#">Sign up</Link>
+                Have an account?{" "}
+                <Link onClick={() => navigate("/sign-in")}> Sign in</Link>
               </Text>
             </Stack>
           </Stack>

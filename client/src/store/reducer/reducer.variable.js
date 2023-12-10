@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isFetching: false,
   error: null,
-  fetchedVariables: [],
-  queriedVariables: [],
+  fetchedVariables: [], //fetched result from server
+  queriedVariables: [], //queried result
   filterCriteria: {}, //{keyword:String,type:String}
   selectedVariables: {}, // Normalizing state, if a variable is selected, add it to object with random color
 };

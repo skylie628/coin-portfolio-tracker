@@ -1,5 +1,7 @@
 import axios from "axios";
+import { store } from "../../redux/store";
 import { getNewRefreshToken } from "../../services/auth";
+import { signoutThunk } from "../../store/action/action.user";
 const instance = axios.create({
   baseURL: import.meta.env.VITE_REACT_SERVER_URL,
 });
@@ -49,8 +51,7 @@ instance.interceptors.response.use(
             return instance(error.config);
           })
           .catch((error) => {
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
+            store.dispatch(signoutThunk());
             return Promise.reject(error);
           });
       }

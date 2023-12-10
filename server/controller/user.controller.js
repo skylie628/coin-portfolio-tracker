@@ -71,14 +71,13 @@ module.exports = {
     });
   },
   refreshToken: async (req, res) => {
-    const { refreshToken = "" } = req.body.data || {};
+    const refreshToken = req.body.data || {};
     if (!refreshToken) {
-      res.status(401).json({ msg: "Unauthenticated", isSuccess: false });
+      res.status(401).json({ msg: "Not have cretidental", isSuccess: false });
       return;
     }
 
     jwt.verify(refreshToken, process.env.SECRET_TOKEN, (error, user) => {
-      console.log(error);
       if (error) {
         console.log(refreshToken);
         res.status(401).json({ msg: "Unauthenticated", isSuccess: false });

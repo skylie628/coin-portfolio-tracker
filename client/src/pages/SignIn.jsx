@@ -17,14 +17,17 @@ import {
 } from "@chakra-ui/react";
 import { OAuthButtonGroup } from "../components/ui/OAuthButtonGroup";
 import { PasswordField } from "../components/ui/PasswordField";
-import { signinService } from "../store/action/action.user";
 //use hook
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 //other
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { signinThunk } from "../store/action/action.user";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const Signin = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const scheme = yup.object().shape({
     email: yup.string().required().email("Email invalid"),
     password: yup
@@ -33,29 +36,18 @@ const Signin = () => {
       .max(50, "Password length can't be more than 50 characters")
       .required(),
   });
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors = {} },
   } = useForm({ resolver: yupResolver(scheme) });
   const onSubmitSignin = (data) => {
-    signinService({ data }).then((rs) => {
-      console.log(rs);
-      const { refreshToken, accessToken } = rs?.data?.data || {};
-      if (!refreshToken || !accessToken) {
-        return;
-      }
-      window.localStorage.setItem("refreshToken", refreshToken);
-      window.localStorage.setItem("accessToken", accessToken);
-      navigate("/");
-    });
+    dispatch(signinThunk({ data }));
   };
   return (
     <form onSubmit={handleSubmit(onSubmitSignin)}>
       <Container
-        maxW="lg"
+        className="max-w-screen-lg"
         py={{ base: "12", md: "24" }}
         px={{ base: "0", sm: "8" }}
       >
@@ -66,7 +58,8 @@ const Signin = () => {
                 Log in to your account
               </Heading>
               <Text color="fg.muted">
-                Don't have an account? <Link href="/sign-up">Sign up</Link>
+                Don't have an account?{" "}
+                <Link onClick={() => navigate("/sign-up")}>Sign up</Link>
               </Text>
             </Stack>
           </Stack>

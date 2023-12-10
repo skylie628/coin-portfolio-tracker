@@ -17,7 +17,13 @@ const tabSlice = createSlice({
     switchTab: (state, action) => {
       return { ...action.payload };
     },
+    resetTab: (state, action) => {
+      return { ...action.payload };
+    },
+    resetTabs: (state, action) => {
+      return { ...initialState };
+    },
   },
 });
-export const { addTab, switchTab } = tabSlice.actions;
+export const { addTab, switchTab, resetTab, resetTabs } = tabSlice.actions;
 export default tabSlice.reducer;
