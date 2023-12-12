@@ -13,6 +13,9 @@ mongoose
 const app = express();
 app.use(express.json({ extend: true }));
 app.use(express.urlencoded({ extended: true }));
+app.get("/", (req, res) => {
+  res.send("Express JS on Vercel");
+});
 const corsOptions = {
   origin: process.env.CLIENT_URL,
   optionsSuccessStatus: 200,

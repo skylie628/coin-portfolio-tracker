@@ -18,7 +18,7 @@ import { PasswordField } from "../components/ui/PasswordField";
 //use hook
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 //other
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
