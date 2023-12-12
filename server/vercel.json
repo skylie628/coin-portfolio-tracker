@@ -1,6 +1,6 @@
 {
   "version": 2,
   "name": "ccms",
-  "builds": [{ "src": "server.js", "use": "@vercel/node" }],
-  "routes": [{ "src": "/api/(.*)", "dest": "/server.js" }]
+  "builds": [{ "src": "index.js", "use": "@vercel/node" }],
+  "routes": [{ "src": "/api/(.*)", "dest": "/index.js" }]
 }
