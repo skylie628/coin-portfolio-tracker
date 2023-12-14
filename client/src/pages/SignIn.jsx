@@ -46,62 +46,65 @@ const Signin = () => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmitSignin)}>
-      <Container
-        className="max-w-screen-lg"
-        py={{ base: "12", md: "24" }}
-        px={{ base: "0", sm: "8" }}
-      >
-        <Stack spacing="8">
-          <Stack spacing="6">
-            <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
-              <Heading size={{ base: "xs", md: "sm" }}>
-                Log in to your account
-              </Heading>
-              <Text color="fg.muted">
-                Don't have an account?{" "}
-                <Link onClick={() => navigate("/sign-up")}>Sign up</Link>
-              </Text>
-            </Stack>
+      <Stack spacing="6">
+        <Stack spacing="6">
+          <Stack spacing={{ base: "3", md: "4" }} textAlign="center">
+            <Heading size={{ base: "xs", md: "sm" }}>
+              digitize & "coi" <br />
+              <Text color="orange.500">Portfolio</Text>
+            </Heading>
+            <Text>
+              Don't have an account?{" "}
+              <Link
+                className="text-orange"
+                onClick={() => navigate("/sign-up")}
+              >
+                Sign up
+              </Link>
+            </Text>
           </Stack>
-          <Box
-            py={{ base: "0", sm: "8" }}
-            px={{ base: "4", sm: "10" }}
-            bg={{ base: "transparent", sm: "bg.surface" }}
-            boxShadow={{ base: "none", sm: "md" }}
-            borderRadius={{ base: "none", sm: "xl" }}
-          >
+        </Stack>
+        <Box
+          py={{ base: "0", sm: "8" }}
+          px={{ base: "4", sm: "10" }}
+          bg={{ base: "transparent", sm: "bg.surface" }}
+          boxShadow={{ base: "none", sm: "md" }}
+          borderRadius={{ base: "none", sm: "xl" }}
+        >
+          <Stack spacing="6">
+            <Stack spacing="5">
+              <FormControl isInvalid={errors.email}>
+                <Input {...register("email")} id="email" placeholder="Email" />
+                <FormErrorMessage color="red.700">
+                  {errors.email && errors.email.message.toString()}
+                </FormErrorMessage>
+              </FormControl>
+              <PasswordField
+                {...register("password")}
+                errors={errors}
+                placeholder="Password"
+              />
+            </Stack>
+            <HStack justify="space-between">
+              <Checkbox defaultChecked>Remember me</Checkbox>
+              <Button variant="text" size="sm">
+                Forgot password?
+              </Button>
+            </HStack>
             <Stack spacing="6">
-              <Stack spacing="5">
-                <FormControl isInvalid={errors.email}>
-                  <FormLabel htmlFor="email">Email</FormLabel>
-                  <Input {...register("email")} id="email" />
-                  <FormErrorMessage color="red.700">
-                    {errors.email && errors.email.message.toString()}
-                  </FormErrorMessage>
-                </FormControl>
-                <PasswordField {...register("password")} errors={errors} />
-              </Stack>
-              <HStack justify="space-between">
-                <Checkbox defaultChecked>Remember me</Checkbox>
-                <Button variant="text" size="sm">
-                  Forgot password?
-                </Button>
-              </HStack>
-              <Stack spacing="6">
-                <Button type="submit">Sign in</Button>
-                <HStack>
+              <Button type="submit">Sign in</Button>
+              {/*<HStack>
                   <Divider />
                   <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
                     or continue with
                   </Text>
                   <Divider />
                 </HStack>
-                <OAuthButtonGroup />
-              </Stack>
+  <OAuthButtonGroup />*/}
             </Stack>
-          </Box>
-        </Stack>
-      </Container>
+          </Stack>
+        </Box>
+      </Stack>
     </form>
   );
 };

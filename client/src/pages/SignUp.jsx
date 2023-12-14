@@ -51,72 +51,79 @@ const Signup = () => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmitSignup)}>
-      <Container
-        maxW="lg"
-        py={{ base: "12", md: "24" }}
-        px={{ base: "0", sm: "8" }}
-      >
-        <Stack spacing="8">
+      <Stack spacing="4">
+        <Stack spacing="4">
+          <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
+            <Heading size={{ base: "xs", md: "sm" }}>
+              join us & "coi"
+              <br />
+              <Text color="orange.500">Portfolio</Text>
+            </Heading>
+            <Text color="fg.muted">
+              Have an account?{" "}
+              <Link onClick={() => navigate("/sign-in")}> Sign in</Link>
+            </Text>
+          </Stack>
+        </Stack>
+        <Box
+          py={{ base: "0", sm: "8" }}
+          px={{ base: "4", sm: "10" }}
+          bg={{ base: "transparent", sm: "bg.surface" }}
+          boxShadow={{ base: "none", sm: "md" }}
+          borderRadius={{ base: "none", sm: "xl" }}
+        >
           <Stack spacing="6">
-            <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
-              <Heading size={{ base: "xs", md: "sm" }}>
-                Sign up to your account
-              </Heading>
-              <Text color="fg.muted">
-                Have an account?{" "}
-                <Link onClick={() => navigate("/sign-in")}> Sign in</Link>
-              </Text>
+            <Stack spacing="5">
+              <FormControl isInvalid={errors.name}>
+                {" "}
+                <Input
+                  placeholder="name"
+                  {...register("name")}
+                  id="name"
+                  type="text"
+                />
+                <FormErrorMessage color="red.700">
+                  {errors.name && errors.name.message.toString()}
+                </FormErrorMessage>
+              </FormControl>
+              <FormControl isInvalid={errors.email}>
+                <Input
+                  placeholder="email"
+                  {...register("email")}
+                  id="email"
+                  type="text"
+                />
+                <FormErrorMessage color="red.700">
+                  {errors.email && errors.email.message.toString()}
+                </FormErrorMessage>
+              </FormControl>
+              <PasswordField
+                placeholder="password"
+                {...register("password")}
+                errors={errors}
+              />
+              <PasswordField
+                placeholder="confirm password"
+                {...register("confirmPassword")}
+                name="confirmPassword"
+                errors={errors}
+              />
+            </Stack>
+            <HStack justify="space-between"></HStack>
+            <Stack spacing="6">
+              <Button type="submit">Sign Up</Button>
+              <HStack>
+                <Divider />
+                <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
+                  or continue with
+                </Text>
+                <Divider />
+              </HStack>
+              <OAuthButtonGroup />
             </Stack>
           </Stack>
-          <Box
-            py={{ base: "0", sm: "8" }}
-            px={{ base: "4", sm: "10" }}
-            bg={{ base: "transparent", sm: "bg.surface" }}
-            boxShadow={{ base: "none", sm: "md" }}
-            borderRadius={{ base: "none", sm: "xl" }}
-          >
-            <Stack spacing="6">
-              <Stack spacing="5">
-                <FormControl isInvalid={errors.name}>
-                  {" "}
-                  <FormLabel htmlFor="name">name</FormLabel>
-                  <Input {...register("name")} id="name" type="text" />
-                  <FormErrorMessage color="red.700">
-                    {errors.name && errors.name.message.toString()}
-                  </FormErrorMessage>
-                </FormControl>
-                <FormControl isInvalid={errors.email}>
-                  {" "}
-                  <FormLabel htmlFor="email">Email</FormLabel>
-                  <Input {...register("email")} id="email" type="text" />
-                  <FormErrorMessage color="red.700">
-                    {errors.email && errors.email.message.toString()}
-                  </FormErrorMessage>
-                </FormControl>
-                <PasswordField {...register("password")} errors={errors} />
-                <PasswordField
-                  {...register("confirmPassword")}
-                  name="confirmPassword"
-                  label="Confirm Password"
-                  errors={errors}
-                />
-              </Stack>
-              <HStack justify="space-between"></HStack>
-              <Stack spacing="6">
-                <Button type="submit">Sign Up</Button>
-                <HStack>
-                  <Divider />
-                  <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
-                    or continue with
-                  </Text>
-                  <Divider />
-                </HStack>
-                <OAuthButtonGroup />
-              </Stack>
-            </Stack>
-          </Box>
-        </Stack>
-      </Container>
+        </Box>
+      </Stack>
     </form>
   );
 };

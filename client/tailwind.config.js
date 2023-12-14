@@ -14,6 +14,9 @@ export default {
         lightstar: "#f8fafc",
         orange: "#f59e0b",
       },
+      backgroundImage: {
+        "sign-pattern": "url('../assets/background/sign-backdrop.webp')",
+      },
     },
   },
   plugins: [],

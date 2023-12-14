@@ -1,5 +1,6 @@
 // component
-import DashBoard from "./pages/DashBoard";
+import Analytics from "./pages/Analytics";
+import DashBoard from "./pages/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 //
 
@@ -8,6 +9,8 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import PublicRoute from "./routes/PublicRoute";
 import PrivateRoute from "./routes/PrivateRoute";
+import AuthLayout from "./components/layout/AuthLayout";
+import MainLayout from "./components/layout/MainLayout";
 //use hook
 import { useDispatch } from "react-redux";
 //other
@@ -23,30 +26,42 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <DashBoard />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/sign-in"
-          element={
-            <PublicRoute>
-              <SignIn />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/sign-up"
-          element={
-            <PublicRoute>
-              <SignUp />
-            </PublicRoute>
-          }
-        />
+        <Route path="/" element={<MainLayout />}>
+          <Route
+            path="dashboard"
+            element={
+              <PrivateRoute>
+                <DashBoard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="analytics"
+            element={
+              <PrivateRoute>
+                <Analytics />
+              </PrivateRoute>
+            }
+          />
+        </Route>
+        <Route path="/" element={<AuthLayout />}>
+          <Route
+            path="sign-in"
+            element={
+              <PublicRoute>
+                <SignIn />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="sign-up"
+            element={
+              <PublicRoute>
+                <SignUp />
+              </PublicRoute>
+            }
+          />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

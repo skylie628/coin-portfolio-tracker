@@ -8,6 +8,7 @@ import {
 import { resetTabs } from "../reducer/reducer.tab";
 import { resetChart } from "../reducer/reducer.chart";
 import { resetVariable } from "../reducer/reducer.variable";
+import { toast } from "react-toastify";
 import axiosConfig from "../../lib/axios/axiosConfig";
 export const signinService = async (payload) => {
   return axiosConfig.post("/user/signin", payload);
@@ -21,9 +22,11 @@ export const signupThunk = (payload) => async (dispatch) => {
   signupService(payload.data)
     .then((rs) => {
       dispatch(signupSuccess());
+      toast.success("Signup Success");
       payload.navigate("/sign-in");
     })
     .catch((err) => {
+      toast.error("Invalid Authentication Credentials");
       dispatch(signFail({ data: err }));
     });
 };
@@ -38,9 +41,14 @@ export const signinThunk = (payload) => async (dispatch) => {
       }
       window.localStorage.setItem("refreshToken", refreshToken);
       window.localStorage.setItem("accessToken", accessToken);
+      toast.success("Signin Success");
       dispatch(signinSuccess());
     })
-    .catch((err) => dispatch(signFail({ data: err })));
+    .catch((err) => {
+      console.log("aaa");
+      toast.error("Invalid Authentication Credentials");
+      dispatch(signFail({ data: err }));
+    });
 };
 export const signoutThunk = () => async (dispatch) => {
   window.localStorage.removeItem("refreshToken");

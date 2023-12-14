@@ -1,40 +1,23 @@
-import { Flex, Stack, Divider } from "@chakra-ui/react";
-import SelectModal from "../components/SelectModal";
-import Header from "../components/Header";
-import ControlCenter from "../components/ControlCenter";
-import ChartPanel from "../components/ChartPanel";
-import QueryCenter from "../components/QueryCenter";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { fetchVariablesThunk } from "../store/action/action.variable";
+import Carousel from "../components/Carousel";
+import Hero from "../pages/dashboard/Hero";
+import TopLists from "./dashboard/TopList";
+import { useRef } from "react";
 export default function DashBoard() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchVariablesThunk());
-  }, []);
+  const topListRef = useRef();
+  const scrollToTopLists = () => {
+    const headerOffset = 89;
+    const elementPosition = topListRef.getBoundingClientRect().top;
+    const offsetPosition = elementPosition - headerOffset;
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth",
+    });
+  };
   return (
-    <Stack
-      className="text-lightstar bg-blackest h-screen w-screen max-w-screen-2xl m-auto"
-      spacing={0}
-    >
-      <Header />
-      <Divider colorScheme="gray" size="1" variant="dashed" />
-      <Flex className="h-full">
-        <ControlCenter />
-        <Divider
-          colorScheme="gray"
-          borderLeftWidth="1px"
-          orientation="vertical"
-        />
-        <ChartPanel />
-        <Divider
-          colorScheme="gray"
-          borderLeftWidth="1px"
-          orientation="vertical"
-        />
-        <QueryCenter />
-      </Flex>
-      <SelectModal />
-    </Stack>
+    <div className="w-full h-full">
+      <Carousel />
+      <Hero scrollToTopLists={scrollToTopLists} />
+      <TopLists ref={topListRef} />
+    </div>
   );
 }

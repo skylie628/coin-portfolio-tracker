@@ -12,7 +12,7 @@ import {
 import { HiEye, HiEyeOff } from "react-icons/hi";
 /* eslint-disable-next-line padded-blocks */
 export const PasswordField = React.forwardRef(
-  ({ name = "password", label = "Password", ...props }, ref) => {
+  ({ name = "password", label, ...props }, ref) => {
     const { isOpen, onToggle } = useDisclosure();
     const onClickReveal = () => {
       onToggle();
@@ -20,7 +20,7 @@ export const PasswordField = React.forwardRef(
 
     return (
       <FormControl isInvalid={props.errors.password}>
-        <FormLabel htmlFor={name}>{label}</FormLabel>
+        {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
         <InputGroup>
           <InputRightElement>
             <IconButton
