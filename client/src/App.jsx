@@ -1,19 +1,19 @@
 // component
-import Analytics from "./pages/Analytics";
-import DashBoard from "./pages/Dashboard";
+import Analytics from "./pages/statistic";
+import DashBoard from "./pages/market";
 import Portfolio from "./pages/portfolio";
 import TransactionsList from "./pages/portfolio/TransactionsList";
-import PortCoins from "./pages/portfolio/PortCoins";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 //
 
 import "./App.css";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
+import SignIn from "./pages/auth/SignIn";
+import SignUp from "./pages/auth/SignUp";
 import PublicRoute from "./routes/PublicRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 import AuthLayout from "./components/layout/AuthLayout";
 import MainLayout from "./components/layout/MainLayout";
+import { Navigate } from "react-router-dom";
 //use hook
 import { useDispatch } from "react-redux";
 //other
@@ -30,16 +30,10 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainLayout />}>
+          <Route index element={<Navigate to="dashboard" />} />
+          <Route path="dashboard" index element={<DashBoard />} />
           <Route
-            path="dashboard"
-            element={
-              <PrivateRoute>
-                <DashBoard />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="analytics"
+            path="statistics"
             element={
               <PrivateRoute>
                 <Analytics />

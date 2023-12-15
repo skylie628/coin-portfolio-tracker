@@ -3,26 +3,22 @@ import {
   Box,
   Button,
   Checkbox,
-  Container,
-  Divider,
   FormControl,
-  FormLabel,
   FormErrorMessage,
-  Heading,
+  Flex,
   HStack,
   Input,
   Link,
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { OAuthButtonGroup } from "../components/ui/OAuthButtonGroup";
-import { PasswordField } from "../components/ui/PasswordField";
+import { PasswordField } from "../../components/ui/PasswordField";
 //use hook
 import { useForm } from "react-hook-form";
 //other
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { signinThunk } from "../store/action/action.user";
+import { signinThunk } from "../../store/action/action.user";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 const Signin = () => {
@@ -45,14 +41,14 @@ const Signin = () => {
     dispatch(signinThunk({ data }));
   };
   return (
-    <form onSubmit={handleSubmit(onSubmitSignin)}>
+    <form className="block" onSubmit={handleSubmit(onSubmitSignin)}>
       <Stack spacing="6">
         <Stack spacing="6">
           <Stack spacing={{ base: "3", md: "4" }} textAlign="center">
-            <Heading size={{ base: "xs", md: "sm" }}>
-              digitize & "coi" <br />
+            <Flex className="flex-col gap-1 font-bold">
+              <Text>join us & track</Text>
               <Text color="orange.500">Portfolio</Text>
-            </Heading>
+            </Flex>
             <Text>
               Don't have an account?{" "}
               <Link

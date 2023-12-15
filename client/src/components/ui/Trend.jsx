@@ -4,15 +4,17 @@ import clsx from "clsx";
 export default function Trend({ value, className = "", ...props }) {
   const isIncrease = value >= 0;
   return (
-    <Flex gap={2} className={clsx(className, " justify-center")} {...props}>
+    <Flex
+      gap={2}
+      className={clsx(className, " justify-center items-center")}
+      {...props}
+    >
       {isIncrease ? (
-        <TriangleUpIcon color="green.500" />
+        <TriangleUpIcon color="#008000" />
       ) : (
         <TriangleDownIcon color="red.500" />
       )}
-      <Text color={isIncrease ? "green.500" : "red.500"}>
-        {Math.abs(value)}%
-      </Text>
+      <Text color={isIncrease ? "#008000" : "red.500"}>{Math.abs(value)}%</Text>
     </Flex>
   );
 }

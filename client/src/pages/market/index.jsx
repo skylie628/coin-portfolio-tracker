@@ -1,9 +1,11 @@
-import Carousel from "../components/Carousel";
-import Hero from "../pages/dashboard/Hero";
-import TopLists from "./dashboard/TopList";
+import Carousel from "../../components/Carousel";
+import Hero from "./Hero";
+import TopLists from "./TopList";
 import { useRef } from "react";
+import useScrollToTop from "../../hooks/useScrollToTop";
 export default function DashBoard() {
   const topListRef = useRef();
+  useScrollToTop();
   const scrollToTopLists = () => {
     topListRef.current.scrollIntoView({
       block: "start",

@@ -17,7 +17,7 @@ export default function Nav() {
           </NavLink>
         </li>
         <li>
-          <NavLink className={setLinkStyle} to="/analytics">
+          <NavLink className={setLinkStyle} to="/statistics">
             STATS
           </NavLink>
         </li>

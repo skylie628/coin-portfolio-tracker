@@ -15,7 +15,7 @@ import { setChartValuesThunk } from "../store/action/action.chart";
 import { useSelector, useDispatch } from "react-redux";
 import { resetTabThunk } from "../store/action/action.tab";
 
-export default function ControlCenter() {
+export default function ControlCenter({ setIsModalOpen }) {
   const dispatch = useDispatch();
   const chartType = useSelector((state) => state.chart.chartType);
   const handleDrawChart = () => {
@@ -114,6 +114,7 @@ export default function ControlCenter() {
           Apply
         </Button>
         <Button onClick={handleReset}>Reset</Button>
+        <Button onClick={() => setIsModalOpen(true)}>Change Chart</Button>
       </HStack>
       <Divider />
       <VStack gap="3">

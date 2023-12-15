@@ -4,7 +4,7 @@ import { useLayoutEffect } from "react";
 const animations = {
   initial: { transform: "translateY(100%)" },
   animate: { transform: "translateY(0)" },
-  exit: { opacity: 0 },
+  exit: { transform: "translateY(0)" },
 };
 
 const BottomDrawer = ({ children }) => {

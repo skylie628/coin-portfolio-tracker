@@ -1,6 +1,6 @@
 import { GridItem, Flex, Divider, Box, Text, VStack } from "@chakra-ui/react";
 import Trend from "./Trend";
-import { iconsHelper } from "../../constants/icons";
+import { iconsHelper } from "../../config/icons";
 import { Link } from "react-router-dom";
 import Coin from "./Coin";
 import Price from "./Price";
@@ -18,18 +18,18 @@ export default function CoinCard() {
           src="https://assets.coingecko.com/coins/images/17233/standard/immutableX-symbol-BLK-RGB.png?1696516787"
           className="!text-blackest"
         />
-        <Flex className="py-10 flex-col gap-2">
-          <Flex gap="3" className="justify-between" textAlign={"left"}>
+        <Flex className="py-10 flex-col gap-3">
+          <Flex gap="1" className=" flex-col " textAlign={"left"}>
             <Price
               amount={1526}
               currencyCode="USD"
-              className="font-bold"
+              className="font-bold text-blackest"
               currencyCodeClassName=" hidden"
             />
-            <Text className="text-sm">total</Text>
+            <Text className="text-sm text-blackest font-bold">total</Text>
           </Flex>
 
-          <Flex gap="3" className="justify-between">
+          <Flex gap="1" className="flex-col">
             <Flex gap="3">
               <Price
                 amount={1211}
@@ -39,7 +39,7 @@ export default function CoinCard() {
               />
               <Trend value={12} />
             </Flex>
-            <Text className="text-sm">loss </Text>
+            <Text className="text-sm">profit </Text>
           </Flex>
         </Flex>
       </VStack>
