@@ -35,7 +35,7 @@ export default function QueryCenter() {
     dispatch(setFilterThunk({ type: "keyword", value: keyword }));
   };
   return (
-    <Stack p="8" gap="5" className="bg-slate-900  w-1/4 h-full">
+    <Stack p="8" gap="5" className="bg-slate-900  w-1/4 ">
       <Grid
         templateColumns="1fr auto 1fr"
         alignItems="center"

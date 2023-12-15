@@ -29,7 +29,6 @@ export default function Header() {
         <BrandName size="md" />
         <Nav />{" "}
         <HStack>
-          <Button onClick={() => window.location.reload()}>Reset</Button>
           {isLogged && <Button onClick={handleSignout}>Signout</Button>}
           {!isLogged && <Button onClick={handleSignin}>Signin</Button>}
         </HStack>

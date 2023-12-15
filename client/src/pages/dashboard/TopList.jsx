@@ -2,6 +2,7 @@ import { Table, Thead, Tbody, Tr, Th, Td, Box } from "@chakra-ui/react";
 import Rank from "../../components/ui/Rank";
 import Trend from "../../components/ui/Trend";
 import Coin from "../../components/ui/Coin";
+import Price from "../../components/ui/Price";
 import { useRef, useLayoutEffect } from "react";
 import React from "react";
 const TopLists = React.forwardRef((props, ref) => {
@@ -21,25 +22,26 @@ const TopLists = React.forwardRef((props, ref) => {
   }));
   const fixedThead = (
     <Thead
-      width="1021px"
-      className="z-30 bg-blackest fixed top-[89px] invisible  w-[1021px]"
+      width="1121px"
+      className="z-30 bg-blackest fixed top-[89px] invisible  w-[1121px]"
       ref={fixedTheadRef}
     >
       <Tr>
-        <Th className="min-w-[64.2px]">#</Th>
-        <Th className="min-w-[146.933px]">Name</Th>
-        <Th className="min-w-[83px]">Price</Th>
-        <Th className="min-w-[94.1833px]">1h</Th>
-        <Th className="min-w-[94.1833px]">4h</Th>
-        <Th className="min-w-[94.1833px]">9h</Th>
-        <Th className="min-w-[103.6px]">Volumn</Th>
-        <Th className="min-w-[92.9px]">Cap</Th>
+        <Th className="min-w-[140.117px] text-left">#</Th>
+        <Th className="min-w-[140.117px] text-left">Name</Th>
+        <Th className="min-w-[140.117px]">Price</Th>
+        <Th className="min-w-[140.117px]">1h</Th>
+        <Th className="min-w-[140.117px]">4h</Th>
+        <Th className="min-w-[140.117px]">9h</Th>
+        <Th className="min-w-[140.117px]">Volumn</Th>
+        <Th className="min-w-[140.117px]">Cap</Th>
       </Tr>
     </Thead>
   );
   const relativeThead = (
     <Thead
-      className="z-30 bg-blackest relative top-0  w-[1021px]"
+      width="1121px"
+      className="z-30 bg-blackest relative top-0  w-[1121px]"
       ref={relativeTheadRef}
     >
       <Tr>
@@ -55,10 +57,11 @@ const TopLists = React.forwardRef((props, ref) => {
     </Thead>
   );
   useLayoutEffect(() => {
+    window.scrollTo(0, 0);
     const Animate = relativeTheadRef.current.getBoundingClientRect().top;
     const onScroll = () => {
       if (window.scrollY > Animate) {
-        console.log(true);
+        console.log(window.scrollY, Animate);
         fixedTheadRef.current.style.visibility = "visible";
         relativeTheadRef.current.style.visibility = "hidden";
       } else {
@@ -70,11 +73,14 @@ const TopLists = React.forwardRef((props, ref) => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
   return (
-    <Box ref={ref} className="w-full bg-blackest relative z-10">
+    <Box
+      ref={ref}
+      className=" scroll-mt-[89px] w-full bg-blackest relative z-10 font-medium "
+    >
       <Table
-        width="1121 px"
+        width="1121px"
         variant="simple"
-        className="relative  bg-blackest z-10  bg-blackest m-auto "
+        className="relative  bg-blackest z-10  bg-blackest m-auto table-fixed"
       >
         {fixedThead}
         {relativeThead}
@@ -84,7 +90,7 @@ const TopLists = React.forwardRef((props, ref) => {
               <Td>
                 <Rank value={coin.rank} />
               </Td>
-              <Td>
+              <Td className="text-left">
                 {
                   <Coin
                     name={coin.name}
@@ -93,7 +99,14 @@ const TopLists = React.forwardRef((props, ref) => {
                   />
                 }
               </Td>
-              <Td>{coin.price}</Td>
+              <Td>
+                <Price
+                  amount={coin.price}
+                  currencyCode="USD"
+                  className="text-lightstar font-medium"
+                  currencyCodeClassName="hidden"
+                />
+              </Td>
               <Td>
                 <Trend value={coin.hour} />
               </Td>
@@ -103,8 +116,24 @@ const TopLists = React.forwardRef((props, ref) => {
               <Td>
                 <Trend value={coin.month} />
               </Td>
-              <Td>{coin.vol}</Td>
-              <Td>{coin.cap}</Td>
+              <Td>
+                {" "}
+                <Price
+                  amount={coin.vol}
+                  currencyCode="USD"
+                  className="text-lightstar font-medium"
+                  currencyCodeClassName="hidden"
+                />
+              </Td>
+              <Td>
+                {" "}
+                <Price
+                  amount={coin.cap}
+                  currencyCode="USD"
+                  className="text-lightstar font-medium"
+                  currencyCodeClassName="hidden"
+                />
+              </Td>
             </Tr>
           ))}
         </Tbody>
@@ -112,4 +141,5 @@ const TopLists = React.forwardRef((props, ref) => {
     </Box>
   );
 });
+TopLists.displayName = "TopsList";
 export default TopLists;

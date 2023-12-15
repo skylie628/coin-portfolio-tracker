@@ -12,7 +12,7 @@ export default function Nav() {
           </NavLink>
         </li>
         <li>
-          <NavLink className={setLinkStyle} to="/profolio">
+          <NavLink className={setLinkStyle} to="/portfolio">
             MY PORT
           </NavLink>
         </li>

@@ -1,6 +1,5 @@
-import { Flex, Stack, Divider } from "@chakra-ui/react";
+import { Flex, Divider } from "@chakra-ui/react";
 import SelectModal from "../components/SelectModal";
-import Header from "../components/header/Header";
 import ControlCenter from "../components/ControlCenter";
 import ChartPanel from "../components/ChartPanel";
 import QueryCenter from "../components/QueryCenter";
@@ -14,7 +13,7 @@ export default function Analytics() {
   }, []);
   return (
     <>
-      <Flex className="h-full">
+      <Flex className="flex-1">
         <ControlCenter />
         <Divider
           colorScheme="gray"

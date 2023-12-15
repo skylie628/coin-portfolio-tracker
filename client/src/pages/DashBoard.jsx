@@ -5,16 +5,13 @@ import { useRef } from "react";
 export default function DashBoard() {
   const topListRef = useRef();
   const scrollToTopLists = () => {
-    const headerOffset = 89;
-    const elementPosition = topListRef.getBoundingClientRect().top;
-    const offsetPosition = elementPosition - headerOffset;
-    window.scrollTo({
-      top: offsetPosition,
+    topListRef.current.scrollIntoView({
+      block: "start",
       behavior: "smooth",
     });
   };
   return (
-    <div className="w-full h-full">
+    <div className="flex-1">
       <Carousel />
       <Hero scrollToTopLists={scrollToTopLists} />
       <TopLists ref={topListRef} />

@@ -9,7 +9,7 @@ export default function Hero({ scrollToTopLists }) {
       <HStack
         as="section"
         spacing={"100px"}
-        className="z-0 sticky top-[89px]  text-left bg-blackest  py-10"
+        className="z-0 sticky top-[89px]  text-left bg-blackest  py-10 "
       >
         <figure>
           <img className=" h-[400px]" src={imagesHelper.hero_background} />

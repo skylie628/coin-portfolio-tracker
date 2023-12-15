@@ -13,9 +13,12 @@ export default {
         silver: "#e2e8f0",
         lightstar: "#f8fafc",
         orange: "#f59e0b",
+        metalgray: "rgb(221, 222, 225)",
+        metaldark: "rgb(202,202,204)",
       },
       backgroundImage: {
         "sign-pattern": "url('../assets/background/sign-backdrop.webp')",
+        "noise-pattern": "url('../assets/background/noisy.png')",
       },
     },
   },

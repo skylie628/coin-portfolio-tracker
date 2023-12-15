@@ -1,6 +1,9 @@
 // component
 import Analytics from "./pages/Analytics";
 import DashBoard from "./pages/Dashboard";
+import Portfolio from "./pages/portfolio";
+import TransactionsList from "./pages/portfolio/TransactionsList";
+import PortCoins from "./pages/portfolio/PortCoins";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 //
 
@@ -43,6 +46,16 @@ export default function App() {
               </PrivateRoute>
             }
           />
+          <Route
+            path="portfolio"
+            element={
+              <PrivateRoute>
+                <Portfolio />
+              </PrivateRoute>
+            }
+          >
+            <Route path=":coinId" element={<TransactionsList />} />
+          </Route>
         </Route>
         <Route path="/" element={<AuthLayout />}>
           <Route
