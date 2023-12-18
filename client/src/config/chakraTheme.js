@@ -16,6 +16,19 @@ export const chakraTheme = extendTheme({
             width: "1021 px",
           },
         },
+        bright: {
+          th: {
+            borderColor: "rgba(255,255,255,0.2)",
+            color: "black",
+            width: "1021 px",
+            textAlign: "center",
+          },
+          td: {
+            borderColor: "rgba(255,255,255,0.2)",
+            textAlign: "!center",
+            width: "1021 px",
+          },
+        },
       },
     },
   },

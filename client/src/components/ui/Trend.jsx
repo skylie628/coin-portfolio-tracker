@@ -14,7 +14,9 @@ export default function Trend({ value, className = "", ...props }) {
       ) : (
         <TriangleDownIcon color="red.500" />
       )}
-      <Text color={isIncrease ? "#008000" : "red.500"}>{Math.abs(value)}%</Text>
+      <Text color={isIncrease ? "#008000" : "red.500"}>
+        {Math.abs(value).toFixed(2)}%
+      </Text>
     </Flex>
   );
 }

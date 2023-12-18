@@ -3,23 +3,25 @@ import Rank from "../../components/ui/Rank";
 import Trend from "../../components/ui/Trend";
 import Coin from "../../components/ui/Coin";
 import Price from "../../components/ui/Price";
-import { useRef, useLayoutEffect } from "react";
+//thunk
+import { setMarketDataThunk } from "../../store/action/action.market";
+//useHooks
+import { useDispatch, useSelector } from "react-redux";
+import { useRef, useLayoutEffect, useEffect } from "react";
 import React from "react";
+import { stopStreaming } from "../../store/reducer/reducer.market";
 const TopLists = React.forwardRef((props, ref) => {
   const fixedTheadRef = useRef();
   const relativeTheadRef = useRef();
-  const coinsList = new Array(20).fill(0).map((x, index) => ({
-    rank: index + 1,
-    name: "Bitcoin",
-    hour: Math.pow(-1, index + 1) * 1.2,
-    day: Math.pow(-1, index + 2) * 2.4,
-    month: Math.pow(-1, index + 3) * 3.5,
-    vol: 14323,
-    price: 15.1,
-    cap: 12421,
-    shortName: "BTC",
-    src: "https://assets.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400",
-  }));
+  const coinsList = useSelector((state) => state.market).data || [];
+  const streamingPrice =
+    useSelector((state) => state.market).streamingPrices || {};
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setMarketDataThunk(1));
+    return () => dispatch(stopStreaming());
+  }, []);
+  
   const fixedThead = (
     <Thead
       width="1121px"
@@ -72,6 +74,7 @@ const TopLists = React.forwardRef((props, ref) => {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
   return (
     <Box
       ref={ref}
@@ -86,51 +89,71 @@ const TopLists = React.forwardRef((props, ref) => {
         {relativeThead}
         <Tbody>
           {coinsList.map((coin) => (
-            <Tr key={coin.rank}>
+            <Tr key={coin.id}>
               <Td>
-                <Rank value={coin.rank} />
+                <Rank value={coin.market_cap_rank} />
               </Td>
               <Td className="text-left">
                 {
                   <Coin
                     name={coin.name}
-                    shortName={coin.shortName}
-                    src={coin.src}
+                    shortName={coin.symbol}
+                    src={coin.image}
                   />
                 }
               </Td>
               <Td>
                 <Price
-                  amount={coin.price}
+                  amount={
+                    streamingPrice.current
+                      ? streamingPrice.current[
+                          `${coin.symbol}usdt`.toUpperCase()
+                        ] || 0
+                      : 0
+                  }
                   currencyCode="USD"
                   className="text-lightstar font-medium"
                   currencyCodeClassName="hidden"
                 />
               </Td>
               <Td>
-                <Trend value={coin.hour} />
+                <Trend
+                  value={
+                    streamingPrice.hour
+                      ? streamingPrice.hour[`${coin.symbol}usdt`.toUpperCase()]
+                          ?.percent || 0
+                      : 0
+                  }
+                />
               </Td>
               <Td>
-                <Trend value={coin.day} />
+                <Trend
+                  value={
+                    streamingPrice.day
+                      ? streamingPrice.day[`${coin.symbol}usdt`.toUpperCase()]
+                          ?.percent || 0
+                      : 0
+                  }
+                />
               </Td>
               <Td>
-                <Trend value={coin.month} />
+                <Trend value={coin.price_change_24h} />
               </Td>
               <Td>
                 {" "}
                 <Price
-                  amount={coin.vol}
+                  amount={coin.total_volume}
                   currencyCode="USD"
-                  className="text-lightstar font-medium"
+                  className="text-lightstar font-medium text-xs"
                   currencyCodeClassName="hidden"
                 />
               </Td>
               <Td>
                 {" "}
                 <Price
-                  amount={coin.cap}
+                  amount={coin.market_cap}
                   currencyCode="USD"
-                  className="text-lightstar font-medium"
+                  className="text-lightstar font-medium text-xs"
                   currencyCodeClassName="hidden"
                 />
               </Td>

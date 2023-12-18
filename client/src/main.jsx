@@ -10,14 +10,12 @@ import { ToastContainer } from "react-toastify";
 import { chakraTheme } from "./config/chakraTheme.js";
 import { store } from "./redux/store.js";
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <AnimatePresence mode="wait">
-      <ChakraProvider theme={chakraTheme}>
-        <Provider store={store}>
-          <App />
-          <ToastContainer />
-        </Provider>
-      </ChakraProvider>
-    </AnimatePresence>
-  </React.StrictMode>
+  <AnimatePresence mode="wait">
+    <ChakraProvider theme={chakraTheme}>
+      <Provider store={store}>
+        <App />
+        <ToastContainer />
+      </Provider>
+    </ChakraProvider>
+  </AnimatePresence>
 );

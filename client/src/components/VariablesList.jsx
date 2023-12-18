@@ -2,6 +2,23 @@ import { Flex, Checkbox, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { toggleVariableThunk } from "../store/action/action.variable";
+const Skeleton = () => (
+  <div className="bg-halfblack w-full ">
+    {new Array(5).fill(0).map((variable) => {
+      return (
+        <Flex
+          key={variable.id}
+          gap="3"
+          as="label"
+          p="2"
+          className="bg-halfblack w-full "
+        >
+          <div className="flex-1 bg-metalgray w-full" />
+        </Flex>
+      );
+    })}
+  </div>
+);
 export default function VariablesList() {
   const {
     queriedVariables: variables,
@@ -14,7 +31,7 @@ export default function VariablesList() {
   const handleToggleVariable = (variable) => {
     dispatch(toggleVariableThunk({ variable }));
   };
-  if (isLoading) return <div>Loading</div>;
+  if (isLoading) return <Skeleton />;
   return (
     <>
       {variables.map((variable) => {

@@ -8,7 +8,6 @@ export default function ChartView() {
   );
   //high chart mutate redux state causing error
   const chartValues = JSON.parse(JSON.stringify(preChartValues));
-  console.log("reder chart");
   const chartOptions =
     chartType == "pie"
       ? {

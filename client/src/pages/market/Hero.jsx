@@ -14,18 +14,20 @@ export default function Hero({ scrollToTopLists }) {
         <figure>
           <img className=" h-[400px]" src={imagesHelper.hero_background} />
         </figure>
-        <Heading className="!text-5xl text-2xl ml-0 md:ml-20 ">
-          <Text className="leading-normal">Stay</Text>
-          <Text className="leading-normal">Up-to-date</Text>
-          <Text className="leading-normal">With</Text>
-          <BrandName className="leading-normal !text-5xl" />
-        </Heading>
-        <ChevronDown
-          size="100"
-          color="gray"
-          className="block cursor-pointer m-auto"
-          onClick={scrollToTopLists}
-        />
+        <HStack className="  w-full">
+          <Heading className="!text-5xl text-2xl ml-0 md:ml-20 ">
+            <Text className="leading-normal">Stay</Text>
+            <Text className="leading-normal">Up-to-date</Text>
+            <Text className="leading-normal">With</Text>
+            <BrandName className="leading-normal !text-5xl" />
+          </Heading>
+          <ChevronDown
+            size="100"
+            color="gray"
+            className="block cursor-pointer m-auto"
+            onClick={scrollToTopLists}
+          />
+        </HStack>
       </HStack>
       <Divider />
     </>

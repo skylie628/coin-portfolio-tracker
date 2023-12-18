@@ -42,7 +42,7 @@ export default function PortSummary() {
   return (
     <Flex className="py-5 flex-1  flex-col gap-5 sticky top-[89px] bg-blackest w-6/12 h-[calc(100vh-89px)]">
       {" "}
-      <Flex className="w-full px-5 gap-3 flex-1 items-start text-lightstar">
+      <Flex className="w-full px-5 gap-3  items-start text-lightstar">
         <VStack className="flex-1 bg-halfblack rounded-lg p-5 border border-dashed border-[#555] text-left text-xl font-medium">
           <Price
             amount={8034}

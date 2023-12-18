@@ -1,4 +1,3 @@
-import React from "react";
 import { Flex, Box, Text, Divider } from "@chakra-ui/react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 export default function Carousel() {

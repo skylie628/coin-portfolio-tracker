@@ -1,8 +1,8 @@
 const RightChevronCircle = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
+    width="32"
+    height="32"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -11,15 +11,19 @@ const RightChevronCircle = (
     strokeLinejoin="round"
     className="lucide lucide-chevron-right-circle cursor-pointer"
   >
-    <circle fill="#fff" cx="12" cy="12" r="10" stroke="white" />
-    <path d="m10 8 4 4-4 4" />
+    <circle fill="#eee" cx="12" cy="12" r="10" stroke="#eee" />
+    <path
+      d="m10 8 4 4-4 4"
+      stroke="blackest"
+      className="group-hover:animate-move-right"
+    />
   </svg>
 );
 const PlusCircle = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
+    width="32"
+    height="32"
     viewBox="0 0 24 24"
     stroke="white"
     strokeWidth="2"
@@ -35,8 +39,8 @@ const PlusCircle = (
 const DeleteCircle = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
+    width="32"
+    height="32"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -45,7 +49,7 @@ const DeleteCircle = (
     strokeLinejoin="round"
     className="lucide lucide-x-circle cursor-pointer"
   >
-    <circle stroke="#fff" fill="#fff" cx="12" cy="12" r="10" />
+    <circle stroke="#eee" fill="#eee" cx="12" cy="12" r="10" />
     <path d="m15 9-6 6" />
     <path d="m9 9 6 6" />
   </svg>
