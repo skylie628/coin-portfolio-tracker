@@ -45,7 +45,6 @@ export const signinThunk = (payload) => async (dispatch) => {
       dispatch(signinSuccess());
     })
     .catch((err) => {
-      console.log("aaa");
       toast.error("Invalid Authentication Credentials");
       dispatch(signFail({ data: err }));
     });

@@ -6,7 +6,7 @@ export default function Price({
   currencyCodeClassName = "",
 }) {
   return (
-    <p suppressHydrationWarning={true} className={className}>
+    <p suppressHydrationWarning={true} className={clsx(" ", className)}>
       {`${new Intl.NumberFormat(undefined, {
         style: "currency",
         currency: currencyCode,

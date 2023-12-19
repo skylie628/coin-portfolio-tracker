@@ -29,6 +29,18 @@ export const chakraTheme = extendTheme({
             width: "1021 px",
           },
         },
+        transaction: {
+          th: {
+            border: "none",
+            width: "1021 px",
+            textAlign: "center",
+          },
+          td: {
+            border: "none",
+            textAlign: "!center",
+            width: "1021 px",
+          },
+        },
       },
     },
   },

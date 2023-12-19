@@ -21,7 +21,7 @@ body {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(-210px * 6));
+    transform: translateX(calc(-210px * 10));
   }
 }
 .slider-carousel {

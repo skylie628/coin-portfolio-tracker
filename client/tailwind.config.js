@@ -17,13 +17,14 @@ export default {
         },
       },
       colors: {
+        blacker: "#080d24",
         blackest: "#020617",
         halfblack: "#1e293b",
         dimgray: "#64748b",
         silver: "#e2e8f0",
         lightstar: "#f8fafc",
         orange: "#f59e0b",
-        metalgray: "#DDDEE1",
+        metalgray: "#F5F5F7",
         metaldark: "rgb(202,202,204)",
       },
       backgroundImage: {

@@ -1,8 +1,12 @@
+//middleware
 import { createListenerMiddleware } from "@reduxjs/toolkit";
+//reducer
 import {
   setMarketData,
   setStreamingPrices,
 } from "../store/reducer/reducer.market";
+//utils
+import createBinanceSocketURL from "../utils/createBinanceSocketURL";
 const listenerMiddleware = createListenerMiddleware();
 let value = { current: {}, hour: {}, day: {} };
 let isDispatch = "true";
@@ -14,11 +18,11 @@ listenerMiddleware.startListening({
   effect: async (action, listenerApi) => {
     listenerApi.cancelActiveListeners();
     const coins = action.payload.data.map((x) => x.symbol);
-    const streamsarr = coins.reduce((acc, x) => `${x}usdt@ticker/${acc}`, "");
-    const stream1h = coins.reduce((acc, x) => `${x}usdt@ticker_1h/${acc}`, "");
-    var wss = new WebSocket(
-      `wss://stream.binance.com:9443/ws/${streamsarr.toLowerCase()}usdt@ticker/${stream1h.toLowerCase()}usdt@ticker_1h`
-    );
+    const socketUrl = createBinanceSocketURL({
+      symbols: coins,
+      tickers: ["ticker", "ticker_1h"],
+    });
+    var wss = new WebSocket(socketUrl);
     wss.onmessage = function (event) {
       value = JSON.parse(JSON.stringify(value));
       var messageObject = JSON.parse(event.data);

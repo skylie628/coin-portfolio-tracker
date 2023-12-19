@@ -6,7 +6,7 @@ export default function Trend({ value, className = "", ...props }) {
   return (
     <Flex
       gap={2}
-      className={clsx(className, " justify-center items-center")}
+      className={clsx(className, " justify-center font-bold items-center")}
       {...props}
     >
       {isIncrease ? (

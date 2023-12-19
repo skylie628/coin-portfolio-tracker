@@ -21,7 +21,7 @@ const TopLists = React.forwardRef((props, ref) => {
     dispatch(setMarketDataThunk(1));
     return () => dispatch(stopStreaming());
   }, []);
-  
+
   const fixedThead = (
     <Thead
       width="1121px"
@@ -33,10 +33,10 @@ const TopLists = React.forwardRef((props, ref) => {
         <Th className="min-w-[140.117px] text-left">Name</Th>
         <Th className="min-w-[140.117px]">Price</Th>
         <Th className="min-w-[140.117px]">1h</Th>
-        <Th className="min-w-[140.117px]">4h</Th>
-        <Th className="min-w-[140.117px]">9h</Th>
+        <Th className="min-w-[140.117px]">24h</Th>
         <Th className="min-w-[140.117px]">Volumn</Th>
         <Th className="min-w-[140.117px]">Cap</Th>
+        <Th className="min-w-[140.117px]">7days</Th>
       </Tr>
     </Thead>
   );
@@ -51,10 +51,10 @@ const TopLists = React.forwardRef((props, ref) => {
         <Th>Name</Th>
         <Th>Price</Th>
         <Th>1h</Th>
-        <Th>4h</Th>
-        <Th>9h</Th>
+        <Th>24h</Th>
         <Th>Volumn</Th>
         <Th>Cap</Th>
+        <Th>7days</Th>
       </Tr>
     </Thead>
   );

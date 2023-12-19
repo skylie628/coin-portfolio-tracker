@@ -1,4 +1,4 @@
-import { VStack, Flex, Grid, GridItem } from "@chakra-ui/react";
+import { VStack, Flex, Grid } from "@chakra-ui/react";
 import CoinCard from "../../components/ui/CoinCard";
 export default function PortCoins() {
   return (
