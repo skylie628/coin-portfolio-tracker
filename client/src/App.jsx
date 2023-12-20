@@ -1,14 +1,14 @@
 // component
-import Analytics from "./pages/statistic";
-import DashBoard from "./pages/market";
-import Portfolio from "./pages/portfolio";
-import TransactionsList from "./pages/portfolio/TransactionsList";
+import Analytics from "./features/statistic";
+import DashBoard from "./features/market";
+import Portfolio from "./features/portfolio";
+import TransactionsList from "./features/transaction/";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 //
 
 import "./App.css";
-import SignIn from "./pages/auth/SignIn";
-import SignUp from "./pages/auth/SignUp";
+import SignIn from "./features/auth/SignIn";
+import SignUp from "./features/auth/SignUp";
 import PublicRoute from "./routes/PublicRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 import AuthLayout from "./components/layout/AuthLayout";

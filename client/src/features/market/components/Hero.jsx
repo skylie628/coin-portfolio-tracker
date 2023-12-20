@@ -1,7 +1,7 @@
-import { imagesHelper } from "../../config/images";
+import { imagesHelper } from "@/config/images";
 import { HStack, Heading, Text } from "@chakra-ui/react";
-import BrandName from "../../components/ui/BrandName";
-import Divider from "../../components/ui/Divider";
+import BrandName from "@/components/ui/BrandName";
+import Divider from "@/components/ui/Divider";
 import { ChevronDown } from "lucide-react";
 export default function Hero({ scrollToTopLists }) {
   return (

@@ -1,6 +1,3 @@
-import { useState, useRef } from "react";
-import { setChartTypeThunk } from "../store/action/action.chart";
-import { useDispatch } from "react-redux";
 // component
 import {
   HStack,
@@ -15,6 +12,11 @@ import {
   Text,
   Button,
 } from "@chakra-ui/react";
+//useHooks
+import { useRef } from "react";
+import { useDispatch } from "react-redux";
+//thunks
+import { setChartTypeThunk } from "@/store/action/action.chart";
 export default function SelectModal({ isOpen, setIsOpen }) {
   const dispatch = useDispatch();
   const selectRef = useRef();

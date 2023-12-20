@@ -15,6 +15,12 @@ import {
   Text,
   Button,
 } from "@chakra-ui/react";
+export const Overlay = () => (
+  <ModalOverlay
+    bg="blackAlpha.500"
+    backdropFilter="blur(10px) hue-rotate(90deg)"
+  />
+);
 export default function Modal({
   isOpen,
   setIsOpen = () => {},
@@ -24,12 +30,7 @@ export default function Modal({
 }) {
   const dispatch = useDispatch();
   const selectRef = useRef();
-  const Overlay = () => (
-    <ModalOverlay
-      bg="blackAlpha.500"
-      backdropFilter="blur(10px) hue-rotate(90deg)"
-    />
-  );
+
   const onSubmit = () => {
     setIsOpen(false);
   };

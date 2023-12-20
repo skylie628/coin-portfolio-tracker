@@ -1,3 +1,6 @@
+//components
+import { toast } from "react-toastify";
+//actions
 import {
   startsign,
   signinSuccess,
@@ -8,18 +11,13 @@ import {
 import { resetTabs } from "../reducer/reducer.tab";
 import { resetChart } from "../reducer/reducer.chart";
 import { resetVariable } from "../reducer/reducer.variable";
-import { toast } from "react-toastify";
-import axiosConfig from "../../lib/axios/axiosConfig";
-export const signinService = async (payload) => {
-  return axiosConfig.post("/user/signin", payload);
-};
-export const signupService = async (payload) => {
-  return axiosConfig.post("/user/signup", payload);
-};
+//services
+import { signin } from "@/features/auth/api/signin";
+import { signup } from "@/features/auth/api/signup";
 export const signupThunk = (payload) => async (dispatch) => {
   dispatch(startsign());
   console.log(payload.data);
-  signupService(payload.data)
+  signup(payload.data)
     .then((rs) => {
       dispatch(signupSuccess());
       toast.success("Signup Success");
@@ -33,7 +31,7 @@ export const signupThunk = (payload) => async (dispatch) => {
 
 export const signinThunk = (payload) => async (dispatch) => {
   dispatch(startsign());
-  signinService(payload)
+  signin(payload)
     .then((rs) => {
       const { refreshToken, accessToken } = rs?.data?.data || {};
       if (!refreshToken || !accessToken) {

@@ -6,12 +6,12 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
-import Modal from "../../components/ui/Modal";
-import TransactionForm from "../../components/TransactionForm";
+import Modal from "@/components/ui/Modal";
+import TransactionForm from "./TransactionForm";
 export default function TransactionModal({ isOpen, setIsOpen }) {
   return (
     <Modal title="Add transaction" isOpen={isOpen} setIsOpen={setIsOpen}>
-      <Tabs position="relative" variant="unstyled">
+      <Tabs position="relative" variant="unstyled" isLazy>
         <TabList className="flex">
           <Tab className="flex-1"> Buy</Tab>
           <Tab className="flex-1">Sell</Tab>
@@ -25,7 +25,7 @@ export default function TransactionModal({ isOpen, setIsOpen }) {
         />
         <TabPanels>
           <TabPanel className="!p-0">
-            <TransactionForm type="buy" setIsOpen={setIsOpen} />
+            {isOpen && <TransactionForm type="buy" setIsOpen={setIsOpen} />}
           </TabPanel>
           <TabPanel className="!p-0">
             <TransactionForm type="sell" setIsOpen={setIsOpen} />

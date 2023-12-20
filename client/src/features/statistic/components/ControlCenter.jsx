@@ -11,9 +11,9 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import SelectedVariableList from "./SelectedVariableList";
-import { setChartValuesThunk } from "../store/action/action.chart";
+import { setChartValuesThunk } from "@/store/action/action.chart";
 import { useSelector, useDispatch } from "react-redux";
-import { resetTabThunk } from "../store/action/action.tab";
+import { resetTabThunk } from "@/store/action/action.tab";
 
 export default function ControlCenter({ setIsModalOpen }) {
   const dispatch = useDispatch();

@@ -19,7 +19,7 @@ import Stats from "../../components/ui/Stats";
 import { Button } from "@chakra-ui/react";
 import { ChevronLeft } from "lucide-react";
 import { Divider } from "@chakra-ui/react";
-import TransactionModal from "./TransactionModal";
+import TransactionModal from "./components/TransactionModal";
 import { useState } from "react";
 export default function TransactionsList() {
   const headerName = [

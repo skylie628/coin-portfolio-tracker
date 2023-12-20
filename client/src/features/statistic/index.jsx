@@ -1,11 +1,14 @@
+//components
 import { Flex, Divider } from "@chakra-ui/react";
-import SelectModal from "../../components/SelectModal";
-import ControlCenter from "../../components/ControlCenter";
-import ChartPanel from "../../components/ChartPanel";
-import QueryCenter from "../../components/QueryCenter";
+import SelectModal from "./components/SelectModal";
+import ControlCenter from "./components/ControlCenter";
+import ChartPanel from "./components/ChartPanel";
+import QueryCenter from "./components/QueryCenter";
+//useHooks
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchVariablesThunk } from "../../store/action/action.variable";
+//thunks
+import { fetchVariablesThunk } from "@/store/action/action.variable";
 export default function Statistic() {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);

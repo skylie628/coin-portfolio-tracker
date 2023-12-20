@@ -13,10 +13,10 @@ import {
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilterThunk } from "../store/action/action.variable";
+import { setFilterThunk } from "@/store/action/action.variable";
 //component
 import VariablesList from "./VariablesList";
-import Select from "./ui/Select";
+import Select from "@/components/ui/Select";
 //usehook
 import { useMemo, useCallback } from "react";
 export default function QueryCenter() {

@@ -1,4 +1,4 @@
-import { noInterceptInstance } from "../../lib/axios/axiosConfig";
+import { noInterceptInstance } from "@/lib/axios";
 export const getNewRefreshToken = async () => {
   const refreshToken = window.localStorage.getItem("refreshToken");
   try {

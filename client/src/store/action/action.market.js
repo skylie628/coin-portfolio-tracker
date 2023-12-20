@@ -1,5 +1,5 @@
 import { setCarousels, setMarketData } from "../reducer/reducer.market";
-import getTopListDetail from "../../services/market/getTopListDetail";
+import getTopListDetail from "@/features/market/api/getTopListDetail";
 export const setMarketDataThunk = (payload) => async (dispatch) => {
   getTopListDetail(payload)
     .then((rs) => {

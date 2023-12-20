@@ -1,5 +1,5 @@
-import axiosConfig from "../../lib/axios/axiosConfig";
-import { genMockData } from "../../utils/genMockData";
+import axiosConfig from "@/lib/axios";
+import { genMockData } from "@/utils/genMockData";
 import {
   fetchVariables,
   fetchVariablesSuccess,

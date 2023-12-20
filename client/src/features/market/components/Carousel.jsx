@@ -1,7 +1,7 @@
 import React from "react";
 import { Flex, Box, Text, Divider } from "@chakra-ui/react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
-import Price from "./ui/Price";
+import Price from "@/components/ui/Price";
 import { useSelector } from "react-redux";
 //usehook
 function Carousel() {

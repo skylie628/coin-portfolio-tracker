@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import Header from "../header/Header";
+import Header from "../header";
 import { Stack } from "@chakra-ui/react";
 export default function MainLayout() {
   return (

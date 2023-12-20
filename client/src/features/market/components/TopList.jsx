@@ -1,15 +1,17 @@
+//components
 import { Table, Thead, Tbody, Tr, Th, Td, Box } from "@chakra-ui/react";
-import Rank from "../../components/ui/Rank";
-import Trend from "../../components/ui/Trend";
-import Coin from "../../components/ui/Coin";
-import Price from "../../components/ui/Price";
-//thunk
-import { setMarketDataThunk } from "../../store/action/action.market";
+import Rank from "@/components/ui/Rank";
+import Trend from "@/components/ui/Trend";
+import Coin from "@/components/ui/Coin";
+import Price from "@/components/ui/Price";
 //useHooks
 import { useDispatch, useSelector } from "react-redux";
 import { useRef, useLayoutEffect, useEffect } from "react";
 import React from "react";
-import { stopStreaming } from "../../store/reducer/reducer.market";
+//action
+import { stopStreaming } from "@/store/reducer/reducer.market";
+//thunk
+import { setMarketDataThunk } from "@/store/action/action.market";
 const TopLists = React.forwardRef((props, ref) => {
   const fixedTheadRef = useRef();
   const relativeTheadRef = useRef();

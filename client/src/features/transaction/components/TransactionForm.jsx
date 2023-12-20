@@ -37,7 +37,12 @@ export default function TransactionForm({ type = "buy", setIsOpen }) {
     setValue,
     control,
     formState: { errors = {} },
-  } = useForm({ resolver: yupResolver(scheme) });
+  } = useForm({
+    defaultValues: {
+      price: 15,
+    },
+    resolver: yupResolver(scheme),
+  });
   const onSubmit = (data) => {
     console.log(data);
     setIsOpen(false);
@@ -49,7 +54,6 @@ export default function TransactionForm({ type = "buy", setIsOpen }) {
     defaultValue: 15,
   });
   useEffect(() => {
-    console.log(watchPrice);
     const total = (watchPrice || 0) * (watchQuantity || 0);
     setValue("total", total);
   }, [watchPrice, watchQuantity]);
@@ -175,7 +179,7 @@ export default function TransactionForm({ type = "buy", setIsOpen }) {
         </VStack>
       </ModalBody>
       <ModalFooter className="bg-noise-pattern bg-metalgray  flex-end rounded-b-lg">
-        <Button type="submit">{"Buy"}</Button>
+        <Button type="submit">{type === "buy" ? "Buy" : "Sell"}</Button>
       </ModalFooter>
     </form>
   );

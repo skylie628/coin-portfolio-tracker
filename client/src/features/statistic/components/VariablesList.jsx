@@ -1,7 +1,7 @@
 import { Flex, Checkbox, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { toggleVariableThunk } from "../store/action/action.variable";
+import { toggleVariableThunk } from "@/store/action/action.variable";
 const Skeleton = () => (
   <div className="bg-halfblack w-full ">
     {new Array(5).fill(0).map((variable) => {

@@ -1,7 +1,7 @@
 import axios from "axios";
-import { store } from "../../redux/store";
-import { getNewRefreshToken } from "../../services/auth";
-import { signoutThunk } from "../../store/action/action.user";
+import { store } from "@/redux/store";
+import { getNewRefreshToken } from "@/features/auth/api/getNewRefreshToken";
+import { signoutThunk } from "@/store/action/action.user";
 const instance = axios.create({
   baseURL: import.meta.env.VITE_REACT_SERVER_URL,
 });

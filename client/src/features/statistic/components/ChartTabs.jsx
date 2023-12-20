@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
-import Tab from "./ui/Tab";
-import { addTabThunk, switchTabThunk } from "../store/action/action.tab";
+import Tab from "@/components/ui/Tab";
+import { addTabThunk, switchTabThunk } from "@/store/action/action.tab";
 import { useDispatch, useSelector } from "react-redux";
 export default function ChartTabs() {
   const { tabs, activeTab } = useSelector((state) => state.tab);
