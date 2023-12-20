@@ -1,7 +1,4 @@
-import axios from "axios";
-const axiosCoingecko = axios.create({
-  baseURL: import.meta.env.VITE_REACT_COINGECKO_ENDPOINT,
-});
+import { axiosCoingecko } from "@/lib/axios";
 const getTopListDetail = async (pageIndex) => {
   try {
     const topCoinsList = await axiosCoingecko.get("/coins/markets", {

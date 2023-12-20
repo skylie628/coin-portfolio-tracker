@@ -16,7 +16,6 @@ import { signin } from "@/features/auth/api/signin";
 import { signup } from "@/features/auth/api/signup";
 export const signupThunk = (payload) => async (dispatch) => {
   dispatch(startsign());
-  console.log(payload.data);
   signup(payload.data)
     .then((rs) => {
       dispatch(signupSuccess());

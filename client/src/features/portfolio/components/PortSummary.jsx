@@ -9,7 +9,7 @@ import { Button } from "@chakra-ui/react";
 //icons
 import { iconsHelper } from "@/config/icons";
 import { useState } from "react";
-export default function PortSummary() {
+export default function PortSummary({ setIsOpen }) {
   const chartValues = [
     { value: 10, full_name: "BTC", color: "red" },
     { value: 10, full_name: "ETH", color: "green" },
@@ -46,6 +46,7 @@ export default function PortSummary() {
       pie: { borderColor: "orange" },
     },
   };
+
   return (
     <Flex className="py-5 flex-1  flex gap-5  bg-blackest w-full ">
       <Flex className="flex-1 flex-col items-start px-10 gap-5">
@@ -85,7 +86,9 @@ export default function PortSummary() {
         >
           {showStats ? iconsHelper.EyeOn : iconsHelper.EyeOff}
         </Box>
-        <Button className="!bg-orange">Add coin</Button>
+        <Button onClick={() => setIsOpen(true)} className="!bg-orange">
+          Add coin
+        </Button>
       </Flex>
       <HighchartsReact
         className="m-auto flex-1"

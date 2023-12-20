@@ -3,15 +3,18 @@ import { Flex } from "@chakra-ui/react";
 import PortSummary from "./components/PortSummary";
 import PortCoins from "./components/PortCoins";
 import { Outlet } from "react-router-dom";
-import useScrollToTop from "@/hooks/useScrollToTop";
 import AddCoinModal from "./components/AddCoinModal";
+//useHooks
+import { useState } from "react";
+import useScrollToTop from "@/hooks/useScrollToTop";
 export default function Portfolio() {
   useScrollToTop();
+  const [isOpen, setIsOpen] = useState(true);
   return (
     <>
-      <AddCoinModal />
+      <AddCoinModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <Flex className="flex-1 flex-col relative">
-        <PortSummary />
+        <PortSummary setIsOpen={setIsOpen}/>
         <PortCoins />
       </Flex>
       <Outlet />

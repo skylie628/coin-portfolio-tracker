@@ -64,5 +64,7 @@ instance.interceptors.response.use(
 export const noInterceptInstance = axios.create({
   baseURL: import.meta.env.VITE_REACT_SERVER_URL,
 });
-
+export const axiosCoingecko = axios.create({
+  baseURL: import.meta.env.VITE_REACT_COINGECKO_ENDPOINT,
+});
 export default instance;

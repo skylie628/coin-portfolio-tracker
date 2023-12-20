@@ -1,31 +1,59 @@
 //components
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-} from "@chakra-ui/react";
-import { Overlay } from "@/components/ui/Modal";
+import Modal from "@/components/ui/Modal";
+import { Flex, Text, VStack, Box } from "@chakra-ui/react";
+import { Flame } from "lucide-react";
+import { Input, InputGroup, InputRightAddon } from "@chakra-ui/react";
+import { Search } from "lucide-react";
 //useHooks
-import { useState } from "react";
-export default function AddCoinModal() {
-  const [isOpen, setIsOpen] = useState(true);
+import useFetchSearchOrTrending from "../hooks/useFetchSearchOrTrending";
+export default function AddCoinModal({ isOpen, setIsOpen }) {
+  const {
+    isTrending,
+    showingItems,
+    isLoading,
+    isError,
+    searchTerm,
+    handleOnChange,
+  } = useFetchSearchOrTrending();
+  console.log(showingItems);
   return (
     <Modal
-      isCentered
-      size="md"
-      className="rounded-t-lg  bg-black w-[8/12]"
+      title="Search your favorite coin"
       isOpen={isOpen}
-      onClose={() => setIsOpen(true)}
+      setIsOpen={setIsOpen}
     >
-      <Overlay />
-      <ModalContent className="rounded-t-lg bg-[#DDDEE1]">
-        <ModalHeader className="rounded-t-lg bg-noise-pattern bg-metalgray ">
-          Add new coin
-        </ModalHeader>
-        <ModalCloseButton />
-        {}
-      </ModalContent>
+      <VStack className=" p-5 pb-10 bg-metalgray rounded-b-xl overflow-hidden">
+        <InputGroup className="w-full bg-metalgray pb-5">
+          <Input
+            value={searchTerm}
+            onChange={handleOnChange}
+            className="p-3 !rounded-none bg-metalgray group"
+          />
+          <InputRightAddon>
+            <Search color="dimgray" />
+          </InputRightAddon>
+        </InputGroup>
+        <VStack className="p-5 max-h-[400px] w-full overflow-y-scroll !gap-0">
+          {isLoading ? (
+            <div>isLoading</div>
+          ) : (
+            showingItems &&
+            showingItems.map((x) => (
+              <Flex
+                key={x.id}
+                gap="3"
+                className="cursor-pointer items-center text-left w-full p-2 border-b border-b-dimgray/[0.2]"
+              >
+                <img className="w-[30px] h-[30px] rounded-full" src={x.src} />
+                <Text className="flex-1 text-sm text-blackest/[0.7] font-medium">
+                  {`${x.name}  (${x.symbol})`}
+                </Text>
+                <Flame color="orange" size="20" />
+              </Flex>
+            ))
+          )}
+        </VStack>
+      </VStack>
     </Modal>
   );
 }
