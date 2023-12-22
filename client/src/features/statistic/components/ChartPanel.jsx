@@ -5,7 +5,6 @@ export default function ChartPanel() {
   return (
     <VStack className=" flex-1 w-1/2 " spacing="0">
       <ChartTabs />
-      <Divider colorScheme="gray" opacity="0.5" />
       <ChartView />
     </VStack>
   );

@@ -1,10 +1,5 @@
+import { genRandomColor } from "./genRandomColor";
 // suppose that server return data of lasted 3 months
-const genRandomColor = () => {
-  const r = Math.floor(Math.random() * 256);
-  const g = Math.floor(Math.random() * 256);
-  const b = Math.floor(Math.random() * 256);
-  return `rgb(${r}, ${g}, ${b})`;
-};
 export const genMockData = (variable, type) => {
   switch (type) {
     case "pie":

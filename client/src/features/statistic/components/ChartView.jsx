@@ -109,7 +109,7 @@ export default function ChartView() {
         };
   console.log("options", chartOptions);
   return (
-    <Flex className="bg-slate-800 h-full w-full justify-center items-center">
+    <Flex className="bg-slate-800 h-full w-full justify-center items-center relative">
       {chartValues.length > 0 && (
         <HighchartsReact highcharts={Highcharts} options={chartOptions} />
       )}

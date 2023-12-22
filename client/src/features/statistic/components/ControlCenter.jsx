@@ -1,22 +1,34 @@
 import {
   Stack,
   Text,
-  Grid,
-  GridItem,
+  Flex,
   Button,
   Input,
-  Select,
   HStack,
   VStack,
   Divider,
 } from "@chakra-ui/react";
+import Select from "@/components/ui/Select";
 import SelectedVariableList from "./SelectedVariableList";
 import { setChartValuesThunk } from "@/store/action/action.chart";
 import { useSelector, useDispatch } from "react-redux";
 import { resetTabThunk } from "@/store/action/action.tab";
-
+import { ChevronLeft, ChevronRightCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+const showHideVariants = {
+  hidden: {
+    width: "57px",
+    transition: { ease: "easeOut" },
+  },
+  visible: {
+    width: "25%",
+    transition: { ease: "easeOut" },
+  },
+};
 export default function ControlCenter({ setIsModalOpen }) {
   const dispatch = useDispatch();
+  const [isShow, setIsShow] = useState(true);
   const chartType = useSelector((state) => state.chart.chartType);
   const handleDrawChart = () => {
     dispatch(setChartValuesThunk());
@@ -25,102 +37,90 @@ export default function ControlCenter({ setIsModalOpen }) {
     dispatch(resetTabThunk());
   };
   return (
-    <Stack p="8" gap="5" className="bg-slate-900  w-1/4 ">
-      <Grid
-        templateColumns="1fr auto 1fr"
-        alignItems="center"
-        className="relative"
+    <AnimatePresence>
+      <motion.div
+        variants={showHideVariants}
+        animate={isShow ? "visible" : "hidden"}
+        exit={{ width: "25%" }}
+        className="flex flex-col gap-5 bg-slate-900 relative text-lightstar/[0.8]"
+        gap="5"
       >
-        <GridItem></GridItem>
-        <GridItem>
-          <Text className="w-full">CONTROL CENTER</Text>
-        </GridItem>
-        <GridItem>
-          <Button className="ml-auto !block"> X</Button>
-        </GridItem>
-      </Grid>
-      <HStack gap="4">
-        <Select size="md" borderRadius="5">
-          <option
-            className="!border-1 text-black !bg-silver hover:text-white"
-            value="pie"
+        {!isShow && (
+          <div className="p-4">
+            {" "}
+            <ChevronRightCircle
+              className="cursor-pointer"
+              color="orange "
+              onClick={() => setIsShow(true)}
+            />
+          </div>
+        )}
+        {isShow && (
+          <Flex
+            alignItems="center"
+            className="relative border-b border-b-1 border-b-slate-700 p-4 justify-between"
           >
-            Select Type
-          </option>
-          <option
-            className="!border-1 text-black !bg-silver hover:text-white"
-            value="pie"
-          >
-            Simple
-          </option>
-        </Select>
-      </HStack>
-      {chartType == "pie" ? (
-        <Input
-          className="bg-blackest"
-          bg={"halfblack"}
-          placeholder="Select Date and Time"
-          size="md"
-          type="datetime-local"
-        />
-      ) : (
-        <>
-          <Input
-            className="bg-blackest"
-            bg={"halfblack"}
-            placeholder="Select Date and Time"
-            size="md"
-            type="datetime-local"
-          />
-          <Input
-            className="bg-blackest"
-            bg={"halfblack"}
-            placeholder="Select Date and Time"
-            size="md"
-            type="datetime-local"
-          />
-          <Select size="md" borderRadius="5">
-            <option
-              className="!border-1 text-black !bg-silver hover:text-white"
-              value="pie"
-            >
-              Select Step
-            </option>
-            <option
-              className="!border-1 text-black !bg-silver hover:text-white"
-              value="pie"
-            >
-              Daily
-            </option>
+            <Text className="w-full text-lightstar/[0.8] text-left">
+              Statistic your port.
+            </Text>
+            <ChevronLeft
+              className="cursor-pointer block"
+              onClick={() => setIsShow((prev) => !prev)}
+            />
+          </Flex>
+        )}
+        {isShow && (
+          <Stack gap="5" className="p-8 ">
+            {chartType == "pie" ? (
+              <></>
+            ) : (
+              <>
+                <Input
+                  className="bg-blackest"
+                  bg={"halfblack"}
+                  placeholder="Select Date and Time"
+                  size="md"
+                  type="datetime-local"
+                />
+                <Input
+                  className="bg-blackest"
+                  bg={"halfblack"}
+                  placeholder="Select Date and Time"
+                  size="md"
+                  type="datetime-local"
+                />
+                <Select options={["day", "month", "week"]} />
+              </>
+            )}
+            {/*<HStack gap="3">
+              <Button onClick={() => setIsModalOpen(true)}>Switch</Button>
+              <Button onClick={() => setIsModalOpen(true)}>Print</Button>
+            </HStack>*/}
+            <HStack gap="3">
+              <Button
+                className="!bg-orange !font-semibold"
+                onClick={handleDrawChart}
+              >
+                Apply
+              </Button>
+              <Button
+                className="!bg-blackest border !border-lightstar/[0.3] !text-lightstar/[0.8]"
+                onClick={handleReset}
+              >
+                Reset
+              </Button>
+            </HStack>
 
-            <option
-              className="!border-1 text-black !bg-silver hover:text-white"
-              value="pie"
-            >
-              Weekly
-            </option>
-
-            <option
-              className="!border-1 text-black !bg-silver hover:text-white"
-              value="pie"
-            >
-              Monthly
-            </option>
-          </Select>
-        </>
-      )}
-      <HStack gap="3">
-        <Button className="!bg-orange" onClick={handleDrawChart}>
-          Apply
-        </Button>
-        <Button onClick={handleReset}>Reset</Button>
-        <Button onClick={() => setIsModalOpen(true)}>Change Chart</Button>
-      </HStack>
-      <Divider />
-      <VStack gap="3">
-        <Text className="text-left w-full">Selected Variables / Sections</Text>
-        <SelectedVariableList />
-      </VStack>
-    </Stack>
+            <Divider className="!border-slate-600" />
+            <VStack gap="3">
+              <Text className="text-left w-full">
+                Selected Variables / Sections
+              </Text>
+              <SelectedVariableList />
+            </VStack>
+          </Stack>
+        )}
+      </motion.div>
+    </AnimatePresence>
   );
 }

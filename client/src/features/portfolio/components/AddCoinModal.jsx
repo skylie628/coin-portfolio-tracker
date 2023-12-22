@@ -8,15 +8,8 @@ import { Suspense } from "react";
 //useHooks
 import useFetchSearchOrTrending from "../hooks/useFetchSearchOrTrending";
 export default function AddCoinModal({ isOpen, setIsOpen }) {
-  const {
-    isTrending,
-    showingItems,
-    isLoading,
-    isError,
-    searchTerm,
-    handleOnChange,
-  } = useFetchSearchOrTrending();
-  console.log(isLoading, showingItems);
+  const { showingItems, isLoading, searchTerm, handleOnChange } =
+    useFetchSearchOrTrending();
   return (
     <Modal
       title="Search your favorite coin"

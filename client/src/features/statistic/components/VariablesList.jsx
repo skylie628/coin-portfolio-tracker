@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { toggleVariableThunk } from "@/store/action/action.variable";
 const Skeleton = () => (
-  <div className="bg-halfblack w-full ">
+  <div className="bg-halfblack w-full p-4 border border-lightstar/[0.2] ">
     {new Array(5).fill(0).map((variable) => {
       return (
         <Flex

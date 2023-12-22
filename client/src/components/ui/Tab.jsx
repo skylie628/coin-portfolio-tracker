@@ -9,8 +9,8 @@ export default function Tab({
     <Flex
       onClick={onClick}
       className={clsx(
-        "shrink-0  p-3  border-slate-400   rounded-md   cursor-pointer ",
-        isActive ? "bg-slate-500" : "bg-slate-800"
+        isActive ? " border-b border-b-2 border-b-orange !text-lightstar" : "",
+        "shrink-0  p-4  border-slate-400  cursor-pointer text-slate-300 font-medium"
       )}
     >
       {tabName}

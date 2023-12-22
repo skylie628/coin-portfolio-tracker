@@ -55,7 +55,15 @@ export default function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Navigate to="dashboard" />} />
-          <Route path="dashboard" index element={<DashBoard />} />
+          <Route
+            path="dashboard"
+            index
+            element={
+              <Suspense fallback={<LoadingPage />}>
+                <DashBoard />
+              </Suspense>
+            }
+          />
           <Route
             path="statistics"
             element={

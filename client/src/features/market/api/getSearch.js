@@ -1,11 +1,11 @@
 import { axiosCoingecko } from "@/lib/axios";
 export const getSearch = async ({ keyword }) => {
   try {
-    const topCoinsList = await axiosCoingecko.get("/search", {
+    const searchResult = await axiosCoingecko.get("/search", {
       params: { query: keyword },
     });
     return (
-      topCoinsList.data?.coins?.map((coin) => ({
+      searchResult.data?.coins?.map((coin) => ({
         id: coin.id,
         name: coin.name,
         src: coin.large,

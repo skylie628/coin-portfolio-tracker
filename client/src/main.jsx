@@ -11,6 +11,7 @@ import "./index.css";
 import { chakraTheme } from "./config/chakraTheme.js";
 import { store } from "./redux/store.js";
 import queryClient from "./lib/reactquery/index.js";
+import "react-toastify/dist/ReactToastify.css";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <AnimatePresence mode="wait">
     <ChakraProvider theme={chakraTheme}>
