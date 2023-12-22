@@ -9,12 +9,12 @@ import { useState } from "react";
 import useScrollToTop from "@/hooks/useScrollToTop";
 export default function Portfolio() {
   useScrollToTop();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <AddCoinModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <Flex className="flex-1 flex-col relative">
-        <PortSummary setIsOpen={setIsOpen}/>
+        <PortSummary setIsOpen={setIsOpen} />
         <PortCoins />
       </Flex>
       <Outlet />

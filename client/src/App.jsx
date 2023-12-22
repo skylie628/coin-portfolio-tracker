@@ -1,18 +1,21 @@
 // component
-import Analytics from "./features/statistic";
-import DashBoard from "./features/market";
-import Portfolio from "./features/portfolio";
-import TransactionsList from "./features/transaction/";
+import React from "react";
+const Analytics = React.lazy(() => import("./features/statistic"));
+const DashBoard = React.lazy(() => import("@/features/market"));
+const Portfolio = React.lazy(() => import("./features/portfolio"));
+const TransactionsList = React.lazy(() => import("./features/transaction"));
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoadingPage from "./components/Loading";
 //
 
 import "./App.css";
-import SignIn from "./features/auth/SignIn";
-import SignUp from "./features/auth/SignUp";
+const SignIn = React.lazy(() => import("./features/auth/SignIn"));
+const SignUp = React.lazy(() => import("./features/auth/SignUp"));
 import PublicRoute from "./routes/PublicRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 import AuthLayout from "./components/layout/AuthLayout";
 import MainLayout from "./components/layout/MainLayout";
+import { Suspense } from "react";
 import { Navigate } from "react-router-dom";
 //use hook
 import { useDispatch } from "react-redux";
@@ -56,37 +59,52 @@ export default function App() {
           <Route
             path="statistics"
             element={
-              <PrivateRoute>
-                <Analytics />
-              </PrivateRoute>
+              <Suspense fallback={<LoadingPage />}>
+                <PrivateRoute>
+                  <Analytics />
+                </PrivateRoute>
+              </Suspense>
             }
           />
           <Route
             path="portfolio"
             element={
-              <PrivateRoute>
-                <Portfolio />
-              </PrivateRoute>
+              <Suspense fallback={<LoadingPage />}>
+                <PrivateRoute>
+                  <Portfolio />
+                </PrivateRoute>
+              </Suspense>
             }
           >
-            <Route path=":coinId" element={<TransactionsList />} />
+            <Route
+              path=":coinId"
+              element={
+                <Suspense fallback={<LoadingPage />}>
+                  <TransactionsList />
+                </Suspense>
+              }
+            />
           </Route>
         </Route>
         <Route path="/" element={<AuthLayout />}>
           <Route
             path="sign-in"
             element={
-              <PublicRoute>
-                <SignIn />
-              </PublicRoute>
+              <Suspense fallback={<LoadingPage />}>
+                <PublicRoute>
+                  <SignIn />
+                </PublicRoute>
+              </Suspense>
             }
           />
           <Route
             path="sign-up"
             element={
-              <PublicRoute>
-                <SignUp />
-              </PublicRoute>
+              <Suspense fallback={<LoadingPage />}>
+                <PublicRoute>
+                  <SignUp />
+                </PublicRoute>
+              </Suspense>
             }
           />
         </Route>

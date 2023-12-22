@@ -4,6 +4,7 @@ import { Flex, Text, VStack, Box } from "@chakra-ui/react";
 import { Flame } from "lucide-react";
 import { Input, InputGroup, InputRightAddon } from "@chakra-ui/react";
 import { Search } from "lucide-react";
+import { Suspense } from "react";
 //useHooks
 import useFetchSearchOrTrending from "../hooks/useFetchSearchOrTrending";
 export default function AddCoinModal({ isOpen, setIsOpen }) {
@@ -15,7 +16,7 @@ export default function AddCoinModal({ isOpen, setIsOpen }) {
     searchTerm,
     handleOnChange,
   } = useFetchSearchOrTrending();
-  console.log(showingItems);
+  console.log(isLoading, showingItems);
   return (
     <Modal
       title="Search your favorite coin"
@@ -34,24 +35,26 @@ export default function AddCoinModal({ isOpen, setIsOpen }) {
           </InputRightAddon>
         </InputGroup>
         <VStack className="p-5 max-h-[400px] w-full overflow-y-scroll !gap-0">
-          {isLoading ? (
-            <div>isLoading</div>
-          ) : (
-            showingItems &&
-            showingItems.map((x) => (
-              <Flex
-                key={x.id}
-                gap="3"
-                className="cursor-pointer items-center text-left w-full p-2 border-b border-b-dimgray/[0.2]"
-              >
-                <img className="w-[30px] h-[30px] rounded-full" src={x.src} />
-                <Text className="flex-1 text-sm text-blackest/[0.7] font-medium">
-                  {`${x.name}  (${x.symbol})`}
-                </Text>
-                <Flame color="orange" size="20" />
-              </Flex>
-            ))
-          )}
+          <Suspense fallback={<div>isLoading</div>}>
+            {isLoading ? (
+              <div>isLoading</div>
+            ) : (
+              showingItems &&
+              showingItems.map((x) => (
+                <Flex
+                  key={x.symbol}
+                  gap="3"
+                  className="cursor-pointer items-center text-left w-full p-2 border-b border-b-dimgray/[0.2]"
+                >
+                  <img className="w-[30px] h-[30px] rounded-full" src={x.src} />
+                  <Text className="flex-1 text-sm text-blackest/[0.7] font-medium">
+                    {`${x.name}  (${x.symbol})`}
+                  </Text>
+                  <Flame color="orange" size="20" />
+                </Flex>
+              ))
+            )}
+          </Suspense>
         </VStack>
       </VStack>
     </Modal>
