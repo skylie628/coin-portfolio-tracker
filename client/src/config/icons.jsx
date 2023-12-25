@@ -1,4 +1,4 @@
-const RightChevronCircle = (
+const RightChevronCircle = ({ colorTheme = "black" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="32"
@@ -11,10 +11,18 @@ const RightChevronCircle = (
     strokeLinejoin="round"
     className="lucide lucide-chevron-right-circle cursor-pointer"
   >
-    <circle fill="#eee" cx="12" cy="12" r="10" stroke="#eee" />
+    <circle
+      fill={colorTheme === "dark" ? "#444" : "#eee"}
+      cx="12"
+      cy="12"
+      r="10"
+      stroke={colorTheme === "dark" ? "#444" : "#eee"}
+    />
     <path
       d="m10 8 4 4-4 4"
-      stroke="blackest"
+      stroke={
+        colorTheme === "dark" ? "rgba(255,255,255,0.5)" : "blackest/[0.5]"
+      }
       className="group-hover:animate-move-right"
     />
   </svg>

@@ -1,28 +1,60 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, GridItem, Text } from "@chakra-ui/react";
 import Tooltip from "@/components/ui/Tooltip";
+import RandomRevealText from "@/components/ui/RandomRevealText";
+//hooks
+import { useState } from "react";
 //others
+import _ from "lodash";
 import getSummarySentence from "@/utils/getSummary";
+import { iconsHelper } from "@/config/icons";
+
 export default function TrendCard({ coin }) {
-  console.log(coin);
+  const [hover, setHover] = useState(false);
   const label = getSummarySentence(coin?.content?.description || coin.name, 2);
   return (
-    <Flex as="article" className="flex-1">
-      <Tooltip label={label}>
-        <Flex
-          className="w-full relative bg-black  rounded-lg p-5 bg-gradient-to-br from-orange/[0.2] to-blackest flex-col justify-start text-left cursor-pointer"
-          gap="10"
-        >
-          <img
-            src={coin.src}
-            className="w-[64px] h-[64px] rounded-full -mt-10 shadow-moonlight block  bg-orange"
-          />
-          <img src={coin.sparkline}></img>
-          <Flex className="flex-col">
-            <Text className="text-dimgray">{coin.symbol}</Text>
-            <Text className="text-lg">{coin.name}</Text>
-          </Flex>
-        </Flex>
-      </Tooltip>
-    </Flex>
+    <GridItem>
+      <Flex
+        as="article"
+        className="flex-1 flex-col hover:border rounded-lg hover:border-1 hover:border-white/[0.2] group cursor-pointer "
+      >
+        <Tooltip label={label}>
+          <div
+            className="w-full hover:translate-x-2 hover:-translate-y-2 transition-transform duration-[400ms] ease-out rounded-lg bg-black "
+            onMouseEnter={() => {
+              setHover((prev) => true);
+            }}
+          >
+            <Flex
+              className="w-full relative    p-5  flex-col justify-start text-left cursor-pointer"
+              gap="10"
+            >
+              <img
+                src={coin.src}
+                className="w-[72px] h-[72px] rounded-full -mt-10 shadow-moonlight block  bg-orange"
+              />
+              <img src={coin.sparkline}></img>
+              <Flex className="flex-col">
+                <RandomRevealText
+                  className="text-dimgray"
+                  hover={hover}
+                  setHover={setHover}
+                  characters={coin.symbol}
+                />
+                <RandomRevealText
+                  hover={hover}
+                  setHover={setHover}
+                  characters={coin.name}
+                  className="text-lg"
+                />
+              </Flex>
+            </Flex>
+            <div className="border-t border-t-lightstar/[0.2] p-4 rounded-b-lg flex justify-between">
+              <div>Ecosystem</div>
+              {iconsHelper.RightChevronCircle({ colorTheme: "dark" })}
+            </div>
+          </div>
+        </Tooltip>
+      </Flex>
+    </GridItem>
   );
 }
