@@ -2,6 +2,7 @@ import React from "react";
 const Carousel = React.lazy(() => import("./components/Carousel"));
 import Hero from "./components/Hero";
 const TopLists = React.lazy(() => import("./components/TopList"));
+import TrendList from "./components/TrendList";
 import { Suspense } from "react";
 import { useRef } from "react";
 import useScrollToTop from "@/hooks/useScrollToTop";
@@ -9,6 +10,7 @@ import { useGetTrending } from "./hooks/useGetTrending";
 export default function DashBoard() {
   const topListRef = useRef();
   useScrollToTop();
+  const { trendingCoins, error, isLoading } = useGetTrending();
   const scrollToTopLists = () => {
     topListRef.current.scrollIntoView({
       block: "start",
@@ -19,6 +21,7 @@ export default function DashBoard() {
     <div className="flex-1">
       <Carousel />
       <Hero scrollToTopLists={scrollToTopLists} />
+      <TrendList trendingCoins={trendingCoins} />
       <Suspense fallback={<div>loading</div>}>
         <TopLists ref={topListRef} />
       </Suspense>

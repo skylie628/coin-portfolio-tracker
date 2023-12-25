@@ -4,6 +4,7 @@ import Rank from "@/components/ui/Rank";
 import Trend from "@/components/ui/Trend";
 import Coin from "@/components/ui/Coin";
 import Price from "@/components/ui/Price";
+import Sparkline from "@/components/ui/Sparkline";
 //useHooks
 import { useDispatch, useSelector } from "react-redux";
 import { useRef, useLayoutEffect, useEffect } from "react";
@@ -23,7 +24,7 @@ const TopLists = React.forwardRef((props, ref) => {
     dispatch(setMarketDataThunk(1));
     return () => dispatch(stopStreaming());
   }, []);
-
+  console.log("coinlist 0", coinsList[0]);
   const fixedThead = (
     <Thead
       width="1121px"
@@ -31,7 +32,6 @@ const TopLists = React.forwardRef((props, ref) => {
       ref={fixedTheadRef}
     >
       <Tr>
-        <Th className="min-w-[140.117px] text-left">#</Th>
         <Th className="min-w-[140.117px] text-left">Name</Th>
         <Th className="min-w-[140.117px]">Price</Th>
         <Th className="min-w-[140.117px]">1h</Th>
@@ -49,14 +49,13 @@ const TopLists = React.forwardRef((props, ref) => {
       ref={relativeTheadRef}
     >
       <Tr>
-        <Th>#</Th>
-        <Th>Name</Th>
-        <Th>Price</Th>
+        <Th colspan="2">Name</Th>
+        <Th colspan="2">Price</Th>
         <Th>1h</Th>
         <Th>24h</Th>
-        <Th>Volumn</Th>
-        <Th>Cap</Th>
-        <Th>7days</Th>
+        <Th colspan="2">Volumn</Th>
+        <Th colspan="2">Cap</Th>
+        <Th colspan="2">Lasted 7 days</Th>
       </Tr>
     </Thead>
   );
@@ -92,10 +91,7 @@ const TopLists = React.forwardRef((props, ref) => {
         <Tbody>
           {coinsList.map((coin) => (
             <Tr key={coin.id}>
-              <Td>
-                <Rank value={coin.market_cap_rank} />
-              </Td>
-              <Td className="text-left">
+              <Td className="text-left" colspan="2">
                 {
                   <Coin
                     name={coin.name}
@@ -104,7 +100,7 @@ const TopLists = React.forwardRef((props, ref) => {
                   />
                 }
               </Td>
-              <Td>
+              <Td colspan="2">
                 <Price
                   amount={
                     streamingPrice.current
@@ -138,10 +134,7 @@ const TopLists = React.forwardRef((props, ref) => {
                   }
                 />
               </Td>
-              <Td>
-                <Trend value={coin.price_change_24h} />
-              </Td>
-              <Td>
+              <Td colspan="2">
                 {" "}
                 <Price
                   amount={coin.total_volume}
@@ -150,7 +143,7 @@ const TopLists = React.forwardRef((props, ref) => {
                   currencyCodeClassName="hidden"
                 />
               </Td>
-              <Td>
+              <Td colspan="2">
                 {" "}
                 <Price
                   amount={coin.market_cap}
@@ -158,6 +151,11 @@ const TopLists = React.forwardRef((props, ref) => {
                   className="text-lightstar font-medium text-xs"
                   currencyCodeClassName="hidden"
                 />
+              </Td>
+              <Td colspan="2">
+                {/*<Rank value={coin.market_cap_rank} />*/}
+
+                <Sparkline data={coin.sparkline_in_7d.price} />
               </Td>
             </Tr>
           ))}

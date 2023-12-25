@@ -6,8 +6,8 @@ import Coin from "./Coin";
 import Price from "./Price";
 export default function CoinCard() {
   return (
-    <GridItem className=" group rounded-lg text-dimgray  bg-metalgray cursor-pointer hover:translate-x-2 hover:-translate-y-2 transition-transform duration-[400ms] ease-out">
-      <Flex className="px-5 py-2  justify-end  bg-noise-pattern ">
+    <GridItem className=" group rounded-lg text-dimgray  bg-metaldark cursor-pointer hover:translate-x-2 hover:-translate-y-2 transition-transform duration-[400ms] ease-out">
+      <Flex className="px-5 py-2  justify-end   ">
         {iconsHelper.DeleteCircle}
       </Flex>
       <Link to="abcd">
@@ -44,7 +44,7 @@ export default function CoinCard() {
           </Flex>
         </VStack>
         <Divider borderColor={"gray"} />
-        <Box className="px-5 py-5 flex justify-between items-center  bg-noise-pattern">
+        <Box className="px-5 py-5 flex justify-between items-center  ">
           <Text className="text-sm text-black">Finance</Text>
           {iconsHelper.RightChevronCircle}
         </Box>
