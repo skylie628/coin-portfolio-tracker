@@ -15,8 +15,8 @@ export default function RandomRevealText({
       {hover ? (
         <RandomReveal
           isPlaying={hover}
-          duration={1}
-          revealDuration={1.6}
+          duration={0.5}
+          revealDuration={1}
           characters={characters}
           onComplete={onComplete}
         />

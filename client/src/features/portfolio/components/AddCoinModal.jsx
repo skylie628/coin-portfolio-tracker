@@ -1,6 +1,6 @@
 //components
 import Modal from "@/components/ui/Modal";
-import { Flex, Text, VStack, Box } from "@chakra-ui/react";
+import { Flex, Text, VStack } from "@chakra-ui/react";
 import { Flame } from "lucide-react";
 import { Input, InputGroup, InputRightAddon } from "@chakra-ui/react";
 import { Search } from "lucide-react";

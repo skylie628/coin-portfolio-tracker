@@ -4,6 +4,7 @@ import { Flex } from "@chakra-ui/react";
 import PortSummary from "./components/PortSummary";
 import PortCoins from "./components/PortCoins";
 import { Outlet } from "react-router-dom";
+import GridSystem from "@/components/grid/GridSystem";
 const AddCoinModal = React.lazy(() => import("./components/AddCoinModal"));
 import { Suspense } from "react";
 //useHooks
@@ -17,10 +18,10 @@ export default function Portfolio() {
       <Suspense fallback="loading">
         <AddCoinModal isOpen={isOpen} setIsOpen={setIsOpen} />
       </Suspense>
-      <Flex className="flex-1 flex-col relative">
-        <PortSummary setIsOpen={setIsOpen} />
+      <PortSummary setIsOpen={setIsOpen} />
+      <GridSystem>
         <PortCoins />
-      </Flex>
+      </GridSystem>
       <Outlet />
     </>
   );

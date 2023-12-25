@@ -6,6 +6,7 @@ import Stats from "@/components/ui/Stats";
 import Trend from "@/components/ui/Trend";
 import Price from "@/components/ui/Price";
 import { Button } from "@chakra-ui/react";
+import Divider from "@/components/ui/Divider";
 //icons
 import { iconsHelper } from "@/config/icons";
 import { useState } from "react";
@@ -48,53 +49,56 @@ export default function PortSummary({ setIsOpen }) {
   };
 
   return (
-    <Flex className="py-5 flex-1  flex gap-5  bg-blackest w-full ">
-      <Flex className="flex-1 flex-col items-start px-10 gap-5">
-        <Grid
-          templateColumns="repeat(2, 1fr)"
-          className=" gap-3 w-full items-start text-lightstar"
-        >
-          <Stats
-            showStats={showStats}
-            valueRender={
-              <Price
-                amount={8034}
-                currencyCode="USD"
-                currencyCodeClassName="hidden"
-              />
-            }
-            title="Total Balance"
-          />
-          <Stats
-            showStats={showStats}
-            valueRender={
-              <Flex gap="3">
+    <>
+      <Flex className="py-5 flex-1  flex gap-5  bg-blackest w-full ">
+        <Flex className="flex-1 flex-col items-start px-10 gap-5">
+          <Grid
+            templateColumns="repeat(2, 1fr)"
+            className=" gap-3 w-full items-start text-lightstar"
+          >
+            <Stats
+              showStats={showStats}
+              valueRender={
                 <Price
-                  amount={1211}
+                  amount={8034}
                   currencyCode="USD"
                   currencyCodeClassName="hidden"
                 />
-                <Trend value={12} />
-              </Flex>
-            }
-            title="Total Balance"
-          />
-        </Grid>
-        <Box
-          className="cursor-pointer"
-          onClick={() => setShowStats((prev) => !prev)}
-        >
-          {showStats ? iconsHelper.EyeOn : iconsHelper.EyeOff}
-        </Box>
-        <Button onClick={() => setIsOpen(true)} className="!bg-orange">
-          Add coin
-        </Button>
+              }
+              title="Total Balance"
+            />
+            <Stats
+              showStats={showStats}
+              valueRender={
+                <Flex gap="3">
+                  <Price
+                    amount={1211}
+                    currencyCode="USD"
+                    currencyCodeClassName="hidden"
+                  />
+                  <Trend value={12} />
+                </Flex>
+              }
+              title="Total Balance"
+            />
+          </Grid>
+          <Box
+            className="cursor-pointer"
+            onClick={() => setShowStats((prev) => !prev)}
+          >
+            {showStats ? iconsHelper.EyeOn : iconsHelper.EyeOff}
+          </Box>
+          <Button onClick={() => setIsOpen(true)} className="!bg-orange">
+            Add coin
+          </Button>
+        </Flex>
+        <HighchartsReact
+          className="m-auto flex-1"
+          highcharts={Highcharts}
+          options={chartOptions}
+        />
       </Flex>
-      <HighchartsReact
-        className="m-auto flex-1"
-        highcharts={Highcharts}
-        options={chartOptions}
-      />
-    </Flex>
+      <Divider />
+    </>
   );
 }

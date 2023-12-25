@@ -51,13 +51,13 @@ const DeleteCircle = (
     height="32"
     viewBox="0 0 24 24"
     fill="none"
-    stroke="currentColor"
+    stroke="#999"
     strokeWidth="1"
     strokeLinecap="round"
     strokeLinejoin="round"
     className="lucide lucide-x-circle cursor-pointer"
   >
-    <circle stroke="#eee" fill="#eee" cx="12" cy="12" r="10" />
+    <circle stroke="#444" fill="#444" cx="12" cy="12" r="10" />
     <path d="m15 9-6 6" />
     <path d="m9 9 6 6" />
   </svg>

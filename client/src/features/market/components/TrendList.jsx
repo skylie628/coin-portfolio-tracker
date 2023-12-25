@@ -1,38 +1,37 @@
-import { Flex, Box, Text, Grid, GridItem } from "@chakra-ui/react";
-import TrendCard from "./TrendCard";
+import { Flex, Text } from "@chakra-ui/react";
+import Tile from "@/components/grid/Tile";
+import FourColumns from "@/components/grid/FourColumns";
+import constants from "../../../utils/constants";
+import { Divider } from "@chakra-ui/react";
 export default function TrendList({ trendingCoins }) {
-  if (!trendingCoins || trendingCoins.length < 5) {
+  if (!trendingCoins || trendingCoins.length < 8) {
     return;
   }
-  if (trendingCoins.length > 5) {
+  if (trendingCoins.length > 8) {
     trendingCoins = trendingCoins.slice(0, 8);
   }
   return (
     <Flex
       as="section"
-      className="relative w-full z-30 bg-blackest px-20 py-40 gap-10 flex-col gap-[100px] text-left"
+      className="z-[11] relative w-full  px-20 py-40 flex-col gap-[100px] text-left"
     >
-      <Grid
-        className="absolute w-full inset-0 px-20 -ml-[25px]"
-        gap="50"
-        gridTemplateColumns={"repeat(4, 1fr) "}
-      >
-        <GridItem className="bg-white/[0.2] w-[1px] border-l border-l-white/[0.05] border-l-[1px]" />
-        <GridItem className="bg-white/[0.2] w-[1px]" />
-        <GridItem className="bg-white/[0.2] w-[1px]" />
-        <GridItem className="bg-white/[0.2] w-[1px] border-r border-r-white/[0.05] border-r-[1px] " />
-      </Grid>
+      <Divider
+        opacity="0.2"
+        className="absolute top-10 left-0 w-full border border-[1px] border-meshgrid"
+      />
       <Text as="h2" className="text-2xl block font-medium">
         Coins of the day
       </Text>
-      <Grid
-        gridTemplateColumns={"repeat(4, 1fr) "}
-        className="relative z-30 w-full  gap-[50px] "
-      >
-        {trendingCoins.map((coin) => (
-          <TrendCard coin={coin} key={coin.id} />
-        ))}
-      </Grid>
+      <FourColumns
+        data={trendingCoins}
+        renderTile={(props) => (
+          <Tile {...props} variant={constants.tileType.trendingCoins} />
+        )}
+      />
+      <Divider
+        opacity="0.2"
+        className="absolute bottom-10 left-0 w-full border border-[1px] border-lightstar/[0.2]"
+      />
     </Flex>
   );
 }

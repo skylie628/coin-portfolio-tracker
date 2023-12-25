@@ -26,6 +26,7 @@ export default {
         orange: "#f59e0b",
         metalgray: "#F5F5F7",
         metaldark: "rgb(202,202,204)",
+        meshgrid: "rgba(100, 116, 139,0.3)",
       },
       backgroundImage: {
         "sign-pattern": "url('../assets/background/sign-backdrop.webp')",
