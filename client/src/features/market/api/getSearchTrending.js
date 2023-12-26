@@ -7,6 +7,9 @@ export const getSearchTrending = async () => {
     searchTrending.coins = mapper.trendingCoins(
       searchTrending.data.coins || []
     );
+    searchTrending.categories = mapper.trendingCategories(
+      searchTrending.data.categories || []
+    );
     return searchTrending;
   } catch (err) {
     throw new Error("Unable to fetch trending coins");

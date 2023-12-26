@@ -14,6 +14,7 @@ export default function RandomRevealText({
     <div className={className}>
       {hover ? (
         <RandomReveal
+          className="break-all"
           isPlaying={hover}
           duration={0.5}
           revealDuration={1}

@@ -21,7 +21,8 @@ export default function Tile({
 }) {
   const { tileType } = constants;
   const [hover, setHover] = useState(false);
-  const bgColor = " bg-black ";
+  const bgColor =
+    variant === tileType.trendingCategories ? "bg-black" : " bg-black ";
   const stats =
     variant === tileType.portOption ? (
       <Flex className="py-2 flex-col gap-2">
@@ -47,14 +48,30 @@ export default function Tile({
     ) : (
       <img src={data.sparkline} />
     );
-
-  const dynamicLink = to ? "Link" : "span";
+  const footer =
+    variant === tileType.trendingCategories ? (
+      <></>
+    ) : (
+      <div className="border-t border-t-lightstar/[0.2] p-4 rounded-b-lg flex justify-between">
+        <div>{data.eco}</div>
+        <Flex gap="3">
+          {" "}
+          {variant == tileType.portOption && iconsHelper.DeleteCircle}{" "}
+          {iconsHelper.RightChevronCircle({ colorTheme: "dark" })}
+        </Flex>
+      </div>
+    );
+  const subheader =
+    variant === tileType.trendingCategories
+      ? `${data.market_cap_1h_change}%`
+      : symbol;
   return (
     <GridItem className="w-full">
       <Link to={to}>
         <Flex
           as="article"
-          className="relative  flex-1 flex-col hover:border rounded-lg hover:border-1 hover:border-meshgrid group cursor-pointer "
+          className="relative 
+           flex-1 flex-col hover:border rounded-lg hover:border-1 hover:border-meshgrid group cursor-pointer "
         >
           <Tooltip label={label}>
             <div
@@ -79,28 +96,20 @@ export default function Tile({
                 {stats}
                 <Flex className="flex-col">
                   <RandomRevealText
-                    className="text-dimgray"
+                    className="text-dimgray break-all"
                     hover={hover}
                     setHover={setHover}
-                    characters={symbol}
+                    characters={subheader}
                   />
                   <RandomRevealText
                     hover={hover}
                     setHover={setHover}
                     characters={name}
-                    className="text-lg"
+                    className="text-lg break-all"
                   />
                 </Flex>
               </Flex>
-              <div className="border-t border-t-lightstar/[0.2] p-4 rounded-b-lg flex justify-between">
-                <div>{data.eco}</div>
-                <Flex gap="3">
-                  {" "}
-                  {variant == tileType.portOption &&
-                    iconsHelper.DeleteCircle}{" "}
-                  {iconsHelper.RightChevronCircle({ colorTheme: "dark" })}
-                </Flex>
-              </div>
+              {footer}
             </div>
           </Tooltip>
         </Flex>

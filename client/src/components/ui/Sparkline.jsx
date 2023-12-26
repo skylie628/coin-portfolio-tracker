@@ -1,3 +1,4 @@
+//component
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 //other
