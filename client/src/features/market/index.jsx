@@ -6,6 +6,7 @@ const TopLists = React.lazy(() => import("./components/TopList"));
 import TrendList from "./components/TrendList";
 import TrendCategories from "./components/TrendCategories";
 import GridSystem from "@/components/grid/GridSystem";
+import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
 //usehooks
 import { useRef } from "react";
@@ -23,16 +24,19 @@ export default function DashBoard() {
     });*/
   };
   return (
-    <div className="flex-1">
-      <Carousel />
-      <Hero scrollToTopLists={scrollToTopLists} />
-      <GridSystem>
-        <TrendList trendingCoins={trendingCoins} />
-        <TrendCategories trendingCategories={trendingCategories} />
-      </GridSystem>
-      {/* <Suspense fallback={<div>loading</div>}>
+    <>
+      <div className="flex-1">
+        <Carousel />
+        <Hero scrollToTopLists={scrollToTopLists} />
+        <GridSystem>
+          <TrendList trendingCoins={trendingCoins} />
+          <TrendCategories trendingCategories={trendingCategories} />
+        </GridSystem>
+        {/* <Suspense fallback={<div>loading</div>}>
         <TopLists ref={topListRef} />
   </Suspense>*/}
-    </div>
+      </div>
+      <Outlet />
+    </>
   );
 }

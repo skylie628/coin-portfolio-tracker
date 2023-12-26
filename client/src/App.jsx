@@ -1,9 +1,10 @@
 // component
 import React from "react";
-const Analytics = React.lazy(() => import("./features/statistic"));
+const Analytics = React.lazy(() => import("@/features/statistic"));
 const DashBoard = React.lazy(() => import("@/features/market"));
-const Portfolio = React.lazy(() => import("./features/portfolio"));
-const TransactionsList = React.lazy(() => import("./features/transaction"));
+const Portfolio = React.lazy(() => import("@/features/portfolio"));
+const TransactionsList = React.lazy(() => import("@/features/transaction"));
+const Currency = React.lazy(() => import("@/features/currency"));
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoadingPage from "./components/Loading";
 //
@@ -57,13 +58,21 @@ export default function App() {
           <Route index element={<Navigate to="dashboard" />} />
           <Route
             path="dashboard"
-            index
             element={
               <Suspense fallback={<LoadingPage />}>
                 <DashBoard />
               </Suspense>
             }
-          />
+          >
+            <Route
+              path="currencies/:coinId"
+              element={
+                <Suspense fallback={<LoadingPage />}>
+                  <Currency />
+                </Suspense>
+              }
+            />
+          </Route>
           <Route
             path="statistics"
             element={

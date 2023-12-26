@@ -5,7 +5,6 @@ const useGetTrending = () => {
   const { data, error, isFetching } = useQuery({
     ...getSearchTrendingQuery(),
   });
-  console.log("hookdata", data);
   return {
     trendingCoins: data.coins,
     trendingCategories: data.categories,

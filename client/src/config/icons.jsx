@@ -98,7 +98,28 @@ const EyeOff = (
     <line x1="2" x2="22" y1="2" y2="22" />
   </svg>
 );
+
+const Tooltip = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="rgba(202,202,204,0.5)"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="lucide lucide-help-circle cursor-pointer"
+  >
+    <circle cx="12" cy="12" r="10" />
+    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+    <path d="M12 17h.01" />
+  </svg>
+);
+
 export const iconsHelper = {
+  Tooltip,
   RightChevronCircle,
   PlusCircle,
   DeleteCircle,

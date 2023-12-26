@@ -1,7 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { TriangleUpIcon, TriangleDownIcon } from "@chakra-ui/icons";
 import clsx from "clsx";
-export default function Trend({ value, className = "", ...props }) {
+export default function Trend({ value, className = "", ticket, ...props }) {
   const isIncrease = value >= 0;
   return (
     <Flex
@@ -10,12 +10,12 @@ export default function Trend({ value, className = "", ...props }) {
       {...props}
     >
       {isIncrease ? (
-        <TriangleUpIcon color="#008000" />
+        <TriangleUpIcon color="#16C784" />
       ) : (
-        <TriangleDownIcon color="red.500" />
+        <TriangleDownIcon color="#EA3943" />
       )}
-      <Text color={isIncrease ? "#008000" : "red.500"}>
-        {Math.abs(value).toFixed(2)}%
+      <Text color={isIncrease ? "#16C784" : "#EA3943"}>
+        {Math.abs(value).toFixed(2)}% {ticket && `(${ticket})`}
       </Text>
     </Flex>
   );
