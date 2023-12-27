@@ -1,7 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react";
 import Tile from "@/components/grid/Tile";
 import FourColumns from "@/components/grid/FourColumns";
-import constants from "../../../utils/constants";
+import constants from "@/utils/constants";
 import { Divider } from "@chakra-ui/react";
 export default function TrendList({ trendingCoins }) {
   if (!trendingCoins || trendingCoins.length < 8) {
@@ -9,6 +9,7 @@ export default function TrendList({ trendingCoins }) {
   }
   if (trendingCoins.length > 8) {
     trendingCoins = trendingCoins.slice(0, 8);
+    console.log(trendingCoins);
   }
   return (
     <Flex

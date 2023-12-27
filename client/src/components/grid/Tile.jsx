@@ -67,7 +67,7 @@ export default function Tile({
       : symbol;
   return (
     <GridItem className="w-full">
-      <Link to={to}>
+      <Link to={to} state={{ shortName: symbol }}>
         <Flex
           as="article"
           className="relative 

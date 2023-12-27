@@ -5,7 +5,7 @@ export default function SelectedVariableList() {
   const selectedVariables =
     useSelector((state) => state.variable.selectedVariables) || {};
   return Object.values(selectedVariables).map((variable) => (
-    <AnimatePresence>
+    <AnimatePresence key={selectedVariables.id}>
       <motion.div
         ease="easeOut"
         initial={{ opacity: 0, transform: "translateX(-50px)" }}

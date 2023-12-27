@@ -5,12 +5,9 @@ import Price from "@/components/ui/Price";
 import Trend from "@/components/ui/Trend";
 import Tooltip from "@/components/ui/Tooltip";
 import TagSection from "./component/TagSection";
-import Sparkline from "@/components/ui/Sparkline";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-//other
-import { sparklineDetailConfig } from "@/lib/highchart";
-import { mockData } from "@/lib/highchart";
+
 //icons
 import {
   Globe,
@@ -22,9 +19,24 @@ import {
 } from "lucide-react";
 //hooks
 import { useGetCurrencyDetail } from "./hooks/useGetCurrencyDetail";
-import { useParams } from "react-router-dom";
+import { useGetHistoryPrice } from "./hooks/useGetHistoryPrice";
+import { useParams, useLocation } from "react-router-dom";
+import { useRef, useEffect, useState } from "react";
+
 //other
 import { iconsHelper } from "@/config/icons";
+import shortNumberFormat from "@/utils/shortNumberFormat";
+import { sparklineChartConfig } from "@/lib/highchart/sparklineChartConfig";
+import createBinanceSocketURL from "@/utils/createBinanceSocketURL";
+function debounce(func, timeout = 300) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, timeout);
+  };
+}
 const InfoRow = ({ name, label = "coiPort xin chao!", renderValue }) => (
   <Flex className=" flex justify-between w-full text-sm">
     <Flex gap="3">
@@ -34,6 +46,20 @@ const InfoRow = ({ name, label = "coiPort xin chao!", renderValue }) => (
     {renderValue()}
   </Flex>
 );
+const renderPriceInfoRow = (name, amount, currencyCode, type = "crypto") => (
+  <InfoRow
+    name={name}
+    renderValue={() => (
+      <Price
+        className=" font-bold text-sm"
+        amount={amount}
+        currencyCode={currencyCode}
+        type={type}
+      />
+    )}
+  />
+);
+
 const OfficalLinkVariants = [
   { name: "Website", icon: () => <Globe color="dimgray" /> },
   { name: "Whitepaper", icon: () => <File color="dimgray" /> },
@@ -44,125 +70,145 @@ const SocialVariants = [
   { name: "Reddit", icon: () => <CreditCard color="dimgray" /> },
   { name: "Chat", icon: () => <MessageSquare color="dimgray" /> },
 ];
+
 export default function Currency() {
+  const [realtime, setRealtime] = useState(false);
+  const [realtimePrice, setRealtimePrice] = useState(false);
+  const chartComponent = useRef(null);
   const { coinId } = useParams();
-  console.log("param la", coinId);
-  const { data } = useGetCurrencyDetail({ id: coinId });
-  const currencyDetail = data.currencyDetail;
-  console.log(data);
+  const {
+    data: detailData,
+    error,
+    isLoading,
+  } = useGetCurrencyDetail({ id: coinId });
+  const { data: historyPriceData, isLoading: isChartLoading } =
+    useGetHistoryPrice({ id: coinId });
+  const {
+    image,
+    name,
+    symbol = false,
+    current_price,
+    price_change_percentage_24h,
+    market_cap_change_percentage_24h,
+    market_cap,
+    total_volume,
+    circulating_supply,
+    total_supply,
+    max_supply,
+    fully_diluted_valuation,
+  } = detailData.currencyDetail || {};
+  const debouncedUpdate = debounce(function (price) {
+    // Update the last point of the series
+    const chart = chartComponent.current.chart;
+    const series = chart.series[0];
+    // Get the current date as a timestamp
+    const currentDate = new Date().getTime();
+    // Add a new point with the new price and the current date
+    series.addPoint([currentDate, parseInt(price)], true, false);
+    var lastPoint = chart.series[0].data[chart.series[0].data.length - 1];
+    lastPoint.update({
+      dataLabels: {
+        enabled: true,
+        format: '<span style="color:green;">●</span>', // Replace this with the actual label
+      },
+    });
+    // Update the labelTxt with the new price
+    if (chart.labelTxt) {
+      chart.labelTxt.attr({
+        text: shortNumberFormat(price),
+      });
+    }
+  }, 200);
+  console.log("rerender !!!!!");
+  useEffect(() => {
+    if (!symbol) return;
+    const ws = new WebSocket(
+      createBinanceSocketURL({ symbols: [symbol], tickers: ["trade"] })
+    );
+    ws.onmessage = function incoming(event) {
+      const { p: price } = JSON.parse(event.data);
+      debouncedUpdate(price);
+      setRealtimePrice(price);
+    };
+
+    // Clean up function
+    return () => {
+      ws.close();
+    };
+  }, [symbol]);
   return (
     <BottomDrawer>
-      <Flex className="w-full h-full bg-blackest !rounded-xl border border-white/[0.5] border-dashed  ">
-        <Flex className="p-5 items-start justify-start gap-5 flex-col w-4/12 border-r border-1 border-white/[0.2]">
-          <HStack className="w-full ">
-            <Flex gap="3" className="justify-center items-center">
-              <img
-                className="w-[30px] h-[30px] rounded-full"
-                src={currencyDetail.image}
-              />
-              <Text className="font-bold text-2xl ">{currencyDetail.name}</Text>
-              <Text className="font-medium text-2xl text-dimgray ">
-                {currencyDetail.symbol.toUpperCase()}
-              </Text>
-            </Flex>
-          </HStack>
-          <HStack>
-            <Price
-              className="text-4xl font-bold"
-              amount={currencyDetail.current_price}
-              currencyCodeClassName="hidden"
-              currencyCode="USD"
-            />
-            <Trend
-              value={currencyDetail["price_change_percentage_24h"]}
-              ticket="1d"
-            />
-          </HStack>
-          <InfoRow
-            name="Market cap"
-            renderValue={() => (
-              <HStack>
-                <Trend
-                  value={currencyDetail["market_cap_change_percentage_24h"]}
-                />
-                <Price
-                  className=" font-bold text-sm"
-                  amount={currencyDetail.market_cap}
-                  currencyCodeClassName="hidden"
-                  currencyCode="USD"
-                />
-              </HStack>
-            )}
-          />
-          <InfoRow
-            name="Total Volumn"
-            renderValue={() => (
+      {!isLoading && !isChartLoading && detailData && (
+        <Flex className="w-full h-full bg-blackest !rounded-xl border border-white/[0.5] border-dashed  ">
+          <Flex className="p-5 items-start justify-start gap-5 flex-col w-4/12 border-r border-1 border-white/[0.2]">
+            <HStack className="w-full ">
+              <Flex gap="3" className="justify-center items-center">
+                <img className="w-[30px] h-[30px] rounded-full" src={image} />
+                <Text className="font-bold text-2xl ">{name}</Text>
+                <Text className="font-medium text-2xl text-dimgray ">
+                  {symbol.toUpperCase()}
+                </Text>
+              </Flex>
+            </HStack>
+            <HStack>
               <Price
-                className=" font-bold text-sm"
-                amount={currencyDetail.total_volume}
+                className="text-4xl font-bold"
+                amount={realtimePrice ? realtimePrice : current_price}
                 currencyCodeClassName="hidden"
                 currencyCode="USD"
               />
-            )}
-          />
-          <InfoRow
-            name="Circulating supply"
-            renderValue={() => (
-              <Price
-                className=" font-bold text-sm"
-                amount={currencyDetail.circulating_supply}
-                currencyCode={currencyDetail.symbol.toUpperCase()}
-                type="crypto"
-              />
-            )}
-          />
-          <InfoRow
-            name="Total supply"
-            renderValue={() => (
-              <Price
-                className=" font-bold text-sm"
-                amount={currencyDetail.total_supply}
-                currencyCode={currencyDetail.symbol.toUpperCase()}
-                type="crypto"
-              />
-            )}
-          />
-          <InfoRow
-            name="Max. supply"
-            renderValue={() => (
-              <Price
-                className=" font-bold text-sm"
-                amount={currencyDetail.max_supply}
-                currencyCode={currencyDetail.symbol.toUpperCase()}
-                type="crypto"
-              />
-            )}
-          />
-          <InfoRow
-            name="Fully diluted market cap"
-            renderValue={() => (
-              <Price
-                className=" font-bold text-sm"
-                amount={currencyDetail.fully_diluted_valuation}
-                currencyCodeClassName="hidden"
-                currencyCode={currencyDetail.symbol.toUpperCase()}
-                type="crypto"
-              />
-            )}
-          />
-          <TagSection title="Official Links" variants={OfficalLinkVariants} />
-          <TagSection title="Socials" variants={SocialVariants} />
-        </Flex>
-        <Box className="w-8/12 p-5">
-          <Flex className="w-full h-[500px] justify-center">
-            <HighchartsReact
-              className="m-auto flex-1 !w-full !h-full"
-              highcharts={Highcharts}
-              options={sparklineDetailConfig({ data: mockData })}
+              <Trend value={price_change_percentage_24h} ticket="1d" />
+            </HStack>
+            <InfoRow
+              name="Market cap"
+              renderValue={() => (
+                <HStack>
+                  <Trend value={market_cap_change_percentage_24h} />
+                  <Price
+                    className=" font-bold text-sm"
+                    amount={market_cap}
+                    currencyCodeClassName="hidden"
+                    currencyCode="USD"
+                  />
+                </HStack>
+              )}
             />
+            {renderPriceInfoRow("Total Volumn", total_volume, "USD")}
+            {renderPriceInfoRow(
+              "Circulating supply",
+              circulating_supply,
+              symbol.toUpperCase()
+            )}
+            {renderPriceInfoRow(
+              "Total supply",
+              total_supply,
+              symbol.toUpperCase()
+            )}
+            {renderPriceInfoRow(
+              "Max. supply",
+              max_supply,
+              symbol.toUpperCase()
+            )}
+            {renderPriceInfoRow(
+              "Fully diluted market cap",
+              fully_diluted_valuation,
+              symbol.toUpperCase()
+            )}
+            <TagSection title="Official Links" variants={OfficalLinkVariants} />
+            <TagSection title="Socials" variants={SocialVariants} />
           </Flex>
-        </Box>
-      </Flex>
+          <Box className="w-8/12 p-5">
+            <Flex className="w-full h-[500px] justify-center">
+              <HighchartsReact
+                ref={chartComponent}
+                className="m-auto flex-1 !w-full !h-full"
+                highcharts={Highcharts}
+                options={sparklineChartConfig({ data: historyPriceData })}
+              />
+            </Flex>
+          </Box>
+        </Flex>
+      )}
     </BottomDrawer>
   );
 }
