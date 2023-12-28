@@ -4,6 +4,7 @@ import variableReducer from "../store/reducer/reducer.variable";
 import userReducer from "../store/reducer/reducer.user";
 import tabReducer from "../store/reducer/reducer.tab";
 import marketReducer from "../store/reducer/reducer.market";
+import streamingReducer from "../store/reducer/reducer.streaming";
 import listenerMiddleware from "../middlewares/listenerMiddleware";
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     tab: tabReducer,
     user: userReducer,
     market: marketReducer,
+    streaming: streamingReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(listenerMiddleware.middleware),

@@ -30,27 +30,6 @@ export default function App() {
   if (isLogged) {
     dispatch(signinSuccess());
   }
-  let coins = [
-    "BTC",
-    "ETH",
-    "BNB",
-    "USDT",
-    "SOL",
-    "ADA",
-    "XRP",
-    "DOT",
-    "USDC",
-    "DOGE",
-  ];
-  const streamsarr = coins.reduce((acc, x) => `${acc}usdt@trade/${x}`, 0);
-  console.log(streamsarr);
-  /*var wss = new WebSocket(
-    `wss://stream.binance.com:9443/ws/${streamsarr.toLowerCase()}usdt@trade`
-  );
-  wss.onmessage = function (event) {
-    var messageObject = JSON.parse(event.data);
-    console.log(messageObject);
-  };*/
   return (
     <BrowserRouter>
       <Routes>

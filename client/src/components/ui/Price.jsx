@@ -9,10 +9,11 @@ export default function Price({
   if (!amount) return <p>_</p>;
   const value =
     type === "crypto"
-      ? amount.toLocaleString(undefined, { minimumFractionDigits: 2 })
+      ? amount.toLocaleString(undefined, { minimumFractionDigits: 3 })
       : `${new Intl.NumberFormat(undefined, {
           style: "currency",
           currency: currencyCode,
+          minimumFractionDigits: 5,
           currencyDisplay: "narrowSymbol",
         }).format(parseFloat(amount))}`;
   return (

@@ -5,6 +5,13 @@ import {
   setMarketData,
   setStreamingPrices,
 } from "../store/reducer/reducer.market";
+import {
+  connectSocket,
+  connectSuccess,
+  connectFailed,
+  updateCurrentValue,
+  reset,
+} from "../store/reducer/reducer.streaming";
 //utils
 import createBinanceSocketURL from "../utils/createBinanceSocketURL";
 const listenerMiddleware = createListenerMiddleware();
@@ -13,6 +20,16 @@ let isDispatch = "true";
 setInterval(function () {
   isDispatch = "true";
 }, 1000);
+function debounce(func, timeout = 300) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, timeout);
+  };
+}
+
 listenerMiddleware.startListening({
   actionCreator: setMarketData,
   effect: async (action, listenerApi) => {
@@ -46,7 +63,6 @@ listenerMiddleware.startListening({
 
     if (
       await listenerApi.condition((action, state) => {
-        console.log(action.type);
         return action.type.toString() === "market/stopStreaming";
       })
     ) {
@@ -56,5 +72,59 @@ listenerMiddleware.startListening({
   },
   // Can cancel other running instances
   // listenerApi.cancelActiveListeners();
+});
+
+let receivedData = false;
+listenerMiddleware.startListening({
+  actionCreator: connectSocket,
+  effect: async (action, listenerApi) => {
+    const { symbol } = action.payload.data;
+    const socketUrl = createBinanceSocketURL({
+      symbols: [symbol],
+      tickers: ["trade"],
+    });
+    var wss = new WebSocket(socketUrl);
+    wss.onopen = function (event) {
+      console.log("WebSocket connection established");
+      // Dispatch an action to update the state with the connection status
+      listenerApi.dispatch(connectSuccess());
+    };
+    const debouncedUpdateCurrentValue = debounce((data) => {
+      console.log("listen state la", listenerApi.getState());
+      if (listenerApi.getState().streaming.currency.streamMode) {
+        listenerApi.dispatch(updateCurrentValue(data));
+      }
+    }, 1000);
+    wss.onmessage = function (event) {
+      receivedData = true;
+      var messageObject = JSON.parse(event.data);
+      console.log("mess la", messageObject);
+      debouncedUpdateCurrentValue({ data: messageObject.p });
+    };
+    wss.onclose = function () {
+      if (!receivedData) {
+        console.log("WebSocket closed without receiving any data.");
+        // Dispatch an action to update the state
+        listenerApi.dispatch(
+          connectFailed({ error: "No data received from stream" })
+        );
+      }
+      receivedData = false;
+    };
+    wss.onerror = function (error) {
+      console.log("WebSocket Error: ", error);
+      // Dispatch an action to update the state with the error
+      listenerApi.dispatch(connectFailed({ error: error.message }));
+    };
+    if (
+      await listenerApi.condition((action, state) => {
+        return action.type.toString() === "streaming/stopStreaming";
+      })
+    ) {
+      wss.close();
+      listenerApi.dispatch(reset());
+      listenerApi.cancel();
+    }
+  },
 });
 export default listenerMiddleware;

@@ -1,12 +1,12 @@
 import Highcharts from "highcharts";
-import shortNumberFormat from "@/utils/shortNumberFormat";
+import abbreviateNumber from "@/utils/abbreviateNumber";
 function labelFormat() {
   return Highcharts.dateFormat("%b", this.value);
 }
 function tooltipFormatter() {
   return (
     '<div style="color:#ccc"><b>Price</b>: ' +
-    (this.y > 1 ? this.y.toFixed(2) : this.y.toFixed(6)) +
+    (this.y > 1 ? this.y.toFixed(6) : this.y.toFixed(6)) +
     "$" +
     '</div><div style="color:#ccc"><b>Time</b>: ' +
     new Date(this.x).toDateString() +
@@ -112,7 +112,7 @@ export const sparklineChartConfig = ({
           }
           if (!chart.labelTxt) {
             chart.labelTxt = renderer
-              .text(shortNumberFormat(lastPoint.y))
+              .text(abbreviateNumber(lastPoint.y))
               .attr({
                 x: -30, // Set the left margin
               })

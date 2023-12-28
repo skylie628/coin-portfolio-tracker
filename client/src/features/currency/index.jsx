@@ -1,214 +1,65 @@
 //components
+import React from "react";
 import BottomDrawer from "@/components/layout/BottomDrawer";
-import { Flex, HStack, Box, Text } from "@chakra-ui/react";
-import Price from "@/components/ui/Price";
-import Trend from "@/components/ui/Trend";
-import Tooltip from "@/components/ui/Tooltip";
-import TagSection from "./component/TagSection";
-import HighchartsReact from "highcharts-react-official";
-import Highcharts from "highcharts";
-
-//icons
-import {
-  Globe,
-  File,
-  Github,
-  Twitter,
-  CreditCard,
-  MessageSquare,
-} from "lucide-react";
-//hooks
-import { useGetCurrencyDetail } from "./hooks/useGetCurrencyDetail";
-import { useGetHistoryPrice } from "./hooks/useGetHistoryPrice";
-import { useParams, useLocation } from "react-router-dom";
-import { useRef, useEffect, useState } from "react";
-
-//other
-import { iconsHelper } from "@/config/icons";
-import shortNumberFormat from "@/utils/shortNumberFormat";
-import { sparklineChartConfig } from "@/lib/highchart/sparklineChartConfig";
-import createBinanceSocketURL from "@/utils/createBinanceSocketURL";
-function debounce(func, timeout = 300) {
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      func.apply(this, args);
-    }, timeout);
-  };
-}
-const InfoRow = ({ name, label = "coiPort xin chao!", renderValue }) => (
-  <Flex className=" flex justify-between w-full text-sm">
-    <Flex gap="3">
-      <Text className="text-dimgray font-bold">{name}</Text>
-      <Tooltip label={label}>{iconsHelper.Tooltip}</Tooltip>
+import { Flex, Box, HStack, VStack } from "@chakra-ui/react";
+import Skeleton from "@/components/ui/Skeleton";
+const GeneralInfo = React.lazy(() => import("./components/GeneralInfo"));
+const ChartPanel = React.lazy(() => import("./components/ChartPanel"));
+const ChartPanelSkeleton = () => (
+  <Flex className="w-full flex-col gap-5">
+    <Flex className="w-full h-[500px] justify-center items-center">
+      <Skeleton className="m-auto flex-1 !w-full !h-full" />
     </Flex>
-    {renderValue()}
+    <Flex className="gap-2 justify-start items-start px-20 w-full flex-col">
+      <Skeleton height="20px" width="200px" />
+      <Flex className="gap-20 w-full">
+        <Flex className="flex-col gap-2">
+          <Skeleton height="20px" width="200px" />
+          <Skeleton height="20px" width="200px" />
+        </Flex>
+        <Flex className="flex-col gap-2">
+          <Skeleton height="20px" width="200px" />
+          <Skeleton height="20px" width="200px" />
+        </Flex>
+      </Flex>
+    </Flex>
   </Flex>
 );
-const renderPriceInfoRow = (name, amount, currencyCode, type = "crypto") => (
-  <InfoRow
-    name={name}
-    renderValue={() => (
-      <Price
-        className=" font-bold text-sm"
-        amount={amount}
-        currencyCode={currencyCode}
-        type={type}
-      />
-    )}
-  />
-);
-
-const OfficalLinkVariants = [
-  { name: "Website", icon: () => <Globe color="dimgray" /> },
-  { name: "Whitepaper", icon: () => <File color="dimgray" /> },
-  { name: "Github", icon: () => <Github color="dimgray" /> },
-];
-const SocialVariants = [
-  { name: "Twitter", icon: () => <Twitter color="dimgray" /> },
-  { name: "Reddit", icon: () => <CreditCard color="dimgray" /> },
-  { name: "Chat", icon: () => <MessageSquare color="dimgray" /> },
-];
-
+function SkeletonGeneralInfo() {
+  return (
+    <Box p="5" className="w-4/12 border-r border-1 border-white/[0.2]">
+      <VStack spacing={5} align="start">
+        <HStack className="w-full">
+          <Skeleton circle width="30px" />
+          <Skeleton width="100px" />
+          <Skeleton width="50px" />
+        </HStack>
+        <HStack>
+          <Skeleton width="100px" />
+          <Skeleton width="50px" />
+        </HStack>
+        {Array(10)
+          .fill()
+          .map((_, index) => (
+            <Skeleton key={index} width="full" />
+          ))}
+      </VStack>
+    </Box>
+  );
+}
 export default function Currency() {
-  const [realtime, setRealtime] = useState(false);
-  const [realtimePrice, setRealtimePrice] = useState(false);
-  const chartComponent = useRef(null);
-  const { coinId } = useParams();
-  const {
-    data: detailData,
-    error,
-    isLoading,
-  } = useGetCurrencyDetail({ id: coinId });
-  const { data: historyPriceData, isLoading: isChartLoading } =
-    useGetHistoryPrice({ id: coinId });
-  const {
-    image,
-    name,
-    symbol = false,
-    current_price,
-    price_change_percentage_24h,
-    market_cap_change_percentage_24h,
-    market_cap,
-    total_volume,
-    circulating_supply,
-    total_supply,
-    max_supply,
-    fully_diluted_valuation,
-  } = detailData.currencyDetail || {};
-  const debouncedUpdate = debounce(function (price) {
-    // Update the last point of the series
-    const chart = chartComponent.current.chart;
-    const series = chart.series[0];
-    // Get the current date as a timestamp
-    const currentDate = new Date().getTime();
-    // Add a new point with the new price and the current date
-    series.addPoint([currentDate, parseInt(price)], true, false);
-    var lastPoint = chart.series[0].data[chart.series[0].data.length - 1];
-    lastPoint.update({
-      dataLabels: {
-        enabled: true,
-        format: '<span style="color:green;">●</span>', // Replace this with the actual label
-      },
-    });
-    // Update the labelTxt with the new price
-    if (chart.labelTxt) {
-      chart.labelTxt.attr({
-        text: shortNumberFormat(price),
-      });
-    }
-  }, 200);
-  console.log("rerender !!!!!");
-  useEffect(() => {
-    if (!symbol) return;
-    const ws = new WebSocket(
-      createBinanceSocketURL({ symbols: [symbol], tickers: ["trade"] })
-    );
-    ws.onmessage = function incoming(event) {
-      const { p: price } = JSON.parse(event.data);
-      debouncedUpdate(price);
-      setRealtimePrice(price);
-    };
-
-    // Clean up function
-    return () => {
-      ws.close();
-    };
-  }, [symbol]);
   return (
     <BottomDrawer>
-      {!isLoading && !isChartLoading && detailData && (
-        <Flex className="w-full h-full bg-blackest !rounded-xl border border-white/[0.5] border-dashed  ">
-          <Flex className="p-5 items-start justify-start gap-5 flex-col w-4/12 border-r border-1 border-white/[0.2]">
-            <HStack className="w-full ">
-              <Flex gap="3" className="justify-center items-center">
-                <img className="w-[30px] h-[30px] rounded-full" src={image} />
-                <Text className="font-bold text-2xl ">{name}</Text>
-                <Text className="font-medium text-2xl text-dimgray ">
-                  {symbol.toUpperCase()}
-                </Text>
-              </Flex>
-            </HStack>
-            <HStack>
-              <Price
-                className="text-4xl font-bold"
-                amount={realtimePrice ? realtimePrice : current_price}
-                currencyCodeClassName="hidden"
-                currencyCode="USD"
-              />
-              <Trend value={price_change_percentage_24h} ticket="1d" />
-            </HStack>
-            <InfoRow
-              name="Market cap"
-              renderValue={() => (
-                <HStack>
-                  <Trend value={market_cap_change_percentage_24h} />
-                  <Price
-                    className=" font-bold text-sm"
-                    amount={market_cap}
-                    currencyCodeClassName="hidden"
-                    currencyCode="USD"
-                  />
-                </HStack>
-              )}
-            />
-            {renderPriceInfoRow("Total Volumn", total_volume, "USD")}
-            {renderPriceInfoRow(
-              "Circulating supply",
-              circulating_supply,
-              symbol.toUpperCase()
-            )}
-            {renderPriceInfoRow(
-              "Total supply",
-              total_supply,
-              symbol.toUpperCase()
-            )}
-            {renderPriceInfoRow(
-              "Max. supply",
-              max_supply,
-              symbol.toUpperCase()
-            )}
-            {renderPriceInfoRow(
-              "Fully diluted market cap",
-              fully_diluted_valuation,
-              symbol.toUpperCase()
-            )}
-            <TagSection title="Official Links" variants={OfficalLinkVariants} />
-            <TagSection title="Socials" variants={SocialVariants} />
-          </Flex>
-          <Box className="w-8/12 p-5">
-            <Flex className="w-full h-[500px] justify-center">
-              <HighchartsReact
-                ref={chartComponent}
-                className="m-auto flex-1 !w-full !h-full"
-                highcharts={Highcharts}
-                options={sparklineChartConfig({ data: historyPriceData })}
-              />
-            </Flex>
-          </Box>
-        </Flex>
-      )}
+      <Flex className="w-full h-full bg-blackest !rounded-xl border border-white/[0.5] border-dashed  ">
+        <React.Suspense fallback={<SkeletonGeneralInfo />}>
+          <GeneralInfo />
+        </React.Suspense>
+        <Box className="w-8/12 p-5">
+          <React.Suspense fallback={<ChartPanelSkeleton />}>
+            <ChartPanel />
+          </React.Suspense>
+        </Box>
+      </Flex>
     </BottomDrawer>
   );
 }

@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import Variants from "@/components/ui/variants";
+import Variants from "@/components/ui/Variants";
 
 export default function TagSection({ title, variants }) {
   return (
