@@ -2,8 +2,9 @@
 import { createListenerMiddleware } from "@reduxjs/toolkit";
 //reducer
 import {
-  setMarketData,
+  startStreaming,
   setStreamingPrices,
+  stopStreaming,
 } from "../store/reducer/reducer.market";
 import {
   connectSocket,
@@ -31,10 +32,11 @@ function debounce(func, timeout = 300) {
 }
 
 listenerMiddleware.startListening({
-  actionCreator: setMarketData,
+  actionCreator: startStreaming,
   effect: async (action, listenerApi) => {
+    console.log("payload la", action.payload);
     listenerApi.cancelActiveListeners();
-    const coins = action.payload.data.map((x) => x.symbol);
+    const coins = action.payload.topCurrencies.map((x) => x.symbol);
     const socketUrl = createBinanceSocketURL({
       symbols: coins,
       tickers: ["ticker", "ticker_1h"],
@@ -94,7 +96,7 @@ listenerMiddleware.startListening({
       if (listenerApi.getState().streaming.currency.streamMode) {
         listenerApi.dispatch(updateCurrentValue(data));
       }
-    }, 1000);
+    }, 500);
     wss.onmessage = function (event) {
       receivedData = true;
       var messageObject = JSON.parse(event.data);

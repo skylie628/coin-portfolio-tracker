@@ -1,40 +1,92 @@
 //component
-import React from "react";
-const Carousel = React.lazy(() => import("./components/Carousel"));
-import Hero from "./components/Hero";
-const TopLists = React.lazy(() => import("./components/TopList"));
-import TrendList from "./components/TrendList";
-import TrendCategories from "./components/TrendCategories";
+import React, { Suspense } from "react";
 import GridSystem from "@/components/grid/GridSystem";
 import { Outlet } from "react-router-dom";
-import { Suspense } from "react";
+import Skeleton from "@/components/ui/Skeleton";
+import { Flex, Text, Divider, Box } from "@chakra-ui/react";
+import Hero from "./components/Hero";
+import { FourColumnsSkeleton } from "@/components/grid/FourColumns";
+import LoadingPage from "@/components/Loading";
+const Carousel = React.lazy(() => import("./components/Carousel"));
+const TopRealTimeCurrencies = React.lazy(() =>
+  import("./components/TopRealTimeCurrencies")
+);
+const TrendingCurrencies = React.lazy(() =>
+  import("./components/TrendingCurrencies")
+);
+const TrendingCategories = React.lazy(() =>
+  import("./components/trendingCategories")
+);
 //usehooks
 import { useRef } from "react";
 import useScrollToTop from "@/hooks/useScrollToTop";
-import { useGetTrending } from "./hooks/useGetTrending";
+
+function TrendingCategoriesSkeleton() {
+  return (
+    <Flex
+      as="section"
+      className="z-[11]  bg-gradient-to-tr  from-orange/[0.2] to-blackest/[0.5]  to-40% relative w-full  px-20 py-40 flex-col gap-[100px] text-left"
+    >
+      <Text as="h2" className="text-2xl block font-medium">
+        <Skeleton height={30} width={200} />
+      </Text>
+      <FourColumnsSkeleton />
+      <Divider
+        opacity="0.2"
+        className="absolute bottom-10 left-0 w-full border border-[1px] border-lightstar/[0.2]"
+      />
+    </Flex>
+  );
+}
+function TrendingCurrenciesSkeleton() {
+  return (
+    <Flex
+      as="section"
+      className="z-[11] relative w-full  px-20 py-40 flex-col gap-[100px] text-left"
+    >
+      <Divider
+        opacity="0.2"
+        className="absolute top-10 left-0 w-full border border-[1px] border-meshgrid"
+      />
+      <Text as="h2" className="text-2xl block font-medium">
+        <Skeleton height={30} width={200} />
+      </Text>
+      <FourColumnsSkeleton />
+      <Divider
+        opacity="0.2"
+        className="absolute bottom-10 left-0 w-full border border-[1px] border-lightstar/[0.2]"
+      />
+    </Flex>
+  );
+}
+
 export default function DashBoard() {
   const topListRef = useRef();
   useScrollToTop();
-  const { trendingCoins, trendingCategories, error, isLoading } =
-    useGetTrending();
   const scrollToTopLists = () => {
-    /*topListRef.current.scrollIntoView({
+    topListRef.current.scrollIntoView({
       block: "start",
       behavior: "smooth",
-    });*/
+    });
   };
   return (
     <>
       <div className="flex-1">
-        <Carousel />
-        <Hero scrollToTopLists={scrollToTopLists} />
+        <Suspense fallback={<LoadingPage />}>
+          <Carousel />
+          <Hero scrollToTopLists={scrollToTopLists} />
+        </Suspense>
         <GridSystem>
-          <TrendList trendingCoins={trendingCoins} />
-          <TrendCategories trendingCategories={trendingCategories} />
+          <Suspense fallback={<TrendingCurrenciesSkeleton />}>
+            <TrendingCurrencies />
+          </Suspense>
+          <Suspense fallback={<TrendingCategoriesSkeleton />}>
+            <TrendingCategories />
+          </Suspense>
         </GridSystem>
-        {/* <Suspense fallback={<div>loading</div>}>
-        <TopLists ref={topListRef} />
-  </Suspense>*/}
+        <Suspense fallback={<div>loading</div>}>
+          <TopRealTimeCurrencies ref={topListRef} />
+        </Suspense>
       </div>
       <Outlet />
     </>

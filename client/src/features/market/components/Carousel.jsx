@@ -2,10 +2,12 @@ import React from "react";
 import { Flex, Box, Text, Divider } from "@chakra-ui/react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import Price from "@/components/ui/Price";
-import { useSelector } from "react-redux";
 //usehook
+import { useGetTopCurrencies } from "../hooks/useGetTopCurrencies";
+
 function Carousel() {
-  let carousels = useSelector((state) => state.market.carousels) || [];
+  const { topCurrencies = [] } = useGetTopCurrencies({ pageIndex: 1 });
+  let carousels = topCurrencies.slice(0, 10);
   carousels = [...carousels, ...carousels];
   return (
     <Box className="overflow-hidden bg-orange ">
@@ -39,4 +41,4 @@ function Carousel() {
     </Box>
   );
 }
-export default React.memo(Carousel);
+export default Carousel;

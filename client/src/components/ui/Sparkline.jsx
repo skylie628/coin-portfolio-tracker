@@ -2,7 +2,8 @@
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 //other
-import { sparklineConfig, sparklineDetailConfig } from "@/lib/highchart";
+import { sparklineChartConfig } from "@/lib/highchart/sparklineChartConfig";
+import { sparklineConfig } from "@/lib/highchart/sparklineConfig";
 const Sparkline = ({ data, variant }) => {
   console.log(data);
   return (

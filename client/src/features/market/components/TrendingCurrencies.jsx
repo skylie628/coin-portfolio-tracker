@@ -3,13 +3,12 @@ import Tile from "@/components/grid/Tile";
 import FourColumns from "@/components/grid/FourColumns";
 import constants from "@/utils/constants";
 import { Divider } from "@chakra-ui/react";
-export default function TrendList({ trendingCoins }) {
+//hooks
+import { useGetTrending } from "@/features/market/hooks/useGetTrending";
+export default function TrendingCurrencies() {
+  const { trendingCoins } = useGetTrending();
   if (!trendingCoins || trendingCoins.length < 8) {
     return;
-  }
-  if (trendingCoins.length > 8) {
-    trendingCoins = trendingCoins.slice(0, 8);
-    console.log(trendingCoins);
   }
   return (
     <Flex
@@ -24,7 +23,7 @@ export default function TrendList({ trendingCoins }) {
         Coins of the day
       </Text>
       <FourColumns
-        data={trendingCoins}
+        data={trendingCoins.slice(0, 8)}
         renderTile={(props) => (
           <Tile {...props} variant={constants.tileType.trendingCoins} />
         )}

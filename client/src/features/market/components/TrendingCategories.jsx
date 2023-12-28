@@ -3,12 +3,13 @@ import Tile from "@/components/grid/Tile";
 import FourColumns from "@/components/grid/FourColumns";
 import constants from "../../../utils/constants";
 import { Divider } from "@chakra-ui/react";
-export default function TrendCategories({ trendingCategories }) {
+//hooks
+import { useGetTrending } from "@/features/market/hooks/useGetTrending";
+
+export default function TrendingCategories() {
+  const { trendingCategories } = useGetTrending();
   if (!trendingCategories || trendingCategories.length < 4) {
     return;
-  }
-  if (trendingCategories.length > 4) {
-    trendingCategories = trendingCategories.slice(0, 4);
   }
 
   return (
@@ -20,7 +21,7 @@ export default function TrendCategories({ trendingCategories }) {
         Trending Categories
       </Text>
       <FourColumns
-        data={trendingCategories}
+        data={trendingCategories.slice(0, 4)}
         renderTile={(props) => (
           <Tile {...props} variant={constants.tileType.trendingCategories} />
         )}
