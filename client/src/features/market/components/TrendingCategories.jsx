@@ -15,7 +15,7 @@ export default function TrendingCategories() {
   return (
     <Flex
       as="section"
-      className="z-[11]  bg-gradient-to-tr  from-orange/[0.2] to-blackest/[0.5]  to-40% relative w-full  px-20 py-40 flex-col gap-[100px] text-left"
+      className="z-[11]  bg-gradient-to-tr  from-orange/[0.2] to-blackest/[0.5]  to-40% relative w-full  px-20 py-40 flex-col gap-[100px] text-left container mx-auto"
     >
       <Text as="h2" className="text-2xl block font-medium">
         Trending Categories

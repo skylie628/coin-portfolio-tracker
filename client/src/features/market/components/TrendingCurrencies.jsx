@@ -13,7 +13,7 @@ export default function TrendingCurrencies() {
   return (
     <Flex
       as="section"
-      className="z-[11] relative w-full  px-20 py-40 flex-col gap-[100px] text-left"
+      className="z-[11] relative w-full  px-20 py-40 flex-col gap-[100px] text-left container mx-auto"
     >
       <Divider
         opacity="0.2"

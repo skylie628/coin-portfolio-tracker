@@ -30,7 +30,8 @@ function debounce(func, timeout = 300) {
     }, timeout);
   };
 }
-
+// Store the WebSocket connection outside the scope of the effect function
+let wss = null;
 listenerMiddleware.startListening({
   actionCreator: startStreaming,
   effect: async (action, listenerApi) => {
@@ -41,7 +42,9 @@ listenerMiddleware.startListening({
       symbols: coins,
       tickers: ["ticker", "ticker_1h"],
     });
-    var wss = new WebSocket(socketUrl);
+    if (!wss || wss.readyState !== WebSocket.OPEN) {
+      wss = new WebSocket(socketUrl);
+    }
     wss.onmessage = function (event) {
       value = JSON.parse(JSON.stringify(value));
       var messageObject = JSON.parse(event.data);
@@ -68,8 +71,7 @@ listenerMiddleware.startListening({
         return action.type.toString() === "market/stopStreaming";
       })
     ) {
-      wss.close();
-      listenerApi.cancel();
+      wss && wss.close();
     }
   },
   // Can cancel other running instances

@@ -56,7 +56,7 @@ export default function ChartPanel() {
     (state) => state.streaming.currency
   );
   useEffect(() => {
-    if (!streamMode) return;
+    if (!currentValue) return;
     // Update the last point of the series
     const chart = chartComponent.current.chart;
     const series = chart.series[0];

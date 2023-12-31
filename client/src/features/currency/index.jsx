@@ -50,11 +50,11 @@ function SkeletonGeneralInfo() {
 export default function Currency() {
   return (
     <BottomDrawer>
-      <Flex className="w-full h-full bg-blackest !rounded-xl border border-white/[0.5] border-dashed  ">
+      <Flex className=" bg-blackest container mx-auto ">
         <React.Suspense fallback={<SkeletonGeneralInfo />}>
           <GeneralInfo />
         </React.Suspense>
-        <Box className="w-8/12 p-5">
+        <Box className="w-8/12 p-5 ">
           <React.Suspense fallback={<ChartPanelSkeleton />}>
             <ChartPanel />
           </React.Suspense>

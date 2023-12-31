@@ -1,19 +1,30 @@
 //components
-import { Table, Thead, Tbody, Tr, Th, Td, Box } from "@chakra-ui/react";
-import Rank from "@/components/ui/Rank";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Box,
+  Text,
+  Flex,
+} from "@chakra-ui/react";
 import Trend from "@/components/ui/Trend";
 import Coin from "@/components/ui/Coin";
 import Price from "@/components/ui/Price";
 import Sparkline from "@/components/ui/Sparkline";
 //useHooks
 import { useDispatch, useSelector } from "react-redux";
-import { useRef, useLayoutEffect, useEffect } from "react";
+import { useEffect } from "react";
 import useInView from "@/hooks/useInView";
 import React from "react";
+import { useMediaQueries } from "@/hooks/useMediaQueries";
 //action
 import { stopStreaming, startStreaming } from "@/store/reducer/reducer.market";
 import { useGetTopCurrencies } from "../hooks/useGetTopCurrencies";
-const RealtimePriceCell = ({ symbol }) => {
+import useStickyTableHeader from "../hooks/useStickyTableHeader";
+const RealtimePriceCell = ({ symbol, fallbackValue }) => {
   const streamingPrice =
     useSelector((state) => state.market).streamingPrices || {};
   return (
@@ -21,7 +32,7 @@ const RealtimePriceCell = ({ symbol }) => {
       amount={
         streamingPrice.current
           ? streamingPrice.current[`${symbol}usdt`.toUpperCase()] || 0
-          : 0
+          : fallbackValue
       }
       currencyCode="USD"
       className="text-lightstar font-medium"
@@ -29,7 +40,7 @@ const RealtimePriceCell = ({ symbol }) => {
     />
   );
 };
-const RealtimeTrendCell = ({ symbol, ticker }) => {
+const RealtimeTrendCell = ({ symbol, ticker, fallbackValue }) => {
   const streamingPrice =
     useSelector((state) => state.market).streamingPrices || {};
   return (
@@ -37,44 +48,86 @@ const RealtimeTrendCell = ({ symbol, ticker }) => {
       value={
         streamingPrice[ticker]
           ? streamingPrice[ticker][`${symbol}usdt`.toUpperCase()]?.percent || 0
-          : 0
+          : fallbackValue
       }
     />
   );
 };
-const TopRealTimeCurrencies = React.forwardRef((props, ref) => {
-  const fixedTheadRef = useRef();
-  const relativeTheadRef = useRef();
-  const inView = useInView(ref);
-  const { topCurrencies } = useGetTopCurrencies({ pageIndex: 1 });
-  console.log("visible la", inView);
-  const dispatch = useDispatch();
-  inView && topCurrencies && dispatch(startStreaming({ topCurrencies }));
-  !inView && dispatch(stopStreaming());
-  useEffect(() => {
-    return () => dispatch(stopStreaming());
-  }, []);
+const SmartphoneOrTabletTopRealTimeCurrencies = ({
+  topCurrencies,
+  isTablet,
+}) => {
+  return (
+    <Flex className="flex-col gap-3 w-full">
+      {topCurrencies &&
+        topCurrencies.map(
+          ({
+            id,
+            name,
+            symbol,
+            image,
+            sparkline_in_7d,
+            price_change_percentage_24h,
+            current_price,
+          }) => (
+            <Flex className="justify-center p-5" key={id}>
+              <Coin
+                className="w-[100px]"
+                name={name}
+                shortName={symbol}
+                src={image}
+              />
+              <Flex className="flex-1 justify-center">
+                {isTablet && <Sparkline data={sparkline_in_7d.price} />}
+              </Flex>
+              <Flex className="flex-col gap-3 flex-end w-[150px] ">
+                <RealtimePriceCell
+                  symbol={symbol}
+                  fallbackValue={current_price}
+                />
+                <RealtimeTrendCell
+                  symbol={symbol}
+                  ticker={"hour"}
+                  fallbackValue={price_change_percentage_24h}
+                />
+              </Flex>
+            </Flex>
+          )
+        )}
+    </Flex>
+  );
+};
+const DesktopTopRealTimeCurrencies = ({ topCurrencies, isSmartphone }) => {
+  const TheadComponent = React.forwardRef((props, ref) => (
+    <Thead width="1121px" className={props.className} ref={ref}>
+      {props.children}
+    </Thead>
+  ));
+  TheadComponent.displayName = "TheadComponent";
+  const MemoizedThead = React.memo(TheadComponent);
 
+  // Usage
+  const { fixedTheadRef, relativeTheadRef } = useStickyTableHeader();
   const fixedThead = (
-    <Thead
-      width="1121px"
+    <MemoizedThead
       className="z-30 bg-blackest fixed top-[89px] invisible  w-[1121px]"
       ref={fixedTheadRef}
     >
       <Tr>
-        <Th className="min-w-[140.117px] text-left">Name</Th>
-        <Th className="min-w-[140.117px]">Price</Th>
-        <Th className="min-w-[140.117px]">1h</Th>
-        <Th className="min-w-[140.117px]">24h</Th>
-        <Th className="min-w-[140.117px]">Volumn</Th>
-        <Th className="min-w-[140.117px]">Cap</Th>
-        <Th className="min-w-[140.117px]">7days</Th>
+        <Th style={{ width: "196.175px" }} className="text-left">
+          Name
+        </Th>
+        <Th style={{ width: "196.175px" }}>Price</Th>
+        <Th style={{ width: "140.125px" }}>1h</Th>
+        <Th style={{ width: "140.125px" }}>24h</Th>
+        <Th style={{ width: "196.175px" }}>Volume</Th>
+        <Th style={{ width: "196.175px" }}>Cap</Th>
+        <Th style={{ width: "196.175px" }}>Last 7 days</Th>
       </Tr>
-    </Thead>
+    </MemoizedThead>
   );
   const relativeThead = (
-    <Thead
-      width="1121px"
+    <MemoizedThead
       className="z-30 bg-blackest relative top-0  w-[1121px]"
       ref={relativeTheadRef}
     >
@@ -87,63 +140,58 @@ const TopRealTimeCurrencies = React.forwardRef((props, ref) => {
         <Th colspan="2">Cap</Th>
         <Th colspan="2">Lasted 7 days</Th>
       </Tr>
-    </Thead>
+    </MemoizedThead>
   );
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0);
-    const Animate = relativeTheadRef.current.getBoundingClientRect().top;
-    const onScroll = () => {
-      if (window.scrollY > Animate) {
-        console.log(window.scrollY, Animate);
-        fixedTheadRef.current.style.visibility = "visible";
-        relativeTheadRef.current.style.visibility = "hidden";
-      } else {
-        fixedTheadRef.current.style.visibility = "hidden";
-        relativeTheadRef.current.style.visibility = "visible";
-      }
-    };
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
-    <Box
-      ref={ref}
-      className=" scroll-mt-[89px] w-full bg-blackest relative z-10 font-medium "
+    <Table
+      width="1121px"
+      variant="simple"
+      className="relative bg-blackest z-10  bg-blackest m-auto table-fixed"
     >
-      <Table
-        width="1121px"
-        variant="simple"
-        className="relative  bg-blackest z-10  bg-blackest m-auto table-fixed"
-      >
-        {fixedThead}
-        {relativeThead}
-        <Tbody>
-          {topCurrencies &&
-            topCurrencies.map((coin) => (
-              <Tr key={coin.id}>
+      {fixedThead}
+      {relativeThead}
+      <Tbody>
+        {topCurrencies &&
+          topCurrencies.map(
+            ({
+              id,
+              name,
+              symbol,
+              image,
+              total_volume,
+              market_cap,
+              sparkline_in_7d,
+              price_change_percentage_24h,
+              current_price,
+            }) => (
+              <Tr key={id}>
                 <Td className="text-left" colspan="2">
-                  {
-                    <Coin
-                      name={coin.name}
-                      shortName={coin.symbol}
-                      src={coin.image}
-                    />
-                  }
+                  {<Coin name={name} shortName={symbol} src={image} />}
                 </Td>
                 <Td colspan="2">
-                  <RealtimePriceCell symbol={coin.symbol} />
+                  <RealtimePriceCell
+                    symbol={symbol}
+                    fallbackValue={current_price}
+                  />
                 </Td>
                 <Td>
-                  <RealtimeTrendCell symbol={coin.symbol} ticker={"hour"} />
+                  <RealtimeTrendCell
+                    symbol={symbol}
+                    ticker={"hour"}
+                    fallbackValue={price_change_percentage_24h}
+                  />
                 </Td>
                 <Td>
-                  <RealtimeTrendCell symbol={coin.symbol} ticker={"day"} />
+                  <RealtimeTrendCell
+                    symbol={symbol}
+                    ticker={"day"}
+                    fallbackValue={price_change_percentage_24h}
+                  />
                 </Td>
                 <Td colspan="2">
                   {" "}
                   <Price
-                    amount={coin.total_volume}
+                    amount={total_volume}
                     currencyCode="USD"
                     className="text-lightstar font-medium text-xs"
                     currencyCodeClassName="hidden"
@@ -152,22 +200,56 @@ const TopRealTimeCurrencies = React.forwardRef((props, ref) => {
                 <Td colspan="2">
                   {" "}
                   <Price
-                    amount={coin.market_cap}
+                    amount={market_cap}
                     currencyCode="USD"
                     className="text-lightstar font-medium text-xs"
                     currencyCodeClassName="hidden"
                   />
                 </Td>
                 <Td colspan="2">
-                  {/*<Rank value={coin.market_cap_rank} />*/}
+                  {/*<Rank value={market_cap_rank} />*/}
 
-                  <Sparkline data={coin.sparkline_in_7d.price} />
+                  <Sparkline data={sparkline_in_7d.price} />
                 </Td>
               </Tr>
-            ))}
-        </Tbody>
-      </Table>
-    </Box>
+            )
+          )}
+      </Tbody>
+    </Table>
+  );
+};
+const TopRealTimeCurrencies = React.forwardRef((props, ref) => {
+  const inView = useInView(ref);
+  const { topCurrencies } = useGetTopCurrencies({ pageIndex: 1 });
+  const dispatch = useDispatch();
+  const { isSm, isMd } = useMediaQueries();
+  useEffect(() => {
+    inView && topCurrencies && dispatch(startStreaming({ topCurrencies }));
+    !inView && dispatch(stopStreaming());
+    // Cleanup function
+    return () => dispatch(stopStreaming());
+  }, [inView, topCurrencies]);
+
+  return (
+    <Flex
+      ref={ref}
+      className="border-t border-t-white/[0.2] border-dashed  scroll-mt-[89px] bg-blackest w-full mx-auto  flex-col gap-10 py-10 relative z-20 font-medium rounded-lg container mx-auto"
+    >
+      <Text
+        as="h2"
+        className="text-2xl block font-medium ml-20 w-full text-left"
+      >
+        Trending Categories
+      </Text>
+      {isMd ? (
+        <DesktopTopRealTimeCurrencies topCurrencies={topCurrencies} />
+      ) : (
+        <SmartphoneOrTabletTopRealTimeCurrencies
+          topCurrencies={topCurrencies}
+          isTablet={isSm}
+        />
+      )}
+    </Flex>
   );
 });
 TopRealTimeCurrencies.displayName = "TopRealTimeCurrencies";

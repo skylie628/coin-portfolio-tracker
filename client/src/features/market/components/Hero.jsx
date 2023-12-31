@@ -15,25 +15,27 @@ export default function Hero({ scrollToTopLists }) {
             <div className="stars"></div>
             <div className="twinkling"></div>
           </div>
-          <figure>
-            <img
-              className=" h-[400px] z-10 relative"
-              src={imagesHelper.hero_background}
-            />
-          </figure>
-          <HStack className="  w-full z-10">
-            <Heading className="!text-5xl text-2xl ml-0 md:ml-20 ">
-              <Text className="leading-normal">Stay</Text>
-              <Text className="leading-normal">Up-to-date</Text>
-              <Text className="leading-normal">With</Text>
-              <BrandName className="leading-normal !text-5xl" />
-            </Heading>
-            <ChevronDown
-              size="100"
-              color="gray"
-              className="block cursor-pointer m-auto"
-              onClick={scrollToTopLists}
-            />
+          <HStack className="container mx-auto">
+            <figure>
+              <img
+                className=" h-[400px] z-10 relative"
+                src={imagesHelper.hero_background}
+              />
+            </figure>
+            <HStack className="  w-full z-10">
+              <Heading className="!text-5xl text-2xl ml-0 md:ml-20 ">
+                <Text className="leading-normal">Stay</Text>
+                <Text className="leading-normal">Up-to-date</Text>
+                <Text className="leading-normal">With</Text>
+                <BrandName className="leading-normal !text-5xl" />
+              </Heading>
+              <ChevronDown
+                size="100"
+                color="gray"
+                className="block cursor-pointer m-auto"
+                onClick={scrollToTopLists}
+              />
+            </HStack>
           </HStack>
         </HStack>
       </section>

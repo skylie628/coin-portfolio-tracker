@@ -199,3 +199,18 @@ button:focus-visible {
     background-position: -10% 10%;
   }
 }
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #858484;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #524848;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

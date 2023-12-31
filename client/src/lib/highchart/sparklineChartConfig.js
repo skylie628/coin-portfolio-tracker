@@ -72,20 +72,6 @@ export const sparklineChartConfig = ({
         marker: {
           radius: 2,
         },
-        dataLabels: {
-          enabled: true,
-          useHTML: true,
-          formatter: function () {
-            var series = this.series;
-            // Check if this point is the last point in the series
-            if (this.point.index === series.data.length - 1) {
-              // If this is the last point, show the label
-              return '<div style="background-color:green; width:20px; height:20px; border-radius:100%;"></div>';
-            } else {
-              return "";
-            }
-          },
-        },
       },
     ],
     chart: {
