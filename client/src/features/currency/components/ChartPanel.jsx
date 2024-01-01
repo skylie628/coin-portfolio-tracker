@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Text, VStack } from "@chakra-ui/react";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import Price from "@/components/ui/Price";
@@ -75,18 +75,19 @@ export default function ChartPanel() {
   }, [currentValue]);
 
   return (
-    <Flex className="w-full flex-col">
-      <Flex className="w-full h-[500px] justify-center items-center">
+    <VStack className="w-full flex-col gap-5 h-full shrink-0 overflow-y-scroll ">
+      <Flex className="relative w-full justify-center items-center">
         <HighchartsReact
           ref={chartComponent}
-          className="m-auto flex-1 !w-full !h-full"
+          className="m-auto flex-1 "
           highcharts={Highcharts}
           options={sparklineChartConfig({ data: historyPriceData })}
+          containerProps={{ style: { width: "100%" } }}
         />
       </Flex>
-      <Flex className="gap-2 justify-start items-start px-20 w-full flex-col">
+      <Flex className="gap-2 justify-start items-start p-10 md:px-20 md:py-10 w-full flex-col ">
         <h3>Price Performance.</h3>
-        <Flex className="gap-20 w-full">
+        <Flex className="flex-col gap-5 md:flex-row md:gap-20 w-full">
           <InfoBlock
             title="All time high"
             amount={ath}
@@ -101,6 +102,6 @@ export default function ChartPanel() {
           />
         </Flex>
       </Flex>
-    </Flex>
+    </VStack>
   );
 }

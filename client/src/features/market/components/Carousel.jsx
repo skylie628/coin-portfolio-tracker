@@ -10,8 +10,8 @@ function Carousel() {
   let carousels = topCurrencies.slice(0, 10);
   carousels = [...carousels, ...carousels];
   return (
-    <div className="p-0 w-full bg-orange">
-      <Box className="overflow-hidden bg-orange container mx-auto ">
+    <div className="p-0 bg-orange">
+      <div className="overflow-hidden bg-orange container mx-auto ">
         <Flex
           color="silver"
           className="p-2 flex-nowrap justify-center items-center slider-carousel "
@@ -39,7 +39,7 @@ function Carousel() {
         </Flex>
 
         <Divider colorScheme="gray" size="1" variant="dashed" />
-      </Box>
+      </div>
     </div>
   );
 }

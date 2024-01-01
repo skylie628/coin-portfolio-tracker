@@ -99,7 +99,7 @@ export default function GeneralInfo() {
     };
   }, [symbol]);
   return (
-    <Flex className="p-5 items-start justify-start gap-5 flex-col w-4/12 border-r border-1 border-white/[0.2]">
+    <Flex className="p-5 items-start justify-start gap-5 flex-col w-full xl:w-4/12 border-r border-1 border-white/[0.2]">
       <HStack className="w-full ">
         <Flex gap="3" className="justify-center items-center">
           <img className="w-[30px] h-[30px] rounded-full" src={image} />

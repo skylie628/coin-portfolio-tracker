@@ -78,7 +78,7 @@ export const sparklineChartConfig = ({
       type: "line",
       height: "70%",
       backgroundColor: "transparent",
-      width: 600,
+      width: null,
       events: {
         render: function () {
           const chart = this,

@@ -2,10 +2,12 @@ import { Flex } from "@chakra-ui/react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useSelector } from "react-redux";
+import { useRef } from "react";
 export default function ChartView() {
   const { chartType, chartValues: preChartValues } = useSelector(
     (state) => state.chart
   );
+  const chartComponent = useRef(null);
   //high chart mutate redux state causing error
   const chartValues = JSON.parse(JSON.stringify(preChartValues));
   const chartOptions =
@@ -13,7 +15,8 @@ export default function ChartView() {
       ? {
           chart: {
             type: "pie",
-            backgroundColor: "rgb(30 41 59)",
+            backgroundColor: "#020617",
+            width: null,
           },
           title: {
             text: "Slice of the pie",
@@ -43,6 +46,7 @@ export default function ChartView() {
           chart: {
             type: "line",
             backgroundColor: "rgb(30 41 59)",
+            height: null,
           },
           labels: {
             formatter() {
@@ -107,12 +111,17 @@ export default function ChartView() {
             data: variable.value,
           })),
         };
-  console.log("options", chartOptions);
   return (
-    <Flex className="bg-slate-800 w-full justify-center items-center relative">
-      {chartValues.length > 0 && (
-        <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-      )}
+    <Flex className="blackest py-5 md:py-20 w-full flex justify-center items-center relative ">
+      <div className="w-full h-full">
+        {chartValues.length > 0 && (
+          <HighchartsReact
+            ref={chartComponent}
+            highcharts={Highcharts}
+            options={chartOptions}
+          />
+        )}
+      </div>
     </Flex>
   );
 }

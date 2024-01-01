@@ -55,7 +55,7 @@ export default function Header() {
           />
         </Flex>
         <Divider />
-        <MobileHeader isOpen={isHamburgerOpen} />
+        <MobileHeader isOpen={isHamburgerOpen} setIsOpen={setIsHamburgerOpen} />
       </div>
     </>
   );

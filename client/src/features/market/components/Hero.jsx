@@ -8,17 +8,17 @@ export default function Hero({ scrollToTopLists }) {
     <>
       <section
         spacing={"100px"}
-        className="z-0 sticky top-[89px]  text-left bg-blackest  py-10 "
+        className="z-0 sticky top-[89px]  text-left bg-blackest w-full overflow-hidden  py-10 "
       >
         <HStack className="relative w-full ">
           <div className=".stars-container z-0">
             <div className="stars"></div>
             <div className="twinkling"></div>
           </div>
-          <HStack className="container mx-auto">
+          <HStack className="container mx-auto w-full">
             <figure>
               <img
-                className=" h-[400px] z-10 relative"
+                className=" h-[400px] z-10 relative mr-auto"
                 src={imagesHelper.hero_background}
               />
             </figure>

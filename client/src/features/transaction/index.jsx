@@ -65,7 +65,11 @@ export default function TransactionsList() {
 
         <VStack className="w-10/12 p-3 ml-auto mr-auto">
           <Grid
-            templateColumns="repeat(4, 1fr)"
+            templateColumns={{
+              base: "repeat(1, 1fr)",
+              md: "repeat(2, 1fr)",
+              lg: "repeat(4, 1fr)",
+            }}
             className="w-full p-5 gap-3  items-start text-lightstar"
           >
             <Stats

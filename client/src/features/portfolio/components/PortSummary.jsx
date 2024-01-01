@@ -50,10 +50,10 @@ export default function PortSummary({ setIsOpen }) {
 
   return (
     <>
-      <Flex className="py-5 flex-1  flex gap-5  bg-blackest w-full ">
+      <Flex className="py-5 flex-1  flex gap-5  bg-blackest w-full flex-col lg:flex-row">
         <Flex className="flex-1 flex-col items-start px-10 gap-5">
           <Grid
-            templateColumns="repeat(2, 1fr)"
+            templateColumns={{ base: "repeat(1, 1fr)", xl: "repeat(2, 1fr)" }}
             className=" gap-3 w-full items-start text-lightstar"
           >
             <Stats

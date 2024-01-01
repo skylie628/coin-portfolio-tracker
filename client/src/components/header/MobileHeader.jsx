@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { menuItems } from "./Nav";
-export default function MobileHeader({ isOpen }) {
+export default function MobileHeader({ isOpen, setIsOpen }) {
   const isLogged = useSelector((state) => state.user.isLogged);
   useEffect(() => {
     if (isOpen) {
@@ -23,7 +23,9 @@ export default function MobileHeader({ isOpen }) {
       animate={{ opacity: isOpen ? 1 : 0 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className=" md:hidden block absolute w-full h-full text-left font-bold bg-blackest min-h-screen pt-[89px] z-[15] text-left  "
+      className={`md:hidden block absolute w-full h-full text-left font-bold bg-blackest min-h-screen pt-[89px] ${
+        isOpen ? "z-[15]" : "z-0 pointer-events-none"
+      } text-left `}
     >
       <VStack
         className="h-full border-t border-t-1 text-xl border-t-lightstar/[0.5] overflow-y-auto custom-scrollbar"
@@ -34,7 +36,11 @@ export default function MobileHeader({ isOpen }) {
             key={index}
             className="text-left border-b boder-b-1 border-dashed w-full p-5 cursor-pointer hover:text-orange border-b-lightstar/[0.5]"
           >
-            <Link className=" font-bold text-lg" to={item.path}>
+            <Link
+              className=" font-bold text-lg"
+              to={item.path}
+              onClick={() => setIsOpen(false)}
+            >
               {item.name}
             </Link>
           </Box>

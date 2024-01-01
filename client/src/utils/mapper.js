@@ -11,7 +11,7 @@ const mapper = {
         coin.item?.data?.content?.description || coin.item.name,
         2
       ),
-      to: `/dashboard/currencies/${coin.item.id}`,
+      to: `/market/currencies/${coin.item.id}`,
       data: {
         coin_id: coin.item.coin_id,
         sparkline: coin.item?.data?.sparkline,

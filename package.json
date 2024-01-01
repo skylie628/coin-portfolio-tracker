@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "numeral": "^2.0.6",
-    "react-helmet": "^6.1.0",
-    "react-hook-form": "^7.48.2",
-    "react-responsive": "^9.0.2"
-  }
-}

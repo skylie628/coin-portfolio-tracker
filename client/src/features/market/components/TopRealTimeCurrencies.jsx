@@ -231,25 +231,27 @@ const TopRealTimeCurrencies = React.forwardRef((props, ref) => {
   }, [inView, topCurrencies]);
 
   return (
-    <Flex
-      ref={ref}
-      className="border-t border-t-white/[0.2] border-dashed  scroll-mt-[89px] bg-blackest w-full mx-auto  flex-col gap-10 py-10 relative z-20 font-medium rounded-lg container mx-auto"
-    >
-      <Text
-        as="h2"
-        className="text-2xl block font-medium ml-20 w-full text-left"
+    <section className="w-full bg-blackest">
+      <Flex
+        ref={ref}
+        className="border-t border-t-white/[0.2] border-dashed  scroll-mt-[89px] bg-blackest flex-col gap-10 py-10 relative z-20 font-medium rounded-lg container mx-auto overflow-hidden"
       >
-        Trending Categories
-      </Text>
-      {isMd ? (
-        <DesktopTopRealTimeCurrencies topCurrencies={topCurrencies} />
-      ) : (
-        <SmartphoneOrTabletTopRealTimeCurrencies
-          topCurrencies={topCurrencies}
-          isTablet={isSm}
-        />
-      )}
-    </Flex>
+        <Text
+          as="h2"
+          className="text-2xl block font-medium ml-20 w-full text-left"
+        >
+          Trending Categories
+        </Text>
+        {isMd ? (
+          <DesktopTopRealTimeCurrencies topCurrencies={topCurrencies} />
+        ) : (
+          <SmartphoneOrTabletTopRealTimeCurrencies
+            topCurrencies={topCurrencies}
+            isTablet={isSm}
+          />
+        )}
+      </Flex>
+    </section>
   );
 });
 TopRealTimeCurrencies.displayName = "TopRealTimeCurrencies";
