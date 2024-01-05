@@ -42,7 +42,7 @@ export default function Statistic() {
         />
         <QueryCenter />
       </Flex>
-      <div className="block md:b fixed bottom-[50px] right-[30px] w-[50px] h-[50px] flex justify-center items-center rounded-lg bg-orange">
+      <div className="block md:hidden fixed bottom-[50px] right-[30px] w-[50px] h-[50px] flex justify-center items-center rounded-lg bg-orange">
         <SlidersHorizontal
           className="cursor-pointer"
           color="black"

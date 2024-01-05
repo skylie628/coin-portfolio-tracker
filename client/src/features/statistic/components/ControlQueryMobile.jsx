@@ -1,15 +1,16 @@
 import { Flex, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BottomDrawer from "@/components/layout/BottomDrawer";
 import { ControlCenterItems } from "./ControlCenter";
 import { QueryCenterItem } from "./QueryCenter";
-import clsx from "clsx";
 export default function ControlQueryMobile({ isOpen, setIsOpen }) {
   const [isControlCenter, setIsControlCenter] = useState(false);
-
   const handleTakeActionClick = () => {
     setIsControlCenter((prev) => !prev);
   };
+  useEffect(() => {
+    !isOpen && setIsControlCenter(false);
+  }, [isOpen]);
   const isLink = "text-orange cursor-pointer";
   return (
     <BottomDrawer isOpen={isOpen} setIsOpen={setIsOpen}>

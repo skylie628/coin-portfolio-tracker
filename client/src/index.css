@@ -126,11 +126,11 @@ button:focus-visible {
   bottom: 0;
   z-index: 2;
 
-  -moz-animation: move-background 70s linear infinite;
-  -ms-animation: move-background 70s linear infinite;
-  -o-animation: move-background 70s linear infinite;
-  -webkit-animation: move-background 70s linear infinite;
-  animation: move-background 70s linear infinite;
+  -moz-animation: move-background 30s linear infinite;
+  -ms-animation: move-background 30s linear infinite;
+  -o-animation: move-background 30s linear infinite;
+  -webkit-animation: move-background 30s linear infinite;
+  animation: move-background 30s linear infinite;
 }
 .shadow-moonlight {
   box-shadow: 0px 0px 20px 1px rgba(245, 158, 11, 0.3);
