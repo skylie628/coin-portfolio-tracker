@@ -4,24 +4,26 @@ require("dotenv").config();
 console.log(process.env.REDIS_URL);
 const client = new Redis({
   host: process.env.REDIS_URL,
-  port: 13120,
-  password: "IYvXmQk8GYlLhFkeb98KtZFr7zEyMCGv",
+  port: process.env.REDIS_PORT,
+  password: process.env.REDIS_PASSWORD,
 });
 
 exports.handler = async (event) => {
   try {
-    const cachedValue = await client.get("topSearchTrending");
+    /*const cachedValue = await client.get("topSearchTrending");
     rst = JSON.parse(cachedValue);
-    console.log(rst);
+    console.log(rst);*/
+    //get top trending search
     const topSearchTrending = await axios
-      .get("https://api.coingecko.com/api/v3/search/trending")
+      .get(`${process.env.COINGECKO_API_URL}/search/trending`)
       .then((res) => ({
         time: new Date().getTime().toLocaleString(),
         coins: res.data.coins.slice(0, 10),
         categories: res.data.categories.slice(0, 4),
       }));
+    //get top market cap
     const topMarketCap = await axios
-      .get("https://api.coingecko.com/api/v3/coins/markets", {
+      .get(`${process.env.COINGECKO_API_URL}/coins/markets`, {
         params: {
           vs_currency: "usd",
           order: "market_cap_desc",
@@ -49,3 +51,5 @@ exports.handler = async (event) => {
     return;
   }
 };
+
+exports.handler();

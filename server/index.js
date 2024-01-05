@@ -25,8 +25,10 @@ app.use(cors(corsOptions));
 //route
 const variablesRoute = require("./route/variable.route");
 const userRoute = require("./route/user.route");
+const coinRoute = require("./route/coin.route");
 app.use("/api/variable", variablesRoute);
 app.use("/api/user", userRoute);
+app.use("/api/coin", coinRoute);
 //start the server
 app.listen(port, () => {
   console.log("listen to port ", port);

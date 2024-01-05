@@ -15,7 +15,7 @@ const TrendingCurrencies = React.lazy(() =>
   import("./components/TrendingCurrencies")
 );
 const TrendingCategories = React.lazy(() =>
-  import("./components/trendingCategories")
+  import("./components/TrendingCategories")
 );
 //usehooks
 import { useRef } from "react";

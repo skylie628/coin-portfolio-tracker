@@ -1,19 +1,10 @@
-import React from "react";
-import { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
 // component
 import {
-  HStack,
-  Select,
   Modal as ChakraModal,
   ModalContent,
   ModalHeader,
   ModalOverlay,
   ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Text,
-  Button,
 } from "@chakra-ui/react";
 export const Overlay = () => (
   <ModalOverlay
@@ -25,15 +16,8 @@ export default function Modal({
   isOpen,
   setIsOpen = () => {},
   title,
-  cta,
   children,
 }) {
-  const dispatch = useDispatch();
-  const selectRef = useRef();
-
-  const onSubmit = () => {
-    setIsOpen(false);
-  };
   const onClose = () => {
     setIsOpen(false);
   };
