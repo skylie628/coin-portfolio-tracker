@@ -1,13 +1,13 @@
-import { axiosCoingecko } from "@/lib/axios";
-export const getCurrencyDetail = async ({ id }) => {
+import noInterceptInstance from "@/lib/axios";
+export const getCurrencyDetail = async ({ coinId }) => {
   try {
-    const marketInfo = await axiosCoingecko.get("/coins/markets", {
+    const marketInfo = await noInterceptInstance.get(`/coin/${coinId}`, {
       params: {
-        vs_currency: "usd",
-        ids: id,
+        quoteCurrency: "usd",
       },
     });
-    return { currencyDetail: marketInfo?.data[0] };
+    console.log(marketInfo);
+    return { currencyDetail: marketInfo?.data?.data || {} };
   } catch (err) {
     throw new Error("Unable to fetch trending coins");
   }

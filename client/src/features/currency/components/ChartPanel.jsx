@@ -10,9 +10,11 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useGetCurrencyDetail } from "@/features/currency/hooks/useGetCurrencyDetail";
+
 //others
 import abbreviateNumber from "@/utils/abbreviateNumber";
 import { sparklineChartConfig } from "@/lib/highchart/sparklineChartConfig";
+
 function InfoBlock({ title, amount, date, trend }) {
   return (
     <Flex className="flex-col flex-1">
@@ -40,7 +42,7 @@ export default function ChartPanel() {
     data: detailData,
     error,
     isLoading,
-  } = useGetCurrencyDetail({ id: coinId });
+  } = useGetCurrencyDetail({ coinId });
   const {
     ath,
     ath_change_percentage,
@@ -51,7 +53,8 @@ export default function ChartPanel() {
   } = detailData.currencyDetail || {};
 
   const { data: historyPriceData, isLoading: isChartLoading } =
-    useGetHistoryPrice({ id: coinId });
+    useGetHistoryPrice({ coinId });
+  
   const { currentValue, streamMode } = useSelector(
     (state) => state.streaming.currency
   );
@@ -73,7 +76,6 @@ export default function ChartPanel() {
       });
     }
   }, [currentValue]);
-
   return (
     <VStack className="w-full flex-col gap-5 h-full shrink-0 overflow-y-scroll ">
       <Flex className="relative w-full justify-center items-center">

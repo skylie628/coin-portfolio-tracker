@@ -1,19 +1,19 @@
-import { axiosCoingecko } from "@/lib/axios";
-export const getHistoryPrice = async ({ id }) => {
+import { noInterceptInstance } from "@/lib/axios";
+import mapper from "@/utils/mapper";
+export const getHistoryPrice = async ({ coinId }) => {
   try {
-    const historyPriceInfo = await axiosCoingecko.get(
-      `coins/${id}/market_chart`,
-      {
-        params: {
-          vs_currency: "usd",
-          days: 365,
-          interval: "daily",
-        },
-      }
+    const historyPriceInfo = await noInterceptInstance.get(`coin/history`, {
+      params: {
+        coinId: coinId.toLowerCase(),
+        quoteCurrency: "usd",
+        period: "year",
+      },
+    });
+    console.log(
+      mapper.historyPrice(historyPriceInfo?.data?.data?.prices || [])
     );
-    console.log(historyPriceInfo);
-    return historyPriceInfo?.data?.prices || [];
+    return mapper.historyPrice(historyPriceInfo?.data?.data?.prices || []);
   } catch (err) {
-    throw new Error("Unable to fetch trending coins");
+    throw new Error("Unable to fetch history price", err);
   }
 };

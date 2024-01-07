@@ -10,10 +10,7 @@ const client = new Redis({
 
 exports.handler = async (event) => {
   try {
-    /*const cachedValue = await client.get("topSearchTrending");
-    rst = JSON.parse(cachedValue);
-    console.log(rst);*/
-    //get top trending search
+    //Get top trending search
     const topSearchTrending = await axios
       .get(`${process.env.COINGECKO_API_URL}/search/trending`)
       .then((res) => ({
@@ -21,7 +18,8 @@ exports.handler = async (event) => {
         coins: res.data.coins.slice(0, 10),
         categories: res.data.categories.slice(0, 4),
       }));
-    //get top market cap
+    topSearchTrending.coins = topSearchTrending.coins.slice(0, 8);
+    //Get top market cap
     const topMarketCap = await axios
       .get(`${process.env.COINGECKO_API_URL}/coins/markets`, {
         params: {
@@ -32,9 +30,28 @@ exports.handler = async (event) => {
           sparkline: true,
         },
       })
+      .then((res) => res.data || []);
+
+    //Get currency detail
+    const currenciesDetail = await axios
+      .get(`${process.env.COINGECKO_API_URL}/coins/markets`, {
+        params: {
+          vs_currency: "usd",
+          ids: topSearchTrending.coins.map((coin) => coin.item.id).join(","),
+        },
+      })
       .then((res) => res.data);
-    // Cache the data in Redis for 10 minutes
-    console.log("Caching trending search data in Redis");
+    // Cache market data to redis
+    console.log(currenciesDetail);
+    // Prepare an array of keys and values for MSET
+    const kvArray = [];
+    for (const coin of [...currenciesDetail, ...topMarketCap]) {
+      kvArray.push(`market:${coin.id}`);
+      kvArray.push(JSON.stringify(coin));
+    }
+    // Use MSET to set all keys and values in one call
+    await client.mset(...kvArray);
+    //cache top search trending data to redis
     await client.set(
       "topSearchTrending",
       JSON.stringify(topSearchTrending),
@@ -43,6 +60,7 @@ exports.handler = async (event) => {
     );
     console.log("Cached trending search data in Redis");
     console.log("Caching market data in Redis");
+    //cache top market cap data to redis
     await client.set("topMarketCap", JSON.stringify(topMarketCap), "EX", 600);
     console.log("Cached market data in Redis");
     return;

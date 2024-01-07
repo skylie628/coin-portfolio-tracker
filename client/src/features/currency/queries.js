@@ -1,9 +1,9 @@
 import { getCurrencyDetail } from "./api/getCurrencyDetail";
 import { getHistoryPrice } from "./api/getHistoryPrice";
-export const getCurrencyDetailQuery = ({ id }) => {
+export const getCurrencyDetailQuery = ({ coinId }) => {
   return {
-    queryKey: ["currencyDetail", id],
-    queryFn: () => getCurrencyDetail({ id }),
+    queryKey: ["currencyDetail", coinId],
+    queryFn: () => getCurrencyDetail({ coinId }),
     retry: 1,
     refetchOnWindowFocus: true,
     refetchOnReconnect: true,
@@ -13,10 +13,10 @@ export const getCurrencyDetailQuery = ({ id }) => {
     useErrorBoundary: true,
   };
 };
-export const getHistoryPriceQuery = ({ id }) => {
+export const getHistoryPriceQuery = ({ coinId }) => {
   return {
-    queryKey: ["currencyPriceHistory", id],
-    queryFn: () => getHistoryPrice({ id }),
+    queryKey: ["currencyPriceHistory", coinId],
+    queryFn: () => getHistoryPrice({ coinId }),
     retry: 1,
     refetchOnWindowFocus: true,
     refetchOnReconnect: true,

@@ -69,11 +69,9 @@ const SocialVariants = [
 ];
 export default function GeneralInfo() {
   const { coinId } = useParams();
-  const {
-    data: detailData,
-    error,
-    isLoading,
-  } = useGetCurrencyDetail({ id: coinId });
+  console.log("coinId la", coinId);
+  const { data: detailData } = useGetCurrencyDetail({ coinId });
+  console.log(detailData);
   const dispatch = useDispatch();
   const {
     image,
@@ -99,49 +97,57 @@ export default function GeneralInfo() {
     };
   }, [symbol]);
   return (
-    <Flex className="p-5 items-start justify-start gap-5 flex-col w-full xl:w-4/12 border-r border-1 border-white/[0.2]">
-      <HStack className="w-full ">
-        <Flex gap="3" className="justify-center items-center">
-          <img className="w-[30px] h-[30px] rounded-full" src={image} />
-          <Text className="font-bold text-2xl ">{name}</Text>
-          <Text className="font-medium text-2xl text-dimgray ">
-            {symbol.toUpperCase()}
-          </Text>
-        </Flex>
-      </HStack>
-      <HStack>
-        <StreamingPrice cachedPrice={current_price} />
-        <Trend value={price_change_percentage_24h} ticket="1d" />
-      </HStack>
-      <InfoRow
-        name="Market cap"
-        renderValue={() => (
-          <HStack>
-            <Trend value={market_cap_change_percentage_24h} />
-            <Price
-              className=" font-bold text-sm"
-              amount={market_cap}
-              currencyCodeClassName="hidden"
-              currencyCode="USD"
-            />
+    <>
+      {symbol && (
+        <Flex className="p-5 items-start justify-start gap-5 flex-col w-full xl:w-4/12 border-r border-1 border-white/[0.2]">
+          <HStack className="w-full ">
+            <Flex gap="3" className="justify-center items-center">
+              <img className="w-[30px] h-[30px] rounded-full" src={image} />
+              <Text className="font-bold text-2xl ">{name}</Text>
+              <Text className="font-medium text-2xl text-dimgray ">
+                {symbol.toUpperCase()}
+              </Text>
+            </Flex>
           </HStack>
-        )}
-      />
-      {renderPriceInfoRow("Total Volumn", total_volume, "USD")}
-      {renderPriceInfoRow(
-        "Circulating supply",
-        circulating_supply,
-        symbol.toUpperCase()
+          <HStack>
+            <StreamingPrice cachedPrice={current_price} />
+            <Trend value={price_change_percentage_24h} ticket="1d" />
+          </HStack>
+          <InfoRow
+            name="Market cap"
+            renderValue={() => (
+              <HStack>
+                <Trend value={market_cap_change_percentage_24h} />
+                <Price
+                  className=" font-bold text-sm"
+                  amount={market_cap}
+                  currencyCodeClassName="hidden"
+                  currencyCode="USD"
+                />
+              </HStack>
+            )}
+          />
+          {renderPriceInfoRow("Total Volumn", total_volume, "USD")}
+          {renderPriceInfoRow(
+            "Circulating supply",
+            circulating_supply,
+            symbol.toUpperCase()
+          )}
+          {renderPriceInfoRow(
+            "Total supply",
+            total_supply,
+            symbol.toUpperCase()
+          )}
+          {renderPriceInfoRow("Max. supply", max_supply, symbol.toUpperCase())}
+          {renderPriceInfoRow(
+            "Fully diluted market cap",
+            fully_diluted_valuation,
+            symbol.toUpperCase()
+          )}
+          <TagSection title="Official Links" variants={OfficalLinkVariants} />
+          <TagSection title="Socials" variants={SocialVariants} />
+        </Flex>
       )}
-      {renderPriceInfoRow("Total supply", total_supply, symbol.toUpperCase())}
-      {renderPriceInfoRow("Max. supply", max_supply, symbol.toUpperCase())}
-      {renderPriceInfoRow(
-        "Fully diluted market cap",
-        fully_diluted_valuation,
-        symbol.toUpperCase()
-      )}
-      <TagSection title="Official Links" variants={OfficalLinkVariants} />
-      <TagSection title="Socials" variants={SocialVariants} />
-    </Flex>
+    </>
   );
 }
