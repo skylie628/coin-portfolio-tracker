@@ -43,5 +43,12 @@ export const chakraTheme = extendTheme({
         },
       },
     },
+    Tab: {
+      variants: {
+        "soft-rounded": {
+          borderRadius: "5px", // Customize the border radius here
+        },
+      },
+    },
   },
 });

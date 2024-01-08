@@ -22,6 +22,7 @@ module.exports = {
 
   getHistory: async ({ coinId, quoteCurrency, period }) => {
     let expireTime = 5 * 60;
+    console.log(period);
     const tag = `histo${period}${coinId}`;
     let days = 0;
     switch (period) {
@@ -32,9 +33,11 @@ module.exports = {
       case "month":
         expireTime = 30 * 60;
         days = 90;
+        break;
       case "year":
         expireTime = 12 * 60 * 60;
         days = 365;
+        break;
     }
     const url = `${process.env.COINGECKO_API_URL}/coins/${coinId}/market_chart`;
     const params = {

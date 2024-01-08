@@ -30,8 +30,10 @@ const mapper = {
       },
     })),
   historyPrice: (historyPrice) => {
-    console.log("historyPrice", historyPrice);
-    return historyPrice;
+    return {
+      price: historyPrice.prices,
+      cap: (historyPrice.market_caps || []).filter((coin) => coin[1] !== 0),
+    };
   },
 };
 

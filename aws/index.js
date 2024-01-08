@@ -42,7 +42,10 @@ exports.handler = async (event) => {
       })
       .then((res) => res.data);
     // Cache market data to redis
-    console.log(currenciesDetail);
+    console.log(
+      currenciesDetail,
+      topSearchTrending.coins.map((coin) => coin.item.id).join(",")
+    );
     // Prepare an array of keys and values for MSET
     const kvArray = [];
     for (const coin of [...currenciesDetail, ...topMarketCap]) {

@@ -47,6 +47,7 @@ export const sparklineChartConfig = ({
       gridLineWidth: 1,
       gridLineColor: "rgba(255,255,255,0.1)",
       labels: {
+        x: 30, // Move labels 15 pixels to the left
         style: {
           fontWeight: "900",
           fontSize: "12px",
@@ -83,7 +84,7 @@ export const sparklineChartConfig = ({
         render: function () {
           const chart = this,
             renderer = this.renderer,
-            pathStr = "M0 12 L12 0 L64 0 L64 24 L12 24 Z",
+            pathStr = "M0 0 L100 0 L100 24 L0 24 Z",
             path = pathStr.split(" "),
             points = this.series[0].points,
             lastPoint = points[points.length - 1];
@@ -94,6 +95,7 @@ export const sparklineChartConfig = ({
               .attr({
                 fill: "#193",
               })
+              .translate(0, -10)
               .add();
           }
           if (!chart.labelTxt) {

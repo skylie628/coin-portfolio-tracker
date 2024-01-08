@@ -1,20 +1,36 @@
-import { Flex, Text, VStack } from "@chakra-ui/react";
-import HighchartsReact from "highcharts-react-official";
-import Highcharts from "highcharts";
+import { Flex, Text, VStack, Tabs, Tab, TabList } from "@chakra-ui/react";
 import Price from "@/components/ui/Price";
 import Trend from "@/components/ui/Trend";
+import { Suspense } from "react";
+import Skeleton from "@/components/ui/Skeleton";
+import ChartView from "./ChartView";
+import ButtonsGroup from "@/components/ui/ButtonsGroup";
 //hooks
-import { useGetHistoryPrice } from "@/features/currency/hooks/useGetHistoryPrice";
 import { useRef } from "react";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useState } from "react";
 import { useGetCurrencyDetail } from "@/features/currency/hooks/useGetCurrencyDetail";
 
-//others
-import abbreviateNumber from "@/utils/abbreviateNumber";
-import { sparklineChartConfig } from "@/lib/highchart/sparklineChartConfig";
-
+const ChartPanelSkeleton = () => (
+  <Flex className="relative w-full h-[400px] justify-center items-center md:px-20">
+    <Skeleton className="m-auto flex-1 !w-full !h-full" />
+  </Flex>
+);
+const InfoBlocksSkeleton = () => (
+  <Flex className="gap-2 justify-start items-start px-20 w-full flex-col">
+    <Skeleton height="20px" width="200px" />
+    <Flex className="gap-20 w-full">
+      <Flex className="flex-col gap-2">
+        <Skeleton height="20px" width="200px" />
+        <Skeleton height="20px" width="200px" />
+      </Flex>
+      <Flex className="flex-col gap-2">
+        <Skeleton height="20px" width="200px" />
+        <Skeleton height="20px" width="200px" />
+      </Flex>
+    </Flex>
+  </Flex>
+);
 function InfoBlock({ title, amount, date, trend }) {
   return (
     <Flex className="flex-col flex-1">
@@ -37,6 +53,8 @@ function InfoBlock({ title, amount, date, trend }) {
 }
 export default function ChartPanel() {
   const chartComponent = useRef(null);
+  const [yAxisMeasure, setYAxisMeasure] = useState(() => "price");
+  const [timeRange, setTimeRange] = useState(() => "year");
   const { coinId } = useParams();
   const {
     data: detailData,
@@ -44,6 +62,7 @@ export default function ChartPanel() {
     isLoading,
   } = useGetCurrencyDetail({ coinId });
   const {
+    name,
     ath,
     ath_change_percentage,
     ath_date,
@@ -52,58 +71,53 @@ export default function ChartPanel() {
     atl_date,
   } = detailData.currencyDetail || {};
 
-  const { data: historyPriceData, isLoading: isChartLoading } =
-    useGetHistoryPrice({ coinId });
-  
-  const { currentValue, streamMode } = useSelector(
-    (state) => state.streaming.currency
-  );
-  useEffect(() => {
-    if (!currentValue) return;
-    // Update the last point of the series
-    const chart = chartComponent.current.chart;
-    const series = chart.series[0];
-    // Get the current date as a timestamp
-    const currentDate = new Date().getTime();
-    console.log("current value", currentValue);
-    const lastPoint = series.data[series.data.length - 1];
-    // Update the last point with the new price and the current date
-    lastPoint.update([currentDate, parseFloat(currentValue)], true);
-    // Update the labelTxt with the new price
-    if (chart.labelTxt) {
-      chart.labelTxt.attr({
-        text: abbreviateNumber(parseFloat(currentValue)),
-      });
-    }
-  }, [currentValue]);
   return (
-    <VStack className="w-full flex-col gap-5 h-full shrink-0 overflow-y-scroll ">
-      <Flex className="relative w-full justify-center items-center">
-        <HighchartsReact
-          ref={chartComponent}
-          className="m-auto flex-1 "
-          highcharts={Highcharts}
-          options={sparklineChartConfig({ data: historyPriceData })}
-          containerProps={{ style: { width: "100%" } }}
+    <VStack className="w-full flex-col gap-5 h-full shrink-0  ">
+      <h2 className="text-lg mr-auto md:px-20 font-bold text-metaldark">
+        {" "}
+        {name.toUpperCase()} Price Chart
+      </h2>
+      <Flex className="py-3 w-full justify-between items-center md:px-20">
+        <ButtonsGroup
+          value={yAxisMeasure}
+          values={["price", "cap"]}
+          labels={["Price", "Market Caps"]}
+          handleOnChange={(value) => setYAxisMeasure(value)}
+        />
+        <ButtonsGroup
+          value={timeRange}
+          values={["day", "month", "year"]}
+          labels={["1D", "3M", "1Y"]}
+          handleOnChange={(value) => setTimeRange(value)}
         />
       </Flex>
-      <Flex className="gap-2 justify-start items-start p-10 md:px-20 md:py-10 w-full flex-col ">
-        <h3>Price Performance.</h3>
-        <Flex className="flex-col gap-5 md:flex-row md:gap-20 w-full">
-          <InfoBlock
-            title="All time high"
-            amount={ath}
-            date={ath_date}
-            trend={ath_change_percentage}
-          />
-          <InfoBlock
-            title="All time low"
-            amount={atl}
-            date={atl_date}
-            trend={atl_change_percentage}
-          />
+      <Suspense fallback={<ChartPanelSkeleton />}>
+        <ChartView
+          ref={chartComponent}
+          coinId={coinId}
+          timeRange={timeRange}
+          yAxisMeasure={yAxisMeasure}
+        />
+      </Suspense>
+      <Suspense fallback={<InfoBlocksSkeleton />}>
+        <Flex className="gap-2 justify-start items-start p-10 md:px-20 md:py-10 w-full flex-col ">
+          <h3>Price Performance.</h3>
+          <Flex className="py-10 flex-col gap-5 md:flex-row md:gap-20 w-full">
+            <InfoBlock
+              title="All time high"
+              amount={ath}
+              date={ath_date}
+              trend={ath_change_percentage}
+            />
+            <InfoBlock
+              title="All time low"
+              amount={atl}
+              date={atl_date}
+              trend={atl_change_percentage}
+            />
+          </Flex>
         </Flex>
-      </Flex>
+      </Suspense>
     </VStack>
   );
 }

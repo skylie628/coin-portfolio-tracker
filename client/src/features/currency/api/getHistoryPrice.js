@@ -1,18 +1,15 @@
 import { noInterceptInstance } from "@/lib/axios";
 import mapper from "@/utils/mapper";
-export const getHistoryPrice = async ({ coinId }) => {
+export const getHistoryPrice = async ({ coinId, timeRange }) => {
   try {
     const historyPriceInfo = await noInterceptInstance.get(`coin/history`, {
       params: {
         coinId: coinId.toLowerCase(),
         quoteCurrency: "usd",
-        period: "year",
+        period: timeRange,
       },
     });
-    console.log(
-      mapper.historyPrice(historyPriceInfo?.data?.data?.prices || [])
-    );
-    return mapper.historyPrice(historyPriceInfo?.data?.data?.prices || []);
+    return mapper.historyPrice(historyPriceInfo?.data?.data || {});
   } catch (err) {
     throw new Error("Unable to fetch history price", err);
   }

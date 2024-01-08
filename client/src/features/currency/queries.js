@@ -13,14 +13,14 @@ export const getCurrencyDetailQuery = ({ coinId }) => {
     useErrorBoundary: true,
   };
 };
-export const getHistoryPriceQuery = ({ coinId }) => {
+export const getHistoryPriceQuery = ({ coinId, timeRange }) => {
+  console.log("queryKey", ["currencyPriceHistory", coinId, timeRange]);
   return {
-    queryKey: ["currencyPriceHistory", coinId],
-    queryFn: () => getHistoryPrice({ coinId }),
+    queryKey: ["currencyPriceHistory", coinId, timeRange],
+    queryFn: () => getHistoryPrice({ coinId, timeRange }),
     retry: 1,
     refetchOnWindowFocus: true,
     refetchOnReconnect: true,
-    keepPreviousData: true,
     staleTime: 10 * 60 * 1000,
     suspense: true,
     useErrorBoundary: true,
