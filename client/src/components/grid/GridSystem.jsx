@@ -1,24 +1,21 @@
-import { Grid, GridItem } from "@chakra-ui/react";
+import { Flex, Divider, useBreakpointValue } from "@chakra-ui/react";
 export default function GridSystem({ children }) {
+  const dividerCount = useBreakpointValue({ base: 2, md: 3, lg: 4, xl: 5 });
   return (
-    <div className="relative w-full container mx-auto">
+    <div className="relative w-full ">
       {" "}
       {children}
-      <Grid
-        className="z-[10] absolute w-full inset-0 px-20 -ml-[25px] bg-blackest "
+      <Flex
+        className="z-21  absolute w-full  container inset-0 px-[50px]  pointer-events-none border-none border-[1px] border-white/[0.1] justify-between"
+        style={{ left: "50%", transform: "translateX(-50%)" }}
         gap="50"
-        gridTemplateColumns={{
-          base: "repeat(1,  minmax(0, 1fr))",
-          md: "repeat(2,  minmax(0, 1fr))",
-          lg: "repeat(3,  minmax(0, 1fr))",
-          xl: "repeat(4,  minmax(0, 1fr))",
-        }}
       >
-        <GridItem className="bg-meshgrid w-[1px] " />
-        <GridItem className="bg-meshgrid w-[1px]" />
-        <GridItem className="bg-meshgrid w-[1px]" />
-        <GridItem className="bg-meshgrid w-[1px]" />
-      </Grid>
+        {Array(dividerCount)
+          .fill(0)
+          .map((_, i) => (
+            <Divider key={i} className="bg-meshgrid" orientation="vertical" />
+          ))}
+      </Flex>
     </div>
   );
 }

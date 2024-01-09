@@ -20,6 +20,7 @@ import { useEffect } from "react";
 import useInView from "@/hooks/useInView";
 import React from "react";
 import { useMediaQueries } from "@/hooks/useMediaQueries";
+import { useNavigate } from "react-router-dom";
 //action
 import { stopStreaming, startStreaming } from "@/store/reducer/reducer.market";
 import { useGetTopCurrencies } from "../hooks/useGetTopCurrencies";
@@ -105,7 +106,7 @@ const DesktopTopRealTimeCurrencies = ({ topCurrencies, isSmartphone }) => {
   ));
   TheadComponent.displayName = "TheadComponent";
   const MemoizedThead = React.memo(TheadComponent);
-
+  const navigate = useNavigate();
   // Usage
   const { fixedTheadRef, relativeTheadRef } = useStickyTableHeader();
   const fixedThead = (
@@ -164,7 +165,11 @@ const DesktopTopRealTimeCurrencies = ({ topCurrencies, isSmartphone }) => {
               price_change_percentage_24h,
               current_price,
             }) => (
-              <Tr key={id}>
+              <Tr
+                key={id}
+                onClick={() => navigate(`currencies/${id}`)}
+                className="cursor-pointer"
+              >
                 <Td className="text-left" colspan="2">
                   {<Coin name={name} shortName={symbol} src={image} />}
                 </Td>

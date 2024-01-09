@@ -13,23 +13,22 @@ export default function TrendingCategories() {
   }
 
   return (
-    <Flex
-      as="section"
-      className="z-[11]  bg-gradient-to-tr  from-orange/[0.2] to-blackest/[0.5]  to-40% relative w-full  px-20 py-40 flex-col gap-[100px] text-left container mx-auto"
-    >
-      <Text as="h2" className="text-2xl block font-medium">
-        Trending Categories
-      </Text>
-      <FourColumns
-        data={trendingCategories.slice(0, 4)}
-        renderTile={(props) => (
-          <Tile {...props} variant={constants.tileType.trendingCategories} />
-        )}
-      />
-      <Divider
-        opacity="0.2"
-        className="absolute bottom-10 left-0 w-full border border-[1px] border-lightstar/[0.2]"
-      />
-    </Flex>
+    <section className=" block bg-blackest z-13 relative w-full bg-gradient-to-tr  from-orange/[0.2] to-blackest/[0.5]  to-40%">
+      <Flex className="z-14 px-20 py-40 flex-col gap-[100px] text-left container mx-auto">
+        <Text as="h2" className="text-2xl block font-medium">
+          Trending Categories
+        </Text>
+        <FourColumns
+          data={trendingCategories.slice(0, 4)}
+          renderTile={(props) => (
+            <Tile {...props} variant={constants.tileType.trendingCategories} />
+          )}
+        />
+        <Divider
+          opacity="0.2"
+          className="absolute bottom-10 left-0 w-full border border-[1px] border-lightstar/[0.2]"
+        />
+      </Flex>
+    </section>
   );
 }

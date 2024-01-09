@@ -11,27 +11,29 @@ export default function TrendingCurrencies() {
     return;
   }
   return (
-    <Flex
-      as="section"
-      className="z-[11] relative   px-20 py-40 flex-col gap-[100px] text-left container mx-auto"
-    >
-      <Divider
-        opacity="0.2"
-        className="absolute top-10 left-0 w-full border border-[1px] border-meshgrid"
-      />
-      <Text as="h2" className="text-2xl block font-medium">
-        Coins of the day
-      </Text>
-      <FourColumns
-        data={trendingCoins.slice(0, 8)}
-        renderTile={(props) => (
-          <Tile {...props} variant={constants.tileType.trendingCoins} />
-        )}
-      />
-      <Divider
-        opacity="0.2"
-        className="absolute bottom-10 left-0 w-full border border-[1px] border-lightstar/[0.2]"
-      />
-    </Flex>
+    <section className="w-full bg-blackest">
+      <Flex
+        as="section"
+        className="z-[11] relative   px-20 py-40 flex-col gap-[100px] text-left container mx-auto"
+      >
+        <Divider
+          opacity="0.2"
+          className="absolute top-10 left-0 w-full border border-[1px] border-meshgrid"
+        />
+        <Text as="h2" className="text-2xl block font-medium">
+          Coins of the day
+        </Text>
+        <FourColumns
+          data={trendingCoins.slice(0, 8)}
+          renderTile={(props) => (
+            <Tile {...props} variant={constants.tileType.trendingCoins} />
+          )}
+        />
+        <Divider
+          opacity="0.2"
+          className="absolute bottom-10 left-0 w-full border border-[1px] border-lightstar/[0.2]"
+        />
+      </Flex>
+    </section>
   );
 }
