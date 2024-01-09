@@ -82,15 +82,17 @@ export default function PortSummary({ setIsOpen }) {
               title="Total Balance"
             />
           </Grid>
-          <Box
-            className="cursor-pointer"
-            onClick={() => setShowStats((prev) => !prev)}
-          >
-            {showStats ? iconsHelper.EyeOn : iconsHelper.EyeOff}
-          </Box>
-          <Button onClick={() => setIsOpen(true)} className="!bg-orange">
-            Add coin
-          </Button>
+          <Flex className="justify-between w-full">
+            <Button onClick={() => setIsOpen(true)} className="!bg-orange">
+              Add coin
+            </Button>
+            <Box
+              className="cursor-pointer"
+              onClick={() => setShowStats((prev) => !prev)}
+            >
+              {showStats ? iconsHelper.EyeOn : iconsHelper.EyeOff}
+            </Box>
+          </Flex>
         </Flex>
         <HighchartsReact
           className="m-auto flex-1"

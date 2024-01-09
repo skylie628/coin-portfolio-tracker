@@ -7,11 +7,11 @@ import {
   FormErrorMessage,
   Flex,
   HStack,
-  Input,
   Link,
   Stack,
   Text,
 } from "@chakra-ui/react";
+import Input from "@/components/ui/Input";
 import { PasswordField } from "@/components/ui/PasswordField";
 //use hook
 import { useForm } from "react-hook-form";
@@ -25,7 +25,7 @@ const Signin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const scheme = yup.object().shape({
-    email: yup.string().required().email("Email invalid"),
+    email: yup.string().required("Email is require").email("Email invalid"),
     password: yup
       .string()
       .min(6, "Password length can't be less than 6 characters")
@@ -38,6 +38,7 @@ const Signin = () => {
     formState: { errors = {} },
   } = useForm({ resolver: yupResolver(scheme) });
   const onSubmitSignin = (data) => {
+    console.log(data);
     dispatch(signinThunk({ data }));
   };
   return (
@@ -52,8 +53,13 @@ const Signin = () => {
             <Text>
               Don't have an account?{" "}
               <Link
-                className="text-orange"
+                className="!text-blue-500 hover:!text-blue-400"
                 onClick={() => navigate("/sign-up")}
+                style={{
+                  textDecoration: "none",
+                  borderBottom: "1px solid",
+                  paddingBottom: "2px",
+                }}
               >
                 Sign up
               </Link>
@@ -69,12 +75,11 @@ const Signin = () => {
         >
           <Stack spacing="6">
             <Stack spacing="5">
-              <FormControl isInvalid={errors.email}>
-                <Input {...register("email")} id="email" placeholder="Email" />
-                <FormErrorMessage color="red.700">
-                  {errors.email && errors.email.message.toString()}
-                </FormErrorMessage>
-              </FormControl>
+              <Input
+                {...register("email")}
+                placeholder="Email"
+                errors={errors}
+              />
               <PasswordField
                 {...register("password")}
                 errors={errors}

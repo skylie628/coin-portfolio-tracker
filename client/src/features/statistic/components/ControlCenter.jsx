@@ -52,20 +52,20 @@ export const ControlCenterItems = ({ setIsOpen }) => {
         </>
       )}
       <HStack className="ml-auto md:ml-0" gap="3">
-        <Button className="!bg-orange !font-semibold" onClick={handleDrawChart}>
-          Apply
-        </Button>
         <Button
           className="!bg-blackest border !border-lightstar/[0.3] !text-lightstar/[0.8]"
           onClick={handleReset}
         >
           Reset
         </Button>
+        <Button className="!bg-orange !font-semibold" onClick={handleDrawChart}>
+          Apply
+        </Button>
       </HStack>
 
       <Divider className="!border-slate-600" />
       <VStack gap="3">
-        <Text className="text-left w-full">Selected Variables / Sections</Text>
+        <Text className="text-left w-full">Picked assets</Text>
         <SelectedVariableList />
       </VStack>
     </Stack>
@@ -81,7 +81,7 @@ export default function ControlCenter({ setIsModalOpen }) {
         className="relative border-b border-b-1 border-b-slate-700 p-4 justify-between"
       >
         <Text className="w-full text-lightstar/[0.8] text-left">
-          Statistic your port.
+          Portfolio Visualizer.
         </Text>
         <ChevronLeft
           className="cursor-pointer block"

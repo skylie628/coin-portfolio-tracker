@@ -6,6 +6,7 @@ import Skeleton from "@/components/ui/Skeleton";
 import { Flex, Text, Divider, Box } from "@chakra-ui/react";
 import Hero from "./components/Hero";
 import { FourColumnsSkeleton } from "@/components/grid/FourColumns";
+import Footer from "@/components/ui/Footer";
 import LoadingPage from "@/components/Loading";
 const Carousel = React.lazy(() => import("./components/Carousel"));
 const TopRealTimeCurrencies = React.lazy(() =>
@@ -89,6 +90,8 @@ export default function DashBoard() {
         </GridSystem>
       </div>
       <Outlet />
+      <Divider className="!border-dashed border-white/[0.2]" />
+      <Footer />
     </>
   );
 }

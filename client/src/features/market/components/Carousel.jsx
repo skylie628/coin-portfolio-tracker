@@ -8,7 +8,8 @@ import { useGetTopCurrencies } from "../hooks/useGetTopCurrencies";
 function Carousel() {
   const { topCurrencies = [] } = useGetTopCurrencies({ pageIndex: 1 });
   let carousels = topCurrencies.slice(0, 10);
-  carousels = [...carousels, ...carousels];
+  carousels = [...carousels, ...carousels, ...carousels];
+  console.log(carousels.length);
   return (
     <div className="p-0 bg-orange">
       <div className="overflow-hidden bg-orange container mx-auto ">

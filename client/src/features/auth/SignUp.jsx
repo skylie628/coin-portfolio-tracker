@@ -5,12 +5,12 @@ import {
   FormControl,
   FormErrorMessage,
   HStack,
-  Input,
   Link,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { PasswordField } from "../../components/ui/PasswordField";
+import Input from "@/components/ui/Input";
 //use hook
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -55,7 +55,17 @@ const Signup = () => {
             </Flex>
             <Text color="fg.muted">
               Have an account?{" "}
-              <Link onClick={() => navigate("/sign-in")}> Sign in</Link>
+              <Link
+                className="!text-blue-500 hover:!text-blue-400"
+                onClick={() => navigate("/sign-in")}
+                style={{
+                  textDecoration: "none",
+                  borderBottom: "1px solid",
+                  paddingBottom: "2px",
+                }}
+              >
+                Sign in
+              </Link>
             </Text>
           </Stack>
         </Stack>
@@ -68,31 +78,15 @@ const Signup = () => {
         >
           <Stack spacing="6">
             <Stack spacing="5">
-              <FormControl isInvalid={errors.name}>
-                {" "}
-                <Input
-                  placeholder="name"
-                  {...register("name")}
-                  id="name"
-                  type="text"
-                />
-                <FormErrorMessage color="red.700">
-                  {errors.name && errors.name.message.toString()}
-                </FormErrorMessage>
-              </FormControl>
-              <FormControl isInvalid={errors.email}>
-                <Input
-                  placeholder="email"
-                  {...register("email")}
-                  id="email"
-                  type="text"
-                />
-                <FormErrorMessage color="red.700">
-                  {errors.email && errors.email.message.toString()}
-                </FormErrorMessage>
-              </FormControl>
+              <Input placeholder="Name" {...register("name")} errors={errors} />
+
+              <Input
+                placeholder="Email"
+                {...register("email")}
+                errors={errors}
+              />
               <PasswordField
-                placeholder="password"
+                placeholder="Password"
                 {...register("password")}
                 errors={errors}
               />

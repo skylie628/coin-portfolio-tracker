@@ -23,11 +23,11 @@ export default function Hero({ scrollToTopLists }) {
               />
             </figure>
             <HStack className="  w-full z-10">
-              <Heading className="!text-5xl text-2xl ml-0 md:ml-20 ">
+              <Heading className="text-xl md:!text-5xl text-2xl ml-0 md:ml-20 ">
                 <Text className="leading-normal">Stay</Text>
                 <Text className="leading-normal">Up-to-date</Text>
                 <Text className="leading-normal">With</Text>
-                <BrandName className="leading-normal !text-5xl" />
+                <BrandName className="leading-normal text-3xl md:!text-5xl" />
               </Heading>
               <ChevronDown
                 size="100"

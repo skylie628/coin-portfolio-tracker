@@ -79,7 +79,7 @@ export default function App() {
           <Route
             path="sign-in"
             element={
-              <Suspense fallback={<LoadingPage />}>
+              <Suspense fallback={<LoadingPage bgClassName="bg-transparent" />}>
                 <PublicRoute>
                   <SignIn />
                 </PublicRoute>
@@ -89,7 +89,7 @@ export default function App() {
           <Route
             path="sign-up"
             element={
-              <Suspense fallback={<LoadingPage />}>
+              <Suspense fallback={<LoadingPage bgClassName="bg-transparent" />}>
                 <PublicRoute>
                   <SignUp />
                 </PublicRoute>

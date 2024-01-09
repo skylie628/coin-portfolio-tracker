@@ -73,7 +73,7 @@ export default function QueryCenter() {
           onClick={() => setIsShow((prev) => !prev)}
         />
         <Text className="w-full text-lightstar/[0.8] text-right">
-          Statistic your port.
+          Pick your invest.
         </Text>
       </Flex>
       <QueryCenterItem />

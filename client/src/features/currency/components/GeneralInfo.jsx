@@ -22,7 +22,12 @@ import { useGetCurrencyDetail } from "@/features/currency/hooks/useGetCurrencyDe
 import { useDispatch, useSelector } from "react-redux";
 import { iconsHelper } from "@/config/icons";
 import { useEffect } from "react";
-const InfoRow = ({ name, label = "coiPort xin chao!", renderValue }) => (
+//other
+import constants from "@/utils/constants";
+const InfoRow = ({
+  desc: { name, label = "coiPort xin chao!" },
+  renderValue,
+}) => (
   <Flex className=" flex justify-between w-full text-sm">
     <Flex gap="3">
       <Text className="text-dimgray font-bold">{name}</Text>
@@ -31,9 +36,9 @@ const InfoRow = ({ name, label = "coiPort xin chao!", renderValue }) => (
     {renderValue()}
   </Flex>
 );
-const renderPriceInfoRow = (name, amount, currencyCode, type = "crypto") => (
+const renderPriceInfoRow = (desc, amount, currencyCode, type = "crypto") => (
   <InfoRow
-    name={name}
+    desc={desc}
     renderValue={() => (
       <Price
         className=" font-bold text-sm"
@@ -87,6 +92,7 @@ export default function GeneralInfo() {
     max_supply,
     fully_diluted_valuation,
   } = detailData.currencyDetail || {};
+  const { cryptoStats } = constants;
   useEffect(() => {
     //connect to socket after get result from coingecko api
     if (symbol) {
@@ -99,7 +105,7 @@ export default function GeneralInfo() {
   return (
     <>
       {symbol && (
-        <Flex className="p-5 items-start justify-start gap-5 flex-col w-full xl:w-4/12 border-r border-1 border-white/[0.2]">
+        <Flex className="p-5 items-start justify-start gap-5 flex-col w-full xl:w-4/12 border-b md:border-r border-1 border-white/[0.2]">
           <HStack className="w-full ">
             <Flex gap="3" className="justify-center items-center">
               <img className="w-[30px] h-[30px] rounded-full" src={image} />
@@ -114,7 +120,7 @@ export default function GeneralInfo() {
             <Trend value={price_change_percentage_24h} ticket="1d" />
           </HStack>
           <InfoRow
-            name="Market cap"
+            desc={cryptoStats.marketCap}
             renderValue={() => (
               <HStack>
                 <Trend value={market_cap_change_percentage_24h} />
@@ -127,20 +133,24 @@ export default function GeneralInfo() {
               </HStack>
             )}
           />
-          {renderPriceInfoRow("Total Volumn", total_volume, "USD")}
+          {renderPriceInfoRow(cryptoStats.volume, total_volume, "USD")}
           {renderPriceInfoRow(
-            "Circulating supply",
+            cryptoStats.circulatingSupply,
             circulating_supply,
             symbol.toUpperCase()
           )}
           {renderPriceInfoRow(
-            "Total supply",
+            cryptoStats.totalSupply,
             total_supply,
             symbol.toUpperCase()
           )}
-          {renderPriceInfoRow("Max. supply", max_supply, symbol.toUpperCase())}
           {renderPriceInfoRow(
-            "Fully diluted market cap",
+            cryptoStats.maxSupply,
+            max_supply,
+            symbol.toUpperCase()
+          )}
+          {renderPriceInfoRow(
+            cryptoStats.fullyDilutedValuation,
             fully_diluted_valuation,
             symbol.toUpperCase()
           )}

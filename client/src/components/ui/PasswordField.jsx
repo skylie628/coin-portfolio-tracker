@@ -32,6 +32,11 @@ export const PasswordField = React.forwardRef(
           </InputRightElement>
           <Input
             ref={ref}
+            borderWidth="1px"
+            borderColor="rgba(255,255,255,0.3)"
+            _hover={{
+              borderColor: "blue.500",
+            }}
             {...props}
             name={name}
             type={isOpen ? "text" : "password"}

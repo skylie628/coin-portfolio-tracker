@@ -12,16 +12,26 @@ const animations = {
 const BottomDrawer = ({ className, children, isOpen = true, setIsOpen }) => {
   const navigate = useNavigate();
   useLayoutEffect(() => {
-    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = "scroll";
+      document.documentElement.style.overflow = "auto";
     };
   });
+  const handleDragEnd = (event, info) => {
+    if (info.offset.y > 0) {
+      setIsOpen(false);
+    }
+  };
+
   return (
     <React.Fragment>
       {isOpen && (
         <div className="fixed w-full h-full z-40">
           <motion.div
+            drag="y"
+            dragElastic={{ top: 0, bottom: 0.3 }}
+            onDragEnd={handleDragEnd}
+            dragConstraints={{ top: 0, bottom: 0 }}
             variants={animations}
             initial="initial"
             animate="animate"

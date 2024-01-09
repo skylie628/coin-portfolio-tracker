@@ -10,6 +10,9 @@
   font-family: "Roboto";
   text-align: center;
 }
+html {
+  overflow: auto;
+}
 body {
   width: 100%;
   height: 100%;
