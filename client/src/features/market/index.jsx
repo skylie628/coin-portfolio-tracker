@@ -7,9 +7,13 @@ import { Flex, Text, Divider, Box } from "@chakra-ui/react";
 import Hero from "./components/Hero";
 import { FourColumnsSkeleton } from "@/components/grid/FourColumns";
 import Footer from "@/components/ui/Footer";
-import LoadingPage from "@/components/Loading";
-
-const Carousel = React.lazy(() => import("./components/Carousel"));
+import { CarouselFallback } from "./components/Carousel";
+const Carousel = React.lazy(() => {
+  return Promise.all([
+    import("./components/Carousel"),
+    new Promise((resolve) => setTimeout(resolve, 3000)),
+  ]).then(([moduleExports]) => moduleExports);
+});
 const TopRealTimeCurrencies = React.lazy(() =>
   import("./components/TopRealTimeCurrencies")
 );
@@ -74,10 +78,10 @@ export default function DashBoard() {
   return (
     <>
       <div className="flex-1 ">
-        <Suspense fallback={<LoadingPage />}>
+        <Suspense fallback={<CarouselFallback />}>
           <Carousel />
-          <Hero scrollToTopLists={scrollToTopLists} />
         </Suspense>
+        <Hero scrollToTopLists={scrollToTopLists} />
         <GridSystem>
           <Suspense fallback={<TrendingCurrenciesSkeleton />}>
             <TrendingCurrencies />
