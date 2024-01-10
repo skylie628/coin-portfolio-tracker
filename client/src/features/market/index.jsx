@@ -8,6 +8,7 @@ import Hero from "./components/Hero";
 import { FourColumnsSkeleton } from "@/components/grid/FourColumns";
 import Footer from "@/components/ui/Footer";
 import LoadingPage from "@/components/Loading";
+
 const Carousel = React.lazy(() => import("./components/Carousel"));
 const TopRealTimeCurrencies = React.lazy(() =>
   import("./components/TopRealTimeCurrencies")

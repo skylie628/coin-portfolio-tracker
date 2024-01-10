@@ -3,6 +3,7 @@ import Tooltip from "@/components/ui/Tooltip";
 import RandomRevealText from "@/components/ui/RandomRevealText";
 import Price from "../ui/Price";
 import Trend from "../ui/Trend";
+import Image from "../ui/Image";
 import constants from "@/utils/constants";
 import { Link } from "react-router-dom";
 //hooks
@@ -46,7 +47,7 @@ export default function Tile({
         </Flex>
       </Flex>
     ) : (
-      <img src={data.sparkline} />
+      <Image src={data.sparkline} />
     );
   const footer =
     variant === tileType.trendingCategories ? (
@@ -88,7 +89,7 @@ export default function Tile({
                 gap="10"
               >
                 <Flex className="flex-row justify-between">
-                  <img
+                  <Image
                     src={src}
                     className="w-[72px] h-[72px] rounded-full -mt-10 shadow-moonlight block  bg-orange"
                   />

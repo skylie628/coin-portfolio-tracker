@@ -1,4 +1,5 @@
 import { HStack, VStack, Text } from "@chakra-ui/react";
+import Image from "./Image";
 import clsx from "clsx";
 export default function Coin({
   src = "#",
@@ -10,7 +11,7 @@ export default function Coin({
 }) {
   return (
     <HStack>
-      <img src={src} className="w-10" />
+      <Image src={src} className="w-10" />
       <VStack className="!block font-bold text-left">
         <Text className={clsx(className, " text-lightstar")}>{name}</Text>
         <Text className={clsx("text-sm text-dimgray", shortNameClass)}>

@@ -9,6 +9,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+
 import { PasswordField } from "../../components/ui/PasswordField";
 import Input from "@/components/ui/Input";
 //use hook
@@ -39,7 +40,7 @@ const Signup = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors = {} },
+    formState: { errors = {}, isSubmitting },
   } = useForm({ resolver: yupResolver(scheme) });
   const onSubmitSignup = (data) => {
     dispatch(signupThunk({ data: { data }, navigate }));
@@ -99,7 +100,13 @@ const Signup = () => {
             </Stack>
             <HStack justify="space-between"></HStack>
             <Stack spacing="6">
-              <Button type="submit">Sign Up</Button>
+              <Button
+                className=" !bg-dimgray !text-halfblack border border-[1px] border-[white/0.2]"
+                type="submit"
+                disabled={isSubmitting}
+              >
+                Sign up
+              </Button>
             </Stack>
           </Stack>
         </Box>

@@ -35,7 +35,7 @@ const Signin = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors = {} },
+    formState: { errors = {}, isSubmitting },
   } = useForm({ resolver: yupResolver(scheme) });
   const onSubmitSignin = (data) => {
     console.log(data);
@@ -93,7 +93,13 @@ const Signin = () => {
               </Button>
             </HStack>
             <Stack spacing="6">
-              <Button type="submit">Sign in</Button>
+              <Button
+                className=" !bg-dimgray !text-halfblack border border-[1px] border-[white/0.2]"
+                type="submit"
+                disabled={isSubmitting}
+              >
+                Sign in
+              </Button>
               {/*<HStack>
                   <Divider />
                   <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">

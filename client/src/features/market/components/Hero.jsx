@@ -19,6 +19,8 @@ export default function Hero({ scrollToTopLists }) {
             <figure>
               <img
                 className=" h-[400px] z-10 relative mr-auto"
+                loading="lazy"
+                decoding="async"
                 src={imagesHelper.hero_background}
               />
             </figure>
