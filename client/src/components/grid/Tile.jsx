@@ -91,6 +91,7 @@ export default function Tile({
                 <Flex className="flex-row justify-between">
                   <Image
                     src={src}
+                    alt={name}
                     className="w-[72px] h-[72px] rounded-full -mt-10 shadow-moonlight block  bg-orange"
                   />
                 </Flex>

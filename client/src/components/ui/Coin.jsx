@@ -11,7 +11,7 @@ export default function Coin({
 }) {
   return (
     <HStack>
-      <Image src={src} className="w-10" />
+      <Image src={src} className="w-10" alt={name} />
       <VStack className="!block font-bold text-left">
         <Text className={clsx(className, " text-lightstar")}>{name}</Text>
         <Text className={clsx("text-sm text-dimgray", shortNameClass)}>

@@ -29,9 +29,10 @@ export default {
         meshgrid: "rgba(100, 116, 139,0.3)",
       },
       backgroundImage: {
-        "sign-pattern": "url('../assets/background/sign-backdrop.webp')",
-        "hero-backdrop": "url('../assets/background/hero-backdrop.svg')",
-        "noise-pattern": "url('../assets/background/noisy.png')",
+        "sign-pattern":
+          "url('https://coiportcdn.s3.ap-southeast-2.amazonaws.com/sign-backdrop.webp')",
+        "noise-pattern":
+          "url('https://coiportcdn.s3.ap-southeast-2.amazonaws.com/noisy.png')",
       },
     },
   },
