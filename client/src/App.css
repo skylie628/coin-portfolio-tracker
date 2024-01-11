@@ -24,9 +24,9 @@ body {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(-210px * 10));
+    transform: translateX(calc(-210px * 10 - 1920px));
   }
 }
 .slider-carousel {
-  animation: scroll 50s linear infinite;
+  animation: scroll 100s linear infinite;
 }

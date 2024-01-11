@@ -11,7 +11,7 @@ import { CarouselFallback } from "./components/Carousel";
 const Carousel = React.lazy(() => {
   return Promise.all([
     import("./components/Carousel"),
-    new Promise((resolve) => setTimeout(resolve, 3000)),
+    new Promise((resolve) => setTimeout(resolve, 0)),
   ]).then(([moduleExports]) => moduleExports);
 });
 const TopRealTimeCurrencies = React.lazy(() =>
