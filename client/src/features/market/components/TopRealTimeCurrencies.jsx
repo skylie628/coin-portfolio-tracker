@@ -71,11 +71,14 @@ const SmartphoneOrTabletTopRealTimeCurrencies = ({
             price_change_percentage_24h,
             current_price,
           }) => (
-            <Flex className="justify-center p-5" key={id}>
+            <Flex
+              className="justify-center p-5 bg-blackest hover:bg-blacker cursor-pointer"
+              key={id}
+            >
               <Coin
                 className="w-[100px]"
                 name={name}
-                shortName={symbol}
+                shortName={symbol.toUpperCase()}
                 src={image}
               />
               <Flex className="flex-1 justify-center">
@@ -168,10 +171,16 @@ const DesktopTopRealTimeCurrencies = ({ topCurrencies, isSmartphone }) => {
               <Tr
                 key={id}
                 onClick={() => navigate(`currencies/${id}`)}
-                className="cursor-pointer"
+                className="cursor-pointer bg-blackest hover:bg-blacker"
               >
                 <Td className="text-left" colspan="2">
-                  {<Coin name={name} shortName={symbol} src={image} />}
+                  {
+                    <Coin
+                      name={name}
+                      shortName={symbol.toUpperCase()}
+                      src={image}
+                    />
+                  }
                 </Td>
                 <Td colspan="2">
                   <RealtimePriceCell

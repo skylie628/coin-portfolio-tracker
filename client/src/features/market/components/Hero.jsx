@@ -16,13 +16,19 @@ export default function Hero({ scrollToTopLists }) {
             <div className="twinkling"></div>
           </div>
           <HStack className="container mx-auto w-full">
-            <figure>
-              <img
-                className="hidden md:block h-[400px] w-[502px] z-10 relative mr-auto"
-                alt="backdrop"
-                decoding="async"
-                src={imagesHelper.hero_background}
-              />
+            <figure className="shrink-0">
+              <picture>
+                <source
+                  media="(min-width: 502px)"
+                  srcSet={imagesHelper.hero_background_desktop}
+                />
+                <img
+                  className="block w-[138px] md:w-[400px] h-[251] md:h-[502px] z-10 relative mr-auto"
+                  alt=""
+                  decoding="async"
+                  src={imagesHelper.hero_background_mobile}
+                />
+              </picture>
             </figure>
             <HStack className="  w-full z-10">
               <Heading className="text-xl md:!text-5xl text-2xl ml-0 md:ml-20 ">

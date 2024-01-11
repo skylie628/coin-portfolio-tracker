@@ -48,7 +48,7 @@ const ChartView = forwardRef(({ coinId, timeRange, yAxisMeasure }, ref) => {
         ref={ref}
         className="m-auto flex-1 "
         highcharts={Highcharts}
-        options={sparklineChartConfig({ data: chartData })}
+        options={sparklineChartConfig({ data: chartData, timeRange })}
         containerProps={{ style: { width: "100%" } }}
       />
     </div>

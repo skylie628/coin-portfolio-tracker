@@ -19,11 +19,11 @@ export default function Nav() {
     `$ font-semibold ${isActive && "text-orange"}`;
   return (
     <nav className="hidden md:block">
-      <ul className="flex gap-3 border-slate-500 rounded-full  bg-halfblack text-silver px-6 py-4">
+      <ul className="flex gap-3 border-slate-500 rounded-full  bg-halfblack text-silver px-6 py-4 font-bold font-roboto">
         {menuItems.map((item, index) => (
           <li key={index}>
             <NavLink className={setLinkStyle} to={item.path}>
-              {item.name}
+              {item.name.toUpperCase()}
             </NavLink>
           </li>
         ))}

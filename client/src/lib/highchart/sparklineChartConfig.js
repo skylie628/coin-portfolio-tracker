@@ -1,7 +1,13 @@
 import Highcharts from "highcharts";
 import abbreviateNumber from "@/utils/abbreviateNumber";
-function labelFormat() {
-  return Highcharts.dateFormat("%b", this.value);
+function labelFormat(timeRange) {
+  if (timeRange === "day") {
+    return Highcharts.dateFormat("%H:%M", this.value);
+  } else if (timeRange === "month") {
+    return Highcharts.dateFormat("%e %b", this.value); // Day Month format
+  } else if (timeRange === "year") {
+    return Highcharts.dateFormat("%b", this.value); // Month format
+  }
 }
 function tooltipFormatter() {
   return (
@@ -18,8 +24,15 @@ export const sparklineChartConfig = ({
     [1, 2],
     [2, 3],
   ],
+  timeRange = "year",
 }) => {
-  console.log(data);
+  const color = data[0][1] <= data[data.length - 1][1] ? "green" : "red";
+  const ticker =
+    timeRange === "year"
+      ? 2592000000
+      : timeRange === "month"
+      ? 12 * 24 * 60 * 60 * 1000
+      : 4 * 60 * 60 * 1000;
   return {
     title: { text: "" },
     xAxis: {
@@ -29,13 +42,15 @@ export const sparklineChartConfig = ({
       title: {
         text: null,
       },
-      tickInterval: 2592000000,
+      tickInterval: ticker,
       labels: {
         style: {
           fontWeight: "900",
           color: "dimgray",
         },
-        formatter: labelFormat,
+        formatter: function () {
+          return labelFormat.call(this, timeRange);
+        },
       },
     },
     yAxis: {
@@ -65,7 +80,23 @@ export const sparklineChartConfig = ({
 
     series: [
       {
-        color: data[0][1] <= data[data.length - 1][1] ? "green" : "red",
+        type: "area",
+        fillColor: {
+          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+          stops: [
+            [
+              0,
+              color === "green"
+                ? "rgba(0, 255, 0, 0.2)"
+                : "rgba(255, 0, 0, 0.2)",
+            ],
+            [
+              1,
+              color === "green" ? "rgba(0, 255, 0, 0)" : "rgba(255, 0, 0, 0)",
+            ],
+          ],
+        },
+        color,
         dashStyle: "Solid",
         showInLegend: false,
         animation: false,
