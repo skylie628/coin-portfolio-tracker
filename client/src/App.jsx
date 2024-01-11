@@ -7,9 +7,6 @@ const TransactionsList = React.lazy(() => import("@/features/transaction"));
 const Currency = React.lazy(() => import("@/features/currency"));
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoadingPage from "./components/Loading";
-//
-
-import "./App.css";
 const SignIn = React.lazy(() => import("./features/auth/SignIn"));
 const SignUp = React.lazy(() => import("./features/auth/SignUp"));
 import PublicRoute from "./routes/PublicRoute";

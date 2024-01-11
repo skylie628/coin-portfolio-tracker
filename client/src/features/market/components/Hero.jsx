@@ -18,7 +18,7 @@ export default function Hero({ scrollToTopLists }) {
           <HStack className="container mx-auto w-full">
             <figure>
               <img
-                className=" h-[400px] z-10 relative mr-auto"
+                className="hidden md:block h-[400px] w-[502px] z-10 relative mr-auto"
                 alt="backdrop"
                 decoding="async"
                 src={imagesHelper.hero_background}

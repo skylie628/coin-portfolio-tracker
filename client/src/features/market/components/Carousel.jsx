@@ -34,7 +34,7 @@ function PromptTexts() {
               -
             </Text>
           ) : (
-            <div>.</div>
+            <div></div>
           )}
         </>
       ))}
@@ -43,10 +43,8 @@ function PromptTexts() {
 }
 export function CarouselFallback() {
   return (
-    <div className="p-0 bg-orange  ">
-      <div className="overflow-hidden bg-orange container mx-auto h-[64px]">
-        <PromptTexts />
-      </div>
+    <div className="p-0 bg-orange h-[64px] overflow-hidden bg-orange container mx-auto h-[64px]">
+      <PromptTexts />
     </div>
   );
 }
@@ -89,8 +87,6 @@ function Carousel() {
             ))}
           {carousels.length > 0 && <PromptTexts />}
         </Flex>
-
-        <Divider colorScheme="gray" size="1" variant="dashed" />
       </div>
     </div>
   );

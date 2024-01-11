@@ -8,13 +8,13 @@ export default function MobileHeader({ isOpen, setIsOpen }) {
   const isLogged = useSelector((state) => state.user.isLogged);
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.classList.add("no-scroll");
     } else {
-      document.body.style.overflow = "unset";
+      document.body.classList.remove("no-scroll");
     }
     // Clean up function
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.classList.remove("no-scroll");
     };
   }, [isOpen]);
   return (

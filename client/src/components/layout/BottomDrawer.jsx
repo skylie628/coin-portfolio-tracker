@@ -12,9 +12,10 @@ const animations = {
 const BottomDrawer = ({ className, children, isOpen = true, setIsOpen }) => {
   const navigate = useNavigate();
   useLayoutEffect(() => {
-    document.documentElement.style.overflow = "hidden";
+    document.body.classList.add("no-scroll");
+    // Clean up function
     return () => {
-      document.documentElement.style.overflow = "auto";
+      document.body.classList.remove("no-scroll");
     };
   });
   const handleDragEnd = (event, info) => {

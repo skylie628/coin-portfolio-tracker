@@ -31,7 +31,7 @@ function TrendingCategoriesSkeleton() {
   return (
     <Flex
       as="section"
-      className="z-[11]  bg-gradient-to-tr  from-orange/[0.2] to-blackest/[0.5]  to-40% relative w-full  px-20 py-40 flex-col gap-[100px] text-left"
+      className="z-[11]  bg-gradient-to-tr  from-orange/[0.2] to-blackest/[0.5]  to-40% relative w-full  px-20 py-40 flex-col gap-[100px] text-left bg-blackest"
     >
       <Text as="h2" className="text-2xl block font-medium">
         <Skeleton height={30} width={200} />
@@ -48,7 +48,7 @@ function TrendingCurrenciesSkeleton() {
   return (
     <Flex
       as="section"
-      className="z-[11] relative w-full  px-20 py-40 flex-col gap-[100px] text-left"
+      className="z-[11] relative w-full  px-20 py-40 flex-col gap-[100px] text-left bg-blackest"
     >
       <Divider
         opacity="0.2"

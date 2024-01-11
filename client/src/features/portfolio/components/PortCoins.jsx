@@ -20,7 +20,7 @@ export default function PortCoins() {
     },
   }));
   return (
-    <Flex className="relative z-[12] w-full flex-col py-40 px-20 gap-[100px] text-left">
+    <Flex className="relative z-[12] w-full flex-col py-40 px-20 gap-[100px] text-left container mx-auto">
       <Divider
         opacity="0.2"
         className="absolute top-10 left-0 w-full border border-[1px] border-meshgrid"
