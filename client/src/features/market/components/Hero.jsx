@@ -8,7 +8,7 @@ export default function Hero({ scrollToTopLists }) {
     <>
       <section
         spacing={"100px"}
-        className="z-0 sticky top-[89px]  text-left bg-blackest w-full overflow-hidden  py-10 "
+        className="z-0 relative  text-left bg-blackest w-full overflow-hidden  py-10 "
       >
         <HStack className="relative w-full ">
           <div className=".stars-container z-0">
@@ -16,14 +16,14 @@ export default function Hero({ scrollToTopLists }) {
             <div className="twinkling"></div>
           </div>
           <HStack className="container mx-auto w-full">
-            <figure className="shrink-0">
-              <picture>
+            <figure className="shrink-0 w-4/12 flex items-center  ">
+              <picture className="mx-auto">
                 <source
                   media="(min-width: 502px)"
                   srcSet={imagesHelper.hero_background_desktop}
                 />
                 <img
-                  className="block w-[138px] md:w-[400px] h-[251] md:h-[502px] z-10 relative mr-auto"
+                  className="block h-[251] md:h-[400px] z-10 relative "
                   alt=""
                   decoding="async"
                   src={imagesHelper.hero_background_mobile}

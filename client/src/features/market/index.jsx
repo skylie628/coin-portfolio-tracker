@@ -78,10 +78,10 @@ export default function DashBoard() {
   return (
     <>
       <div className="flex-1 ">
+        <Hero scrollToTopLists={scrollToTopLists} />
         <Suspense fallback={<CarouselFallback />}>
           <Carousel />
         </Suspense>
-        <Hero scrollToTopLists={scrollToTopLists} />
         <GridSystem>
           <Suspense fallback={<TrendingCurrenciesSkeleton />}>
             <TrendingCurrencies />

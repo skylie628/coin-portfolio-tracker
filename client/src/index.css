@@ -118,7 +118,8 @@ button:focus-visible {
   width: 10000px;
   height: 100%;
   background: transparent
-    url(https://coiportcdn.s3.ap-southeast-2.amazonaws.com/twinkling.png) repeat;
+    url(https://coiportcdn.s3.ap-southeast-2.amazonaws.com/twinkling.webp)
+    repeat;
   background-size: 1000px 1000px;
   position: absolute;
   right: 0;
