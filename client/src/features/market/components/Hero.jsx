@@ -25,7 +25,6 @@ export default function Hero({ scrollToTopLists }) {
                 <img
                   className="block h-[251] md:h-[400px] z-10 relative "
                   alt=""
-                  decoding="async"
                   src={imagesHelper.hero_background_mobile}
                 />
               </picture>

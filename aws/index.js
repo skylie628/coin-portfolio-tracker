@@ -20,18 +20,18 @@ exports.handler = async (event) => {
       }));
     topSearchTrending.coins = topSearchTrending.coins.slice(0, 8);
     //Get top market cap
-    const topMarketCap = await axios
+    let allCoins = await axios
       .get(`${process.env.COINGECKO_API_URL}/coins/markets`, {
         params: {
           vs_currency: "usd",
           order: "market_cap_desc",
-          per_page: 10,
+          per_page: 250,
           page: 1,
           sparkline: true,
         },
       })
       .then((res) => res.data || []);
-
+    const topMarketCap = allCoins.slice(0, 10);
     //Get currency detail
     const currenciesDetail = await axios
       .get(`${process.env.COINGECKO_API_URL}/coins/markets`, {
@@ -66,6 +66,14 @@ exports.handler = async (event) => {
     //cache top market cap data to redis
     await client.set("topMarketCap", JSON.stringify(topMarketCap), "EX", 600);
     console.log("Cached market data in Redis");
+    //cache all coins data to redis
+    allCoins = allCoins.map((coin) => ({
+      id: coin.id,
+      name: coin.name,
+      symbol: coin.symbol,
+      image: coin.image,
+    }));
+    await client.set("allCoins", JSON.stringify(allCoins), "EX", 600);
     return;
   } catch (error) {
     console.error(error);

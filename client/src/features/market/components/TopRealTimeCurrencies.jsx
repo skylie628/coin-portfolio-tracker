@@ -1,15 +1,5 @@
 //components
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Box,
-  Text,
-  Flex,
-} from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Td, Text, Flex } from "@chakra-ui/react";
 import Trend from "@/components/ui/Trend";
 import Coin from "@/components/ui/Coin";
 import Price from "@/components/ui/Price";

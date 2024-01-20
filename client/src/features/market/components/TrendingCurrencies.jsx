@@ -11,7 +11,7 @@ export default function TrendingCurrencies() {
     return;
   }
   return (
-    <section className="w-full bg-blacker/[0.6]">
+    <section className="w-full bg-blacker">
       <Divider
         opacity="0.2"
         className="absolute top-10 left-0 w-full border border-[1px] border-meshgrid"

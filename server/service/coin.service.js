@@ -13,13 +13,22 @@ module.exports = {
   getTopMarketCap: async () => {
     try {
       let topMarketCap = await redis.get("topMarketCap");
-      return JSON.parse(topMarketCap);
+      return JSON.parse(topMarketCap).slice(0, 10);
     } catch (error) {
       console.error(`Error getting top market cap from Redis: ${error}`);
       throw new Error(error); // re-throw the error so it can be handled by the caller
     }
   },
-
+  getAllCoins: async () => {
+    try {
+      let allCoins = await redis.get("allCoins");
+      console.log("allCoins", allCoins);
+      return JSON.parse(allCoins);
+    } catch (error) {
+      console.error(`Error getting all coins from Redis: ${error}`);
+      throw new Error(error); // re-throw the error so it can be handled by the caller
+    }
+  },
   getHistory: async ({ coinId, quoteCurrency, period }) => {
     let expireTime = 5 * 60;
     console.log(period);

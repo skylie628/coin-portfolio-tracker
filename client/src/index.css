@@ -19,7 +19,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 * {
   box-sizing: border-box;

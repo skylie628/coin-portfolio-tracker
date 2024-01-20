@@ -3,6 +3,7 @@ const {
   getTopMarketCap,
   getHistory,
   getGeneralInfo,
+  getAllCoins,
 } = require("../service/coin.service");
 module.exports = {
   getTrendingSearch: async (req, res) => {
@@ -25,6 +26,25 @@ module.exports = {
   getTopMarketCap: async (req, res) => {
     try {
       const data = await getTopMarketCap();
+      res.status(200).json({
+        isSuccess: true,
+        data,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({
+        msg: "Unable to get coins",
+        isSucess: false,
+        data: null,
+        error,
+      });
+    }
+  },
+  getAllCoins: async (req, res) => {
+    try {
+      const data = await getAllCoins();
+      console.log("allcoins data", data);
+
       res.status(200).json({
         isSuccess: true,
         data,

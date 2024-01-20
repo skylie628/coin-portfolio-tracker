@@ -6,12 +6,7 @@ import {
   ModalOverlay,
   ModalCloseButton,
 } from "@chakra-ui/react";
-export const Overlay = () => (
-  <ModalOverlay
-    bg="blackAlpha.500"
-    backdropFilter="blur(10px) hue-rotate(90deg)"
-  />
-);
+export const Overlay = () => <ModalOverlay bg="blackAlpha.500" />;
 export default function Modal({
   isOpen,
   setIsOpen = () => {},
