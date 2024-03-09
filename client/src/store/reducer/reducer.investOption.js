@@ -4,20 +4,12 @@ const initialState = {
   isError: false,
   revenue: 0,
   balance: 0,
-  investOptions: [],
 };
 const investOptionSlice = createSlice({
   name: "investOption",
   initialState,
   reducers: {
     loadInvestOption: (state, action) => action.payload.data,
-    addInvestOption: (state, action) => {
-      if (!action.payload.data) {
-        return;
-      }
-      state.investOptions.push(action.payload.data);
-      return state;
-    },
     deleteInvestOption: (state, action) => {
       const { coinId } = action.payload.data;
       if (!coinId) {

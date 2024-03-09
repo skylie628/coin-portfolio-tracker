@@ -7,10 +7,15 @@ import { Search } from "lucide-react";
 import { Suspense, useState, useTransition } from "react";
 //useHooks
 import { useGetAllCoins } from "../hooks/useGetAllCoins";
+import { useDispatch, useSelector } from "react-redux";
+//other
+import { createInvestOptionThunk } from "../../../store/action/action.investOption";
 export default function AddCoinModal({ isOpen, setIsOpen }) {
   const { allCoins, isLoading } = useGetAllCoins();
   const [searchTerm, setSearchTerm] = useState(null);
   const [isPending, startTransition] = useTransition();
+  const dispatch = useDispatch();
+  const portid = useSelector((state) => state.portfolio.data.id);
   console.log(allCoins);
   let showingItems = [];
   //if not allCoins, return empty array
@@ -30,6 +35,11 @@ export default function AddCoinModal({ isOpen, setIsOpen }) {
     startTransition(() => {
       setSearchTerm(e.target.value);
     });
+  };
+  const handleOnclick = async ({ symbol }) => {
+    dispatch(createInvestOptionThunk({ portid, symbol })).then(
+      setIsOpen(false)
+    );
   };
   return (
     <Modal
@@ -57,6 +67,7 @@ export default function AddCoinModal({ isOpen, setIsOpen }) {
               showingItems.map((x) => (
                 <Flex
                   key={x.symbol}
+                  onClick={() => handleOnclick(x)}
                   gap="3"
                   className="cursor-pointer items-center text-left w-full p-2 border-b border-b-dimgray/[0.2] hover:bg-dimgray/[0.2]"
                 >

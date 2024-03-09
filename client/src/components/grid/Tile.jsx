@@ -43,7 +43,7 @@ export default function Tile({
             className="font-light text-dimgray"
             currencyCodeClassName="hidden"
           />
-          <Trend className="!mr-auto" value={12} />
+          <Trend className="!mr-auto" value={data.pnl_percentage} />
         </Flex>
       </Flex>
     ) : (
@@ -101,12 +101,12 @@ export default function Tile({
                     className="text-dimgray break-all"
                     hover={hover}
                     setHover={setHover}
-                    characters={subheader}
+                    characters={subheader || " "}
                   />
                   <RandomRevealText
                     hover={hover}
                     setHover={setHover}
-                    characters={name}
+                    characters={name || " "}
                     className="text-lg break-all"
                   />
                 </Flex>

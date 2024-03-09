@@ -32,12 +32,17 @@ export const signinThunk = (payload) => async (dispatch) => {
   dispatch(startsign());
   signin(payload)
     .then((rs) => {
-      const { refreshToken, accessToken } = rs?.data?.data || {};
+      console.log("result la ", rs.data.data);
+      const { refreshToken, accessToken, name, email, id } =
+        rs?.data?.data || {};
       if (!refreshToken || !accessToken) {
         return;
       }
       window.localStorage.setItem("refreshToken", refreshToken);
       window.localStorage.setItem("accessToken", accessToken);
+      window.localStorage.setItem("name", name);
+      window.localStorage.setItem("email", email);
+      window.localStorage.setItem("id", id);
       toast.success("Signin Success");
       dispatch(signinSuccess());
     })

@@ -7,10 +7,14 @@ import Trend from "@/components/ui/Trend";
 import Price from "@/components/ui/Price";
 import { Button } from "@chakra-ui/react";
 import Divider from "@/components/ui/Divider";
+//hook
+import { useSelector } from "react-redux";
 //icons
 import { iconsHelper } from "@/config/icons";
 import { useState } from "react";
 export default function PortSummary({ setIsOpen }) {
+  const portfolio = useSelector((state) => state.portfolio).data;
+  console.log("portfolio", portfolio);
   const chartValues = [
     { value: 10, full_name: "BTC", color: "red" },
     { value: 10, full_name: "ETH", color: "green" },
@@ -60,7 +64,7 @@ export default function PortSummary({ setIsOpen }) {
               showStats={showStats}
               valueRender={
                 <Price
-                  amount={8034}
+                  amount={portfolio.balance}
                   currencyCode="USD"
                   currencyCodeClassName="hidden"
                 />
@@ -72,11 +76,11 @@ export default function PortSummary({ setIsOpen }) {
               valueRender={
                 <Flex gap="3">
                   <Price
-                    amount={1211}
+                    amount={portfolio.totalPnl}
                     currencyCode="USD"
                     currencyCodeClassName="hidden"
                   />
-                  <Trend value={12} />
+                  <Trend value={portfolio.pnl_percentage} />
                 </Flex>
               }
               title="Total Balance"

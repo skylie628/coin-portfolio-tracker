@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 module.exports = function (req, res, next) {
   const accessToken = req.header("x-auth-token");
+  // console.log(accessToken)
   if (!accessToken) {
     res.status(403).json({
       isSuccess: false,

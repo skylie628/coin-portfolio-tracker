@@ -23,12 +23,18 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 //route
-const variablesRoute = require("./route/variable.route");
+const transactionRoute = require("./route/transaction.route");
+const investOptionRoute = require("./route/investOption.route");
+const portfolioRoute = require("./route/portfolio.route");
 const userRoute = require("./route/user.route");
 const coinRoute = require("./route/coin.route");
-app.use("/api/variable", variablesRoute);
+const variablesRoute = require("./route/variable.route");
 app.use("/api/user", userRoute);
+app.use("/api/transactions", transactionRoute);
+app.use("/api/invests", investOptionRoute);
+app.use("/api/portfolio", portfolioRoute);
 app.use("/api/coin", coinRoute);
+app.use("/api/variable", variablesRoute);
 //start the server
 app.listen(port, () => {
   console.log("listen to port ", port);

@@ -1,3 +1,5 @@
+const portfolioModel = require("../model/portfolio.model");
+const portfolioService = require("../service/portfolio.service");
 const { createUser, findUser } = require("../service/user.service");
 const { generateAccessToken, generateRefreshToken } = require("../utils");
 const bcrypt = require("bcrypt");
@@ -7,6 +9,7 @@ module.exports = {
     try {
       const { email, name, password } = req.body.data;
       const isUserExisted = await findUser(email);
+      console.log(isUserExisted);
       if (isUserExisted) {
         res.status(400).json({
           msg: "email already exisited",
@@ -19,6 +22,15 @@ module.exports = {
       const hashPassword = await bcrypt.hash(password, salt);
       const user = await createUser({ email, name, password: hashPassword });
       delete user.password;
+
+      //create new port when signup
+      const port = await portfolioService.createPortfolio({
+        userid: user._id,
+      });
+      // assign portid to user
+      user.portid = port._id;
+      user.save();
+
       res.status(200).json({
         isSuccess: true,
         data: user,
@@ -35,8 +47,9 @@ module.exports = {
   },
   signin: async (req, res) => {
     const { email, password } = req.body.data;
-    console.log("sign");
+    // console.log("sign");
     const user = await findUser(email);
+    // console.log(email)
     if (!user) {
       res.status(400).json({
         isSuccess: false,
@@ -45,6 +58,7 @@ module.exports = {
       return;
     }
     const isMatchedPassword = await bcrypt.compare(password, user.password);
+    // console.log(password)
     if (!isMatchedPassword) {
       res.status(400).json({
         isSuccess: false,
@@ -67,11 +81,12 @@ module.exports = {
       data: {
         accessToken,
         refreshToken,
+        ...payload.user,
       },
     });
   },
   refreshToken: async (req, res) => {
-    const refreshToken = req.body.data || {};
+    const { refreshToken } = req.body.data || {};
     if (!refreshToken) {
       res.status(401).json({ msg: "Not have cretidental", isSuccess: false });
       return;
@@ -79,7 +94,7 @@ module.exports = {
 
     jwt.verify(refreshToken, process.env.SECRET_TOKEN, (error, user) => {
       if (error) {
-        console.log(refreshToken);
+        // console.log(refreshToken);
         res.status(401).json({ msg: "Unauthenticated", isSuccess: false });
         return;
       }

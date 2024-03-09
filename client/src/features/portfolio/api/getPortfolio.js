@@ -1,12 +1,12 @@
 import axiosConfig from "@/lib/axios";
-export default async function getPortfolio({ portId }) {
+export default async function getPortfolioService({ userId }) {
   try {
-    const portInfo = axiosConfig.get("/port", {
+    const portInfo = await axiosConfig.get("portfolio", {
       params: {
-        portId: portId,
+        userId,
       },
     });
-    return portInfo;
+    return portInfo?.data;
   } catch (err) {
     throw new err(err.msg);
   }

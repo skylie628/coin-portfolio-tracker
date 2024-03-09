@@ -4,21 +4,29 @@ import FourColumns from "@/components/grid/FourColumns";
 import Tile from "@/components/grid/Tile";
 //constants
 import constants from "@/utils/constants";
+//hooks
+import { useDispatch, useSelector } from "react-redux";
 export default function PortCoins() {
-  const data = new Array(10).fill(0).map((x) => ({
-    id: "imx",
-    name: "ImmutableX",
-    src: "https://assets.coingecko.com/coins/images/479/large/firocoingecko.png?1696501734",
-    symbol: "IMX",
-    label: "Somthing just like this",
-    to: "/portfolio/abc",
-    data: {
-      coin_id: "IMX",
-      balance: 1124,
-      revenue: +432,
-      eco: "Ecosystem",
-    },
-  }));
+  const dispatch = useDispatch();
+  const invests = useSelector((state) => state.portfolio.data.investid);
+  console.log("invest", invests);
+  const data =
+    invests &&
+    invests.map((invest) => ({
+      id: invest.symbol,
+      name: invest.name,
+      src: invest.img,
+      symbol: invest.symbol.toUpperCase(),
+      label: invest.des.split(".")[0],
+      to: `/portfolio/${invest.symbol}`,
+      data: {
+        coin_id: invest.name,
+        balance: invest.balance || 0,
+        revenue: invest.revenue || 0,
+        pnl_percentage: invest.pnl_percentage || 0,
+        eco: invest.coinType,
+      },
+    }));
   return (
     <Flex className="relative z-[12] w-full flex-col py-40 px-20 gap-[100px] text-left container mx-auto">
       <Divider

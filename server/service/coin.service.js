@@ -1,5 +1,9 @@
 const getCachedOrFetch = require("../lib/redis/getCachedOrFetch");
 const redis = require("../lib/redis/index");
+const axios = require("axios");
+const { URLSearchParams } = require("url");
+// const dotenv = require("dotenv")
+// dotenv.config()
 module.exports = {
   getTrendingSearch: async () => {
     try {
@@ -11,10 +15,12 @@ module.exports = {
     }
   },
   getTopMarketCap: async () => {
+    console.log("getTopMarketCap");
     try {
       let topMarketCap = await redis.get("topMarketCap");
       return JSON.parse(topMarketCap).slice(0, 10);
     } catch (error) {
+      console.log("error");
       console.error(`Error getting top market cap from Redis: ${error}`);
       throw new Error(error); // re-throw the error so it can be handled by the caller
     }
@@ -113,6 +119,42 @@ module.exports = {
     } catch (error) {
       console.error(`Error getting general from server: ${error}`);
       throw new Error(error); // re-throw the error so it can be handled by the caller
+    }
+  },
+  isExternalCoinApiActive: async () => {
+    try {
+      const url = process.env.COIN_GEKO_API;
+      const response = await axios.get(url);
+      return response.status == 200 ? true : false;
+    } catch (error) {
+      throw error;
+    }
+  },
+  getCoinById: async (tokenId) => {
+    try {
+      const queryParams = new URLSearchParams({
+        localization: "false",
+        tickers: "false",
+        community_data: "false",
+        developer_data: "false",
+        sparkline: "false",
+      });
+      const url = `${
+        process.env.COIN_GEKO_API
+      }/coins/${tokenId}?${queryParams.toString()}`;
+      const response = await axios.get(url);
+
+      return {
+        id: response?.data?.id,
+        name: response?.data?.name,
+        symbol: response?.data?.symbol,
+        currentPrice: {
+          inr: response?.data?.market_data?.current_price?.inr,
+          usd: response?.data?.market_data?.current_price?.usd,
+        },
+      };
+    } catch (e) {
+      throw e;
     }
   },
 };
