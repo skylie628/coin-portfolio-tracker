@@ -13,12 +13,12 @@ export default function PortCoins() {
   const data =
     invests &&
     invests.map((invest) => ({
-      id: invest.symbol,
+      id: invest._id,
       name: invest.name,
       src: invest.img,
       symbol: invest.symbol.toUpperCase(),
       label: invest.des.split(".")[0],
-      to: `/portfolio/${invest.symbol}`,
+      to: `/portfolio/${invest._id}`,
       data: {
         coin_id: invest.name,
         balance: invest.balance || 0,

@@ -21,6 +21,12 @@ import { ChevronLeft } from "lucide-react";
 import { Divider } from "@chakra-ui/react";
 import TransactionModal from "./components/TransactionModal";
 import { useState } from "react";
+//hooks
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+//thunks
+import { loadInvestOptionThunk } from "../../store/action/action.investOption";
 export default function TransactionsList() {
   const headerName = [
     "Type",
@@ -41,6 +47,14 @@ export default function TransactionsList() {
     Costs: 33202,
     PNL: 17,
   }));
+  const dispatch = useDispatch();
+  const { investOptionId } = useParams();
+  console.log("");
+  const invest = useSelector((state) => state.investOption);
+
+  useEffect(() => {
+    dispatch(loadInvestOptionThunk({ id: investOptionId }));
+  }, []);
   return (
     <BottomDrawer>
       <TransactionModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
@@ -75,7 +89,7 @@ export default function TransactionsList() {
             <Stats
               valueRender={
                 <Price
-                  amount={8034}
+                  amount={invest.holding || 0}
                   currencyCode="USD"
                   currencyCodeClassName="hidden"
                 />
@@ -85,7 +99,7 @@ export default function TransactionsList() {
             <Stats
               valueRender={
                 <Price
-                  amount={8034}
+                  amount={invest.quantity || 0}
                   currencyCode="USD"
                   currencyCodeClassName="hidden"
                 />
@@ -95,7 +109,7 @@ export default function TransactionsList() {
             <Stats
               valueRender={
                 <Price
-                  amount={8034}
+                  amount={invest.capital || 0}
                   currencyCode="USD"
                   currencyCodeClassName="hidden"
                 />
@@ -106,11 +120,11 @@ export default function TransactionsList() {
               valueRender={
                 <Flex gap="3">
                   <Price
-                    amount={1211}
+                    amount={invest.totalPnl || 0}
                     currencyCode="USD"
                     currencyCodeClassName="hidden"
                   />
-                  <Trend value={12} />
+                  <Trend value={invest.pnl_percentage || 0} />
                 </Flex>
               }
               title="Profit / Loss"
@@ -130,7 +144,7 @@ export default function TransactionsList() {
                 </Tr>
               </Thead>
               <Tbody>
-                {mock.map((x, index) => (
+                {invest.transactions.map((x, index) => (
                   <Tr
                     key={index}
                     className={index % 2 == 0 ? "bg-blackest" : "bg-blacker"}

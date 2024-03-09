@@ -63,7 +63,7 @@ export default function App() {
             }
           >
             <Route
-              path=":coinId"
+              path=":investOptionId"
               element={
                 <Suspense fallback={<LoadingPage />}>
                   <TransactionsList />

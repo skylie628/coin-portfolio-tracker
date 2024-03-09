@@ -19,11 +19,15 @@ import {
 } from "@chakra-ui/react";
 //use hook
 import { useForm, useWatch } from "react-hook-form";
+import { useParams } from "react-router-dom";
 //other
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { Controller } from "react-hook-form";
+import { useDispatch } from "react-redux";
+//thunk
+import { addTransactionThunk } from "../../../store/action/action.investOption";
 export default function TransactionForm({ type = "buy", setIsOpen }) {
   const scheme = yup.object().shape({
     price: yup.number().required(),
@@ -43,9 +47,22 @@ export default function TransactionForm({ type = "buy", setIsOpen }) {
     },
     resolver: yupResolver(scheme),
   });
-  const onSubmit = (data) => {
-    console.log(data);
-    setIsOpen(false);
+  const dispatch = useDispatch();
+  const { investOptionId } = useParams();
+  const onSubmit = async (data) => {
+    console.log("transaction la ", data, investOptionId);
+    const { price, date, quantity } = data;
+    dispatch(
+      addTransactionThunk({
+        investid: investOptionId,
+        type,
+        price,
+        date,
+        quantity,
+        status: "completed",
+      })
+    );
+    //setIsOpen(false);
   };
   const watchPrice = useWatch({ control, name: "price", defaultValue: 15 });
   const watchQuantity = useWatch({

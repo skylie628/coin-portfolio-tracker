@@ -22,6 +22,7 @@ export default function Tile({
 }) {
   const { tileType } = constants;
   const [hover, setHover] = useState(false);
+  console.log("to la", to);
   const bgColor =
     variant === tileType.trendingCategories ? "bg-black" : " bg-black ";
   const stats =

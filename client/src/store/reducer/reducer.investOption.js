@@ -1,9 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  isLoading: false,
-  isError: false,
-  revenue: 0,
+  id: null,
+  portid: null,
+  symbol: null,
+  img: null,
+  holding: 0,
   balance: 0,
+  capital: 0,
+  averageNetCost: 0,
+  totalProceed: 0,
+  totalPnl: 0,
+  pnlPercentage: 0,
+  transactions: [],
 };
 const investOptionSlice = createSlice({
   name: "investOption",
@@ -20,12 +28,16 @@ const investOptionSlice = createSlice({
       );
       return state;
     },
+    addTransaction: (state, action) => action.payload.data,
+    removeTransaction: (state, action) => action.payload.data,
     updateInvestOption: (state, action) => action.payload.data,
   },
 });
 export const {
   loadInvestOption,
   addInvestOption,
+  addTransaction,
+  removeTransaction,
   deleteInvestOption,
   updateInvestOption,
 } = investOptionSlice.actions;
