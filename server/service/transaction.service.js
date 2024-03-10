@@ -28,7 +28,14 @@ module.exports = {
   deleteTransaction: async (id) => {
     await transactionModel.deleteOne({ _id: new ObjectId(id) });
   },
-  pnl: (quantity = 0, currentPrice = 0, price = 0) => {
+  calculatePnl: (quantity = 0, currentPrice = 0, price = 0) => {
     return quantity * (currentPrice - price);
+  },
+  calculateProceeds: (quantity = 0, price = 0, arr) => {
+    proceed = 0;
+    for (x of arr) {
+      proceed += quantity * price;
+    }
+    return proceed;
   },
 };

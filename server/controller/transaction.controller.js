@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const transactionModel = require("../model/transaction.model");
 const transactionService = require("../service/transaction.service");
-
+const { calculatePnl } = require("../service/transaction.service");
 const {
   getTopCoin,
   getCoinPrice,
@@ -50,32 +50,51 @@ module.exports = {
       res.status(400);
     }
     invest = await investOptionModel.findById(investid);
-    if(!invest){
-      throw new Error("Invest not found with id:"+ `${investid}`)
+
+    if (!invest) {
+      throw new Error("Invest not found with id:" + `${investid}`);
     }
-    
 
-    // console.log(invest.transactions)
-    coinprice = await getCoinPrice(invest.symbol);
+    //get coin current price
+    // currentPrice = await getCoinPrice(invest.symbol);
+    proceeds = null;
+    pnl = null;
+    //calculate pnl if buy and proceed if sell
+    if (type === "buy") {
+      pnl = 0;
+      invest.holding += quantity;
+      invest.capital += quantity * price;
+    } else {
+      //sell
+      // if (quantity > invest.holding) {
+      //   throw new Error("Selling more than you have");
+      // }
+      proceeds = quantity * price;
+      invest.totalProceeds += proceeds;
+      invest.holding -= quantity;
+    }
 
-    // console.log(coinprice)
-    const pnl = transactionService.pnl(quantity, coinprice, price);
-    // console.log(pnl)
-    
     const newtransaction = await transactionService.createTransaction({
       quantity,
       price,
       type,
       date,
-      pnl,
       status,
+      pnl,
+      proceeds,
       investid,
     });
     invest.transactions.push(newtransaction._id);
-    invest.revenue += pnl;
     invest.save();
-    // console.log(req.body);
-    res.status(201).json(newtransaction);
+    // transactionModel.populate(newtransaction, {path: "investid"}).then(tran=>{
+    //   res.status(201).json(tran)
+    //   console.log(tran)
+    // })
+    console.log("invest la", invest, quantity, price);
+    res.status(201).json({
+      newInvestOption: invest,
+      newtransaction,
+    });
   }),
   updateTransaction: asyncHandler(async (req, res) => {
     const transaction = await transactionModel.findById(req.params.id);

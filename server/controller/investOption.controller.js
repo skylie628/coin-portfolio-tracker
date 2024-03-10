@@ -1,10 +1,15 @@
 const expressAsyncHandler = require("express-async-handler");
 const investOptionService = require("../service/investOption.service");
 const investOptionModel = require("../model/investOption.model");
-const { getAssetbySymbol } = require("../service/externalApiCoin.service");
+const {
+  getAssetbySymbol,
+  getCoinPrice,
+} = require("../service/externalApiCoin.service");
 const portfolioModel = require("../model/portfolio.model");
 const { Error } = require("mongoose");
-
+const Transaction = require("../model/transaction.model");
+const { calculatePnl } = require("../service/transaction.service");
+const transactionService = require("../service/transaction.service");
 module.exports = {
   getInvests: expressAsyncHandler(async (req, res) => {
     const invests = await investOptionService.getInvests();
@@ -27,8 +32,39 @@ module.exports = {
       res.status(404);
       throw new Error("Invest not found!");
     }
-    // revenue = investOptionService.totoalRevenue
-    res.status(200).json(invest);
+
+    invest.populate("transactions").then(async (invest) => {
+      //invest holding, capital, proceeds đã được tính khi tạo transaction rồi
+      //curent price
+      currentPrice = await getCoinPrice(invest.symbol);
+      invest.balance = invest.holding * currentPrice;
+      //transaction pnl = 0
+      totalPnl = 0;
+      for (transaction of invest.transactions) {
+        if (transaction.pnl != null) {
+          transaction.pnl = calculatePnl(
+            transaction.quantity,
+            currentPrice,
+            transaction.price
+          );
+        }
+        transaction.save();
+      }
+
+      //calculate averageNetCost
+      if (!invest.totalProceeds) {
+        invest.averageNetCost = invest.capital / invest.holding;
+      } else {
+        invest.averageNetCost =
+          (invest.capital - invest.totalProceeds) / invest.holding;
+      }
+
+      //calculate total pnl in invest option
+      invest.totalPnl = invest.balance - invest.averageNetCost * invest.holding;
+      invest.pnl_percentage = invest.totalPnl / invest.capital;
+      invest.save();
+      res.status(200).json(invest);
+    });
   }),
   createInvest: expressAsyncHandler(async (req, res) => {
     const { portid, symbol } = req.body;

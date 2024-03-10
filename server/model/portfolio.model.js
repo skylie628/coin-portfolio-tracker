@@ -4,14 +4,24 @@ const PortfolioSchema = new mongoose.Schema({
   userid: {
     type: String,
     require: true,
-    default: 0,
     ref: "User",
   },
 
+  balance: {
+    type: Number,
+    default: 0,
+  },
+  totalPnl: {
+    type: Number,
+    default: 0,
+  },
+  pnl_percentage: {
+    type: Number,
+    default: 0,
+  },
   investid: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      default: 0,
       ref: "InvestOption",
     },
   ],

@@ -7,10 +7,7 @@ const router = require("express").Router();
 // router.get("/",cors(),transactionController.getTransactions);
 router
   .route("/")
-  .get(authMiddleware, transactionController.getTransactions)
-  .post(authMiddleware, transactionController.createTransaction);
-router
-  .route("/:id")
+  .post(authMiddleware, transactionController.createTransaction)
   .get(authMiddleware, transactionController.getTransaction)
   .put(authMiddleware, transactionController.updateTransaction)
   .delete(authMiddleware, transactionController.deleteTransaction);

@@ -2,11 +2,13 @@ const mongoose = require("mongoose");
 const TransactionSchema = new mongoose.Schema({
   quantity: { type: Number, required: true },
   price: { type: Number, required: true },
-  type: { type: String },
+  type: { type: String, require: true },
   date: { type: Date, default: Date.now },
-  pnl: { type: Number, default: 0 },
+  fee: { type: Number, default: 0 },
+  pnl: { type: Number, default: null },
   status: { type: String },
-  investid: { type: mongoose.Schema.Types.ObjectId, ref: "InvestOption", require: true},
+  proceeds: { type: Number, default: null },
+  investid: { type: mongoose.Schema.Types.ObjectId, ref: "InvestOption" },
 });
 // module.exports = mongoose.model("Transaction", TransactionSchema);
 const Transaction = mongoose.model("Transaction", TransactionSchema);
