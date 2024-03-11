@@ -27,6 +27,8 @@ export default {
         metalgray: "#F5F5F7",
         metaldark: "rgb(202,202,204)",
         meshgrid: "rgba(100, 116, 139,0.3)",
+        greenstats: "#16C784",
+        redstats: "#EA3943",
       },
       backgroundImage: {
         "sign-pattern":

@@ -12,6 +12,7 @@ import {
   HStack,
   Grid,
 } from "@chakra-ui/react";
+import clsx from "clsx";
 import BottomDrawer from "../../components/layout/BottomDrawer";
 import Price from "../../components/ui/Price";
 import Trend from "../../components/ui/Trend";
@@ -80,16 +81,16 @@ export default function TransactionsList() {
         <VStack className="w-10/12 p-3 ml-auto mr-auto">
           <Grid
             templateColumns={{
-              base: "repeat(1, 1fr)",
-              md: "repeat(2, 1fr)",
-              lg: "repeat(4, 1fr)",
+              base: "repeat(2, 1fr)",
+              md: "repeat(4, 1fr)",
             }}
             className="w-full p-5 gap-3  items-start text-lightstar"
           >
             <Stats
               valueRender={
                 <Price
-                  amount={invest.holding || 0}
+                  className="text-lg md:text-xl"
+                  amount={invest.balance || 0}
                   currencyCode="USD"
                   currencyCodeClassName="hidden"
                 />
@@ -99,7 +100,8 @@ export default function TransactionsList() {
             <Stats
               valueRender={
                 <Price
-                  amount={invest.quantity || 0}
+                  className="text-lg md:text-xl"
+                  amount={invest.holding || 0}
                   currencyCode="USD"
                   currencyCodeClassName="hidden"
                 />
@@ -109,6 +111,7 @@ export default function TransactionsList() {
             <Stats
               valueRender={
                 <Price
+                  className="text-lg md:text-xl"
                   amount={invest.capital || 0}
                   currencyCode="USD"
                   currencyCodeClassName="hidden"
@@ -118,13 +121,39 @@ export default function TransactionsList() {
             />
             <Stats
               valueRender={
-                <Flex gap="3">
+                <Price
+                  className="text-lg md:text-xl"
+                  amount={invest.totalProceeds || 0}
+                  currencyCode="USD"
+                  currencyCodeClassName="hidden"
+                />
+              }
+              title="Total Proceeds"
+            />
+            <Stats
+              valueRender={
+                <Price
+                  className="text-lg md:text-xl"
+                  amount={invest.averageNetCost || 0}
+                  currencyCode="USD"
+                  currencyCodeClassName="hidden"
+                />
+              }
+              title="Avg Net Cost"
+            />
+            <Stats
+              valueRender={
+                <Flex className="flex-col justify-center md:flex-row" gap="3">
                   <Price
+                    className="text-lg md:text-xl"
                     amount={invest.totalPnl || 0}
                     currencyCode="USD"
                     currencyCodeClassName="hidden"
                   />
-                  <Trend value={invest.pnl_percentage || 0} />
+                  <Trend
+                    className="text-sm md:text-lg"
+                    value={invest.pnl_percentage * 100 || 0}
+                  />
                 </Flex>
               }
               title="Profit / Loss"
@@ -140,6 +169,7 @@ export default function TransactionsList() {
                   <Th>Date</Th>
                   <Th>Fees</Th>
                   <Th>Costs</Th>
+                  <Th>Proceeds</Th>
                   <Th>PNL</Th>
                 </Tr>
               </Thead>
@@ -149,27 +179,33 @@ export default function TransactionsList() {
                     key={index}
                     className={index % 2 == 0 ? "bg-blackest" : "bg-blacker"}
                   >
-                    <Td>{x.Type}</Td>
+                    <Td
+                      className={
+                        x.type === "buy" ? "text-greenstats" : "text-redstats"
+                      }
+                    >
+                      {x.type.toUpperCase()}
+                    </Td>
                     <Td>
                       <Price
-                        amount={x.Price}
+                        amount={x.price}
                         className="text-metaldark"
                         currencyCode="USD"
                         currencyCodeClassName="hidden"
                       />
                     </Td>
-                    <Td className="text-metaldark">{x.Quantity}</Td>
-                    <Td className="text-metaldark">{x.Date}</Td>
+                    <Td className="text-metaldark">{x.quantity}</Td>
+                    <Td className="text-metaldark">{x.date}</Td>
                     <Td>
                       <Price
-                        amount={x.Fees}
+                        amount={x.fee || 0}
                         currencyCode="USD"
                         currencyCodeClassName="hidden"
                       />
                     </Td>
                     <Td>
                       <Price
-                        amount={x.Costs}
+                        amount={x.price * x.quantity - x.fee}
                         className="text-metaldark"
                         currencyCode="USD"
                         currencyCodeClassName="hidden"
@@ -177,8 +213,19 @@ export default function TransactionsList() {
                     </Td>
                     <Td>
                       <Price
-                        amount={x.PNL}
+                        amount={x.proceeds}
                         className="text-metaldark"
+                        currencyCode="USD"
+                        currencyCodeClassName="hidden"
+                      />
+                    </Td>
+                    <Td>
+                      <Price
+                        amount={x.pnl}
+                        className={clsx(
+                          "text-metaldark ",
+                          x.pnl > 0 ? "text-greenstats" : "text-redstats"
+                        )}
                         currencyCode="USD"
                         currencyCodeClassName="hidden"
                       />

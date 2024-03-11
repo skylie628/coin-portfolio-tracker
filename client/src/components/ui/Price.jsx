@@ -13,7 +13,12 @@ export default function Price({
       : `${new Intl.NumberFormat(undefined, {
           style: "currency",
           currency: currencyCode,
-          minimumFractionDigits: 5,
+          minimumFractionDigits:
+            parseInt(amount) === amount
+              ? 0
+              : Math.abs(parseInt(amount)) > 1
+              ? 2
+              : 5,
           currencyDisplay: "narrowSymbol",
         }).format(parseFloat(amount))}`;
   return (

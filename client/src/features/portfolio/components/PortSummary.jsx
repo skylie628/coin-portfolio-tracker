@@ -80,7 +80,7 @@ export default function PortSummary({ setIsOpen }) {
                     currencyCode="USD"
                     currencyCodeClassName="hidden"
                   />
-                  <Trend value={portfolio.pnl_percentage} />
+                  <Trend value={portfolio.pnl_percentage * 100} />
                 </Flex>
               }
               title="Total Balance"

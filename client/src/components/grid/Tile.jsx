@@ -22,7 +22,6 @@ export default function Tile({
 }) {
   const { tileType } = constants;
   const [hover, setHover] = useState(false);
-  console.log("to la", to);
   const bgColor =
     variant === tileType.trendingCategories ? "bg-black" : " bg-black ";
   const stats =
@@ -44,7 +43,7 @@ export default function Tile({
             className="font-light text-dimgray"
             currencyCodeClassName="hidden"
           />
-          <Trend className="!mr-auto" value={data.pnl_percentage} />
+          <Trend className="!mr-auto" value={data.pnl_percentage * 100} />
         </Flex>
       </Flex>
     ) : (

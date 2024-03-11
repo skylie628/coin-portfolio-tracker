@@ -1,6 +1,7 @@
 //reducer
 import { addInvestOption } from "../reducer/reducer.portfolio";
 import { loadInvestOption } from "../reducer/reducer.investOption";
+//thun
 //api
 import createInvestOptionService from "../../features/portfolio/api/createInvestOption";
 import getInvestOptionDetailService from "../../features/transaction/api/getInvestOptionDetailService";
@@ -35,7 +36,7 @@ export const addTransactionThunk =
     addTransactionService({ quantity, price, type, date, status, investid })
       .then((data) => {
         console.log("returned value afer add transaction la", data);
-        /*  dispatch(addInvestOption({ data }));*/
+        dispatch(loadInvestOptionThunk({ id: investid }));
       })
       .catch((err) => {
         console.log("err");

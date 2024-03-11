@@ -28,6 +28,7 @@ import { Controller } from "react-hook-form";
 import { useDispatch } from "react-redux";
 //thunk
 import { addTransactionThunk } from "../../../store/action/action.investOption";
+import { loadInvestOptionThunk } from "../../../store/action/action.investOption";
 export default function TransactionForm({ type = "buy", setIsOpen }) {
   const scheme = yup.object().shape({
     price: yup.number().required(),
@@ -56,13 +57,13 @@ export default function TransactionForm({ type = "buy", setIsOpen }) {
       addTransactionThunk({
         investid: investOptionId,
         type,
-        price,
+        price: parseFloat(price),
         date,
-        quantity,
+        quantity: parseFloat(quantity),
         status: "completed",
       })
     );
-    //setIsOpen(false);
+    setIsOpen(false);
   };
   const watchPrice = useWatch({ control, name: "price", defaultValue: 15 });
   const watchQuantity = useWatch({

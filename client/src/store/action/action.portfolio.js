@@ -5,7 +5,7 @@ export const getPortfolioThunk =
   async (dispatch, getState) => {
     getPortfolioService({ userId })
       .then((data) => {
-        console.log("res la", data);
+        console.log("result la", data);
         dispatch(loadPortfolio({ data }));
       })
       .catch((err) => {});
