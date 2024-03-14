@@ -10,6 +10,10 @@ const InvestOptionSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  name: {
+    type: String,
+    require: true,
+  },
   img: {
     type: String,
   },

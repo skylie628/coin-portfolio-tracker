@@ -27,7 +27,8 @@ module.exports = {
     });
   }),
   getInvest: expressAsyncHandler(async (req, res) => {
-    const invest = await investOptionService.getInvest(req.params.id);
+    console.log("id la", req.query.id);
+    const invest = await investOptionService.getInvest(req.query.id);
     if (!invest) {
       res.status(404);
       throw new Error("Invest not found!");
@@ -53,15 +54,20 @@ module.exports = {
 
       //calculate averageNetCost
       if (!invest.totalProceeds) {
-        invest.averageNetCost = invest.capital / invest.holding;
+        invest.averageNetCost = invest.holding
+          ? invest.capital / invest.holding
+          : 0;
       } else {
-        invest.averageNetCost =
-          (invest.capital - invest.totalProceeds) / invest.holding;
+        invest.averageNetCost = invest.holding
+          ? (invest.capital - invest.totalProceeds) / invest.holding
+          : 0;
       }
 
       //calculate total pnl in invest option
       invest.totalPnl = invest.balance - invest.averageNetCost * invest.holding;
-      invest.pnl_percentage = invest.totalPnl / invest.capital;
+      invest.pnl_percentage = invest.capital
+        ? invest.totalPnl / invest.capital
+        : invest.capital;
       invest.save();
       res.status(200).json(invest);
     });
@@ -120,11 +126,12 @@ module.exports = {
     );
   }),
   deleteInvest: expressAsyncHandler(async (req, res) => {
-    const invest = await investOptionModel.findById(req.params.id);
+    const { id } = req.query;
+    const invest = await investOptionModel.findById(id);
     if (!invest) {
       res.status(404);
       throw new Error("Invest not found");
     }
-    res.status(200).json(investOptionService.deleteInvest(req.params.id));
+    res.status(200).json(investOptionService.deleteInvest(id));
   }),
 };
