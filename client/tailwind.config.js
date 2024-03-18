@@ -6,6 +6,9 @@ export default {
       roboto: "Roboto",
     },
     extend: {
+      zIndex: {
+        max: "9999",
+      },
       animation: {
         "move-right": "moveRight 0.4s ease-out ",
       },

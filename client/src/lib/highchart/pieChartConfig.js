@@ -1,3 +1,4 @@
+import abbreviateNumber from "../../utils/abbreviateNumber";
 export default function pieChartConfig(chartValues) {
   return {
     chart: {
@@ -25,6 +26,14 @@ export default function pieChartConfig(chartValues) {
         },
       },
     ],
+    tooltip: {
+      pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
+      formatter: function () {
+        let value = this.y;
+        value = abbreviateNumber(value); // Use your abbreviateNumber function here
+        return value;
+      },
+    },
     plotOptions: {
       pie: { borderColor: "orange" },
     },

@@ -4,7 +4,6 @@ import { createListenerMiddleware } from "@reduxjs/toolkit";
 import {
   startStreaming,
   setStreamingPrices,
-  stopStreaming,
 } from "../store/reducer/reducer.market";
 import {
   connectSocket,
@@ -35,7 +34,6 @@ let wss = null;
 listenerMiddleware.startListening({
   actionCreator: startStreaming,
   effect: async (action, listenerApi) => {
-    console.log("payload la", action.payload);
     listenerApi.cancelActiveListeners();
     const coins = action.payload.topCurrencies.map((x) => x.symbol);
     const socketUrl = createBinanceSocketURL({
@@ -89,12 +87,10 @@ listenerMiddleware.startListening({
     });
     var wss = new WebSocket(socketUrl);
     wss.onopen = function (event) {
-      console.log("WebSocket connection established");
       // Dispatch an action to update the state with the connection status
       listenerApi.dispatch(connectSuccess());
     };
     const debouncedUpdateCurrentValue = debounce((data) => {
-      console.log("listen state la", listenerApi.getState());
       if (listenerApi.getState().streaming.currency.streamMode) {
         listenerApi.dispatch(updateCurrentValue(data));
       }
@@ -102,12 +98,10 @@ listenerMiddleware.startListening({
     wss.onmessage = function (event) {
       receivedData = true;
       var messageObject = JSON.parse(event.data);
-      console.log("mess la", messageObject);
       debouncedUpdateCurrentValue({ data: messageObject.p });
     };
     wss.onclose = function () {
       if (!receivedData) {
-        console.log("WebSocket closed without receiving any data.");
         // Dispatch an action to update the state
         listenerApi.dispatch(
           connectFailed({ error: "No data received from stream" })
@@ -116,7 +110,6 @@ listenerMiddleware.startListening({
       receivedData = false;
     };
     wss.onerror = function (error) {
-      console.log("WebSocket Error: ", error);
       // Dispatch an action to update the state with the error
       listenerApi.dispatch(connectFailed({ error: error.message }));
     };
@@ -127,7 +120,7 @@ listenerMiddleware.startListening({
     ) {
       wss.close();
       listenerApi.dispatch(reset());
-      listenerApi.cancel();
+      //listenerApi.cancel();
     }
   },
 });

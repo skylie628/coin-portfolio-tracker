@@ -7,15 +7,25 @@ import {
   setFilter,
   toggle,
 } from "../reducer/reducer.variable";
-const apiFetchVariables = async () => {
-  return axiosConfig.get("/variable/variables");
-};
-export const fetchVariablesThunk = () => async (dispatch) => {
-  dispatch(fetchVariables());
-  apiFetchVariables()
-    .then((rs) => dispatch(fetchVariablesSuccess(rs.data)))
-    .catch((err) => dispatch(fetchVariablesFail(err)));
-};
+import getPortfolioService from "../../features/portfolio/api/getPortfolio";
+
+export const fetchVariablesThunk =
+  ({ userId }) =>
+  async (dispatch) => {
+    getPortfolioService({ userId })
+      .then((rs) => {
+        const variableData =
+          rs?.investid?.map((invest) => ({
+            id: invest._id,
+            type: "BLOCKCHAIN",
+            unit: "USD",
+            full_name: invest.symbol.toUpperCase(),
+            value: invest.balance,
+          })) || [];
+        dispatch(fetchVariablesSuccess({ data: variableData }));
+      })
+      .catch((err) => dispatch(fetchVariablesFail(err)));
+  };
 
 export const setFilterThunk = (payload) => (dispatch, getState) => {
   const { fetchedVariables, filterCriteria } = getState().variable;

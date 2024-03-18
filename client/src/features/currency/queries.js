@@ -14,7 +14,6 @@ export const getCurrencyDetailQuery = ({ coinId }) => {
   };
 };
 export const getHistoryPriceQuery = ({ coinId, timeRange }) => {
-  console.log("queryKey", ["currencyPriceHistory", coinId, timeRange]);
   return {
     queryKey: ["currencyPriceHistory", coinId, timeRange],
     queryFn: () => getHistoryPrice({ coinId, timeRange }),

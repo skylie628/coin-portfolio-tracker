@@ -27,7 +27,5 @@ export const loadPortThunk = (portId) => async (dispatch, getState) => {
         })
       );
     })
-    .catch((err) => {
-      console.log("err");
-    });
+    .catch((err) => {});
 };

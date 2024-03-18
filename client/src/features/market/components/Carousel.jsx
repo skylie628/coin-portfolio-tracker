@@ -2,10 +2,8 @@ import React from "react";
 import { Flex, Box, Text, Container, Divider } from "@chakra-ui/react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import Price from "@/components/ui/Price";
-import { motion, AnimatePresence } from "framer-motion";
 //usehook
 import { useGetTopCurrencies } from "../hooks/useGetTopCurrencies";
-import { useEffect, useState } from "react";
 const promptTexts = [
   "Cryptographers",
   "Miners",
@@ -52,7 +50,6 @@ function Carousel() {
   const { topCurrencies = [] } = useGetTopCurrencies({ pageIndex: 1 });
 
   let carousels = topCurrencies.slice(0, 10);
-  console.log(carousels.length);
   return (
     <div className="py-0 bg-orange h-[64px] relative z-[20] h-[64px]">
       <div className="overflow-hidden bg-orange container mx-auto ">

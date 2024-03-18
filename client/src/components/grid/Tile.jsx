@@ -57,7 +57,9 @@ export default function Tile({
         <div>{data.eco}</div>
         <Flex gap="3">
           {" "}
-          {variant == tileType.portOption && iconsHelper.DeleteCircle}{" "}
+          {variant == tileType.portOption && (
+            <div className="z-max">{iconsHelper.DeleteCircle}</div>
+          )}{" "}
           {iconsHelper.RightChevronCircle({ colorTheme: "dark" })}
         </Flex>
       </div>
@@ -72,7 +74,7 @@ export default function Tile({
         <Flex
           as="article"
           className="relative 
-           flex-1 flex-col hover:border rounded-lg hover:border-1 hover:border-meshgrid group cursor-pointer "
+           flex-1 flex-col hover:border rounded-lg hover:border-1 hover:border-meshgrid group cursor-pointer  "
         >
           <Tooltip label={label}>
             <div

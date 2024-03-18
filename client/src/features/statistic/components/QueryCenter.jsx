@@ -16,8 +16,7 @@ import { setFilterThunk } from "@/store/action/action.variable";
 import SideDrawer from "@/components/ui/SideDrawer";
 import VariablesList from "./VariablesList";
 import Select from "@/components/ui/Select";
-import { ChevronRight, ChevronLeftCircle } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { ChevronRight } from "lucide-react";
 //usehook
 import { useMemo, useCallback, useState } from "react";
 export function QueryCenterItem() {

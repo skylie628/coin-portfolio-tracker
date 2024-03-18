@@ -25,10 +25,10 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { Controller } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 //thunk
 import { addTransactionThunk } from "../../../store/action/action.investOption";
-import { loadInvestOptionThunk } from "../../../store/action/action.investOption";
+import { format } from "date-fns";
 export default function TransactionForm({ type = "buy", setIsOpen }) {
   const scheme = yup.object().shape({
     price: yup.number().required(),
@@ -36,6 +36,7 @@ export default function TransactionForm({ type = "buy", setIsOpen }) {
     total: yup.number(),
     date: yup.string().required(),
   });
+  const invest = useSelector((state) => state.investOption);
   const {
     register,
     handleSubmit,
@@ -44,14 +45,13 @@ export default function TransactionForm({ type = "buy", setIsOpen }) {
     formState: { errors = {} },
   } = useForm({
     defaultValues: {
-      price: 15,
+      price: 0,
     },
     resolver: yupResolver(scheme),
   });
   const dispatch = useDispatch();
   const { investOptionId } = useParams();
   const onSubmit = async (data) => {
-    console.log("transaction la ", data, investOptionId);
     const { price, date, quantity } = data;
     dispatch(
       addTransactionThunk({
@@ -65,11 +65,11 @@ export default function TransactionForm({ type = "buy", setIsOpen }) {
     );
     setIsOpen(false);
   };
-  const watchPrice = useWatch({ control, name: "price", defaultValue: 15 });
+  const watchPrice = useWatch({ control, name: "price", defaultValue: 0 });
   const watchQuantity = useWatch({
     control,
     name: "quantity",
-    defaultValue: 15,
+    defaultValue: 0,
   });
   useEffect(() => {
     const total = (watchPrice || 0) * (watchQuantity || 0);
@@ -94,7 +94,7 @@ export default function TransactionForm({ type = "buy", setIsOpen }) {
                     {...field}
                     step={1}
                     min={0}
-                    defaultValue={15}
+                    defaultValue={0}
                     className="!bg-[#eee] w-full"
                   >
                     <NumberInputField id="price" />
@@ -126,7 +126,9 @@ export default function TransactionForm({ type = "buy", setIsOpen }) {
               </Flex>
             </FormLabel>
             <InputGroup className="w-full">
-              <InputLeftAddon>ETH</InputLeftAddon>
+              <InputLeftAddon>
+                {invest?.symbol?.toUpperCase() || "Coin"}
+              </InputLeftAddon>
               <Controller
                 control={control}
                 name="quantity"
@@ -134,7 +136,7 @@ export default function TransactionForm({ type = "buy", setIsOpen }) {
                   <NumberInput
                     {...field}
                     step={1}
-                    defaultValue={15}
+                    defaultValue={0}
                     min={0}
                     className="!bg-[#eee] w-full"
                   >
@@ -160,7 +162,7 @@ export default function TransactionForm({ type = "buy", setIsOpen }) {
               <InputLeftAddon>USD</InputLeftAddon>
               <NumberInput
                 step={1}
-                defaultValue={15}
+                defaultValue={0}
                 min={0}
                 max={30}
                 className="!bg-[#eee] w-full"
@@ -188,6 +190,7 @@ export default function TransactionForm({ type = "buy", setIsOpen }) {
               className="!bg-[#eee]"
               placeholder="Select Date and Time"
               size="md"
+              defaultValue={format(new Date(), "yyyy-MM-dd'T'HH:mm")}
               type="datetime-local"
             />
             <FormErrorMessage color="red.700">

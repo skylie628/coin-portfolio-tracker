@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 export default function PortCoins() {
   const dispatch = useDispatch();
   const invests = useSelector((state) => state.portfolio.data.investid);
-  console.log("invest", invests);
   const data =
     invests &&
     invests.map((invest) => ({

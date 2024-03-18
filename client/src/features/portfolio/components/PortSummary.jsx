@@ -14,13 +14,8 @@ import { iconsHelper } from "@/config/icons";
 import { useState } from "react";
 export default function PortSummary({ setIsOpen }) {
   const portfolio = useSelector((state) => state.portfolio).data;
-  console.log("portfolio", portfolio);
-  const chartValues = [
-    { value: 10, full_name: "BTC", color: "red" },
-    { value: 10, full_name: "ETH", color: "green" },
-    { value: 10, full_name: "DOT", color: "blue" },
-  ];
   const [showStats, setShowStats] = useState(false);
+  const chartData = portfolio.investid || [];
   const chartOptions = {
     chart: {
       height: "60%",
@@ -28,16 +23,16 @@ export default function PortSummary({ setIsOpen }) {
       backgroundColor: "#020617",
     },
     title: {
-      text: "Portion of Port",
+      text: chartData.length > 0 ? "Crypto assets" : "Port is empty",
       style: {
         color: "orange",
       },
     },
     series: [
       {
-        data: chartValues.map((value) => ({
-          name: value.full_name,
-          y: value.value,
+        data: chartData.map((value) => ({
+          name: value.symbol.toUpperCase(),
+          y: value.balance,
           color: value.color,
         })),
         dataLabels: {
@@ -83,7 +78,7 @@ export default function PortSummary({ setIsOpen }) {
                   <Trend value={portfolio.pnl_percentage * 100} />
                 </Flex>
               }
-              title="Total Balance"
+              title="Total Pnl"
             />
           </Grid>
           <Flex className="justify-between w-full">
@@ -98,11 +93,13 @@ export default function PortSummary({ setIsOpen }) {
             </Box>
           </Flex>
         </Flex>
-        <HighchartsReact
-          className="m-auto flex-1"
-          highcharts={Highcharts}
-          options={chartOptions}
-        />
+        {
+          <HighchartsReact
+            className="m-auto flex-1"
+            highcharts={Highcharts}
+            options={chartOptions}
+          />
+        }
       </Flex>
       <Divider />
     </>

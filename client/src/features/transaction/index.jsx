@@ -29,28 +29,9 @@ import { useParams } from "react-router-dom";
 //thunks
 import { loadInvestOptionThunk } from "../../store/action/action.investOption";
 export default function TransactionsList() {
-  const headerName = [
-    "Type",
-    "Price",
-    "Quantity",
-    "Date",
-    "Fees",
-    "Costs",
-    "PNL",
-  ];
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const mock = new Array(20).fill(0).map((item) => ({
-    Type: "Sell",
-    Price: 123,
-    Quantity: 0.02,
-    Date: Date.now(),
-    Fees: 0.0001,
-    Costs: 33202,
-    PNL: 17,
-  }));
   const dispatch = useDispatch();
   const { investOptionId } = useParams();
-  console.log("");
   const invest = useSelector((state) => state.investOption);
 
   useEffect(() => {
@@ -59,12 +40,12 @@ export default function TransactionsList() {
   return (
     <BottomDrawer>
       <TransactionModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
-      <div className="bg-blackest overflow-scroll w-full h-full relative rounded-2xl  align-center text-lightstar border-r-0 border border-opacity-40 border-dashed border-white  ">
+      <div className="bg-blackest overflow-scroll w-full h-full relative rounded-2xl  align-center text-lightstar border-r-0 border border-opacity-40 border-dashed border-white pb-20 ">
         <Flex className="w-full  flex-col sticky top-0 z-[60] bg-blackest">
           <HStack className="w-10/12 p-3 ml-auto mr-auto justify-between">
             <Flex className="cursor-pointer gap-3">
               <ChevronLeft />
-              <Text>Bitcoin Transactions</Text>
+              <Text>{invest?.symbol?.toUpperCase() || ""} Transactions</Text>
             </Flex>
             <Button
               size="sm"
@@ -174,64 +155,72 @@ export default function TransactionsList() {
                 </Tr>
               </Thead>
               <Tbody>
-                {invest.transactions.map((x, index) => (
-                  <Tr
-                    key={index}
-                    className={index % 2 == 0 ? "bg-blackest" : "bg-blacker"}
-                  >
-                    <Td
-                      className={
-                        x.type === "buy" ? "text-greenstats" : "text-redstats"
-                      }
+                {invest.transactions.length > 0 ? (
+                  invest.transactions.map((x, index) => (
+                    <Tr
+                      key={index}
+                      className={index % 2 == 0 ? "bg-blackest" : "bg-blacker"}
                     >
-                      {x.type.toUpperCase()}
-                    </Td>
-                    <Td>
-                      <Price
-                        amount={x.price}
-                        className="text-metaldark"
-                        currencyCode="USD"
-                        currencyCodeClassName="hidden"
-                      />
-                    </Td>
-                    <Td className="text-metaldark">{x.quantity}</Td>
-                    <Td className="text-metaldark">{x.date}</Td>
-                    <Td>
-                      <Price
-                        amount={x.fee || 0}
-                        currencyCode="USD"
-                        currencyCodeClassName="hidden"
-                      />
-                    </Td>
-                    <Td>
-                      <Price
-                        amount={x.price * x.quantity - x.fee}
-                        className="text-metaldark"
-                        currencyCode="USD"
-                        currencyCodeClassName="hidden"
-                      />
-                    </Td>
-                    <Td>
-                      <Price
-                        amount={x.proceeds}
-                        className="text-metaldark"
-                        currencyCode="USD"
-                        currencyCodeClassName="hidden"
-                      />
-                    </Td>
-                    <Td>
-                      <Price
-                        amount={x.pnl}
-                        className={clsx(
-                          "text-metaldark ",
-                          x.pnl > 0 ? "text-greenstats" : "text-redstats"
-                        )}
-                        currencyCode="USD"
-                        currencyCodeClassName="hidden"
-                      />
-                    </Td>
-                  </Tr>
-                ))}
+                      <Td
+                        className={
+                          x.type === "buy" ? "text-greenstats" : "text-redstats"
+                        }
+                      >
+                        {x.type.toUpperCase()}
+                      </Td>
+                      <Td>
+                        <Price
+                          amount={x.price}
+                          className="text-metaldark"
+                          currencyCode="USD"
+                          currencyCodeClassName="hidden"
+                        />
+                      </Td>
+                      <Td className="text-metaldark">{x.quantity}</Td>
+                      <Td className="text-metaldark">
+                        {x.date ? new Date(x.date).toLocaleDateString() : "_"}
+                      </Td>
+                      <Td>
+                        <Price
+                          amount={x.fee || 0}
+                          currencyCode="USD"
+                          currencyCodeClassName="hidden"
+                        />
+                      </Td>
+                      <Td>
+                        <Price
+                          amount={x.price * x.quantity - x.fee}
+                          className="text-metaldark"
+                          currencyCode="USD"
+                          currencyCodeClassName="hidden"
+                        />
+                      </Td>
+                      <Td>
+                        <Price
+                          amount={x.proceeds}
+                          className="text-metaldark"
+                          currencyCode="USD"
+                          currencyCodeClassName="hidden"
+                        />
+                      </Td>
+                      <Td>
+                        <Price
+                          amount={x.pnl}
+                          className={clsx(
+                            "text-metaldark ",
+                            x.pnl > 0 ? "text-greenstats" : "text-redstats"
+                          )}
+                          currencyCode="USD"
+                          currencyCodeClassName="hidden"
+                        />
+                      </Td>
+                    </Tr>
+                  ))
+                ) : (
+                  <div className="w-full flex justify-center items-center text-lg p-5">
+                    <div> No transaction yet !</div>
+                  </div>
+                )}
               </Tbody>
             </Table>
           </TableContainer>

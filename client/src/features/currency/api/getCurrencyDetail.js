@@ -6,7 +6,6 @@ export const getCurrencyDetail = async ({ coinId }) => {
         quoteCurrency: "usd",
       },
     });
-    console.log(marketInfo);
     return { currencyDetail: marketInfo?.data?.data || {} };
   } catch (err) {
     throw new Error("Unable to fetch trending coins");

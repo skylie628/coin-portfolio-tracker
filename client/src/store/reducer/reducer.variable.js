@@ -62,7 +62,6 @@ const variableSlice = createSlice({
       };
     },
     switchSelectedVariables: (state, action) => {
-      console.log("action", action);
       return {
         ...state,
         selectedVariables: action.payload.selectedVariables,

@@ -5,7 +5,6 @@ import Highcharts from "highcharts";
 import { sparklineChartConfig } from "@/lib/highchart/sparklineChartConfig";
 import { sparklineConfig } from "@/lib/highchart/sparklineConfig";
 const Sparkline = ({ data, variant }) => {
-  console.log(data);
   return (
     <HighchartsReact
       className="m-auto flex-1 w-full h-full"

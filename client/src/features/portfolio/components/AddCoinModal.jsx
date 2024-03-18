@@ -16,7 +16,6 @@ export default function AddCoinModal({ isOpen, setIsOpen }) {
   const [isPending, startTransition] = useTransition();
   const dispatch = useDispatch();
   const portid = useSelector((state) => state.portfolio.data.id);
-  console.log(allCoins);
   let showingItems = [];
   //if not allCoins, return empty array
   if (allCoins && !searchTerm) {

@@ -15,7 +15,6 @@ export default function TransactionModal({ isOpen, setIsOpen }) {
         <TabList className="flex">
           <Tab className="flex-1"> Buy</Tab>
           <Tab className="flex-1">Sell</Tab>
-          <Tab className="flex-1"> Transfer</Tab>
         </TabList>
         <TabIndicator
           mt="-1.5px"
@@ -29,9 +28,6 @@ export default function TransactionModal({ isOpen, setIsOpen }) {
           </TabPanel>
           <TabPanel className="!p-0">
             <TransactionForm type="sell" setIsOpen={setIsOpen} />
-          </TabPanel>
-          <TabPanel className="!p-0">
-            <p>three!</p>
           </TabPanel>
         </TabPanels>
       </Tabs>

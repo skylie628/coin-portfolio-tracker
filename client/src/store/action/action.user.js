@@ -32,7 +32,6 @@ export const signinThunk = (payload) => async (dispatch) => {
   dispatch(startsign());
   signin(payload)
     .then((rs) => {
-      console.log("result la ", rs.data.data);
       const { refreshToken, accessToken, name, email, id } =
         rs?.data?.data || {};
       if (!refreshToken || !accessToken) {

@@ -18,9 +18,9 @@ export default function Statistic() {
   const handleIconClick = () => {
     setIsBottomDrawerOpen(true);
   };
-
+  const userId = window.localStorage.getItem("id");
   useEffect(() => {
-    dispatch(fetchVariablesThunk());
+    dispatch(fetchVariablesThunk({ userId }));
   }, []);
   return (
     <>

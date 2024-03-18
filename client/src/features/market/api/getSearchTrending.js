@@ -11,7 +11,6 @@ export const getSearchTrending = async () => {
     searchTrending.categories = mapper.trendingCategories(
       searchTrending.data.categories || []
     );
-    console.log("searching", searchTrending);
     return searchTrending;
   } catch (err) {
     throw new Error("Unable to fetch trending coins");

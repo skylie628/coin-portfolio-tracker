@@ -34,7 +34,6 @@ export const switchTabThunk =
       })
     );
     // switch current tab to switched tab
-    console.log("switch", tabId);
     dispatch(switchTab({ activeTab: tabId, tabs: newTabs }));
   };
 export const addTabThunk = () => (dispatch, getState) => {

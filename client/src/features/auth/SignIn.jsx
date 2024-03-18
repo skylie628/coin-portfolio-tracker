@@ -38,7 +38,6 @@ const Signin = () => {
     formState: { errors = {}, isSubmitting },
   } = useForm({ resolver: yupResolver(scheme) });
   const onSubmitSignin = (data) => {
-    console.log(data);
     dispatch(signinThunk({ data }));
   };
   return (

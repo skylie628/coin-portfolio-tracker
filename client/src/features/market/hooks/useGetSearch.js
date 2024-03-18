@@ -10,7 +10,6 @@ export const useGetSearch = () => {
   const { data, isFetching, error } = useQuery({
     ...getSearchQuery(debouncedSearchTerm),
   });
-  console.log(data);
   return {
     searchCoins: data || [],
     isLoading: isFetching,

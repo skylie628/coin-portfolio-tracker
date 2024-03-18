@@ -23,16 +23,13 @@ instance.interceptors.request.use(
 );
 instance.interceptors.response.use(
   function (response) {
-    console.log("res của req là", response);
     return response;
   },
   async (error) => {
     if (error.code === "ECONNABORTED") {
       // code logic
-      console.log("timeout");
       return;
     }
-    console.log("token expired", error);
     const status = error?.response?.status;
     switch (status) {
       case 400:

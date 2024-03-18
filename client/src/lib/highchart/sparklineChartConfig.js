@@ -102,7 +102,7 @@ export const sparklineChartConfig = ({
         animation: false,
         data,
         marker: {
-          radius: 2,
+          radius: 5,
         },
       },
     ],
@@ -111,6 +111,7 @@ export const sparklineChartConfig = ({
       height: "70%",
       backgroundColor: "transparent",
       width: null,
+      marginRight: 80,
       events: {
         render: function () {
           const chart = this,

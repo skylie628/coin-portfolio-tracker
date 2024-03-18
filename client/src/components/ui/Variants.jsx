@@ -1,7 +1,6 @@
 import { HStack, Tag, TagLeftIcon, TagLabel } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 export default function Variants({ variants }) {
-  console.log(variants[0].icon);
   return (
     <HStack className="w-full flex-wrap" spacing={4}>
       {variants.map((variant) => (

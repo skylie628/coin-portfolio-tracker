@@ -17,7 +17,6 @@ export default function Portfolio() {
   useScrollToTop();
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
-  const portfolio = useSelector((state) => state.portfolio).data;
   const userId = window.localStorage.getItem("id");
   useEffect(() => {
     dispatch(getPortfolioThunk({ userId }));
@@ -26,12 +25,12 @@ export default function Portfolio() {
     <>
       <Suspense fallback="loading">
         <AddCoinModal isOpen={isOpen} setIsOpen={setIsOpen} />
+        <PortSummary setIsOpen={setIsOpen} />
+        <GridSystem>
+          <PortCoins />
+        </GridSystem>
+        <Outlet />
       </Suspense>
-      <PortSummary setIsOpen={setIsOpen} />
-      <GridSystem>
-        <PortCoins />
-      </GridSystem>
-      <Outlet />
     </>
   );
 }
