@@ -2,6 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useLayoutEffect } from "react";
+import { Suspense } from "react";
+import LoaderSpinner from "../ui/LoadingSpiner";
 import clsx from "clsx";
 const animations = {
   initial: { transform: "translateY(100%)" },
@@ -43,7 +45,15 @@ const BottomDrawer = ({ className, children, isOpen = true, setIsOpen }) => {
               className
             )}
           >
-            {children}
+            <Suspense
+              fallback={
+                <div className="w-full h-full flex justify-center items-center">
+                  <LoaderSpinner />
+                </div>
+              }
+            >
+              {children}
+            </Suspense>
           </motion.div>
           <div
             onClick={() => (setIsOpen ? setIsOpen(false) : navigate(-1))}

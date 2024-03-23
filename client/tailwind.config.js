@@ -32,6 +32,7 @@ export default {
         meshgrid: "rgba(100, 116, 139,0.3)",
         greenstats: "#16C784",
         redstats: "#EA3943",
+        carotene: "#FE4F31",
       },
       backgroundImage: {
         "sign-pattern":

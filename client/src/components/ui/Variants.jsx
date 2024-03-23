@@ -5,9 +5,12 @@ export default function Variants({ variants }) {
     <HStack className="w-full flex-wrap" spacing={4}>
       {variants.map((variant) => (
         <Link key={variant.name} to={variants.to || "#"}>
-          <Tag className="!bg-halfblack !p-3" borderRadius="full">
+          <Tag
+            className="!bg-halfblack !p-3 hover:outline-1 hover:outline-slate-500"
+            borderRadius="full"
+          >
             <TagLeftIcon boxSize="12px" as={variant.icon} />
-            <TagLabel className="text-white ml-2 text-xs font-bold">
+            <TagLabel className="!text-lightstar hover:!text-white ml-2 text-xs font-bold">
               {variant.name}
             </TagLabel>
           </Tag>

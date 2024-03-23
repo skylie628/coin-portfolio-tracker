@@ -63,14 +63,17 @@ const StreamingPrice = ({ cachedPrice }) => {
   );
 };
 const OfficalLinkVariants = [
-  { name: "Website", icon: () => <Globe color="dimgray" /> },
-  { name: "Whitepaper", icon: () => <File color="dimgray" /> },
-  { name: "Github", icon: () => <Github color="dimgray" /> },
+  {
+    name: "Website",
+    icon: () => <Globe color="white" className="hover:text-carotene" />,
+  },
+  { name: "Whitepaper", icon: () => <File color="white" /> },
+  { name: "Github", icon: () => <Github color="white" /> },
 ];
 const SocialVariants = [
-  { name: "Twitter", icon: () => <Twitter color="dimgray" /> },
-  { name: "Reddit", icon: () => <CreditCard color="dimgray" /> },
-  { name: "Chat", icon: () => <MessageSquare color="dimgray" /> },
+  { name: "Twitter", icon: () => <Twitter color="white" /> },
+  { name: "Reddit", icon: () => <CreditCard color="white" /> },
+  { name: "Chat", icon: () => <MessageSquare color="white" /> },
 ];
 export default function GeneralInfo() {
   const { coinId } = useParams();

@@ -14,6 +14,7 @@ const Input = forwardRef(
         <ChakraInput
           ref={ref}
           borderWidth="1px"
+          className="text-lightstar"
           onChange={(e) => {}}
           placeholder={placeholder}
           borderColor="rgba(255,255,255,0.3)"

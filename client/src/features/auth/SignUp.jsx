@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -9,9 +8,10 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-
-import { PasswordField } from "../../components/ui/PasswordField";
+import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
+import { PasswordField } from "@/components/ui/PasswordField";
+
 //use hook
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -51,8 +51,8 @@ const Signup = () => {
         <Stack spacing="4">
           <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
             <Flex className="flex-col gap-1 font-bold">
-              <Text>join us & track</Text>
-              <Text color="orange.500">Portfolio</Text>
+              <Text className="!text-lightstar">join us & track</Text>
+              <Text className="!text-carotene">Portfolio</Text>
             </Flex>
             <Text color="fg.muted">
               Have an account?{" "}
@@ -100,12 +100,8 @@ const Signup = () => {
             </Stack>
             <HStack justify="space-between"></HStack>
             <Stack spacing="6">
-              <Button
-                className=" !bg-dimgray !text-halfblack border border-[1px] border-[white/0.2]"
-                type="submit"
-                disabled={isSubmitting}
-              >
-                Sign up
+              <Button type="submit" disabled={isSubmitting}>
+                SIGN-UP
               </Button>
             </Stack>
           </Stack>

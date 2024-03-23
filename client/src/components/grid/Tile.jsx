@@ -74,12 +74,12 @@ export default function Tile({
         <Flex
           as="article"
           className="relative 
-           flex-1 flex-col hover:border rounded-lg hover:border-1 hover:border-meshgrid group cursor-pointer  "
+           flex-1 flex-col hover:outline rounded-lg hover:outline-1 hover:outline-meshgrid group cursor-pointer  "
         >
           <Tooltip label={label}>
             <div
               className={clsx(
-                "w-full hover:translate-x-2 hover:-translate-y-2 transition-transform duration-[400ms] ease-out rounded-lg  ",
+                "w-full hover:translate-x-3 hover:-translate-y-3 transition-transform duration-[400ms]  rounded-lg  ",
                 bgColor
               )}
               onMouseEnter={() => {
@@ -108,7 +108,10 @@ export default function Tile({
                   <RandomRevealText
                     hover={hover}
                     setHover={setHover}
-                    characters={name || " "}
+                    characters={
+                      (name.length > 17 ? `${name.slice(0, 17)}...` : name) ||
+                      " "
+                    }
                     className="text-lg break-all"
                   />
                 </Flex>

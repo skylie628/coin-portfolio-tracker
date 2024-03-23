@@ -2,12 +2,12 @@ import {
   Stack,
   Text,
   Flex,
-  Button,
   Input,
   HStack,
   VStack,
   Divider,
 } from "@chakra-ui/react";
+import Button from "@/components/ui/Button";
 import Select from "@/components/ui/Select";
 import SelectedVariableList from "./SelectedVariableList";
 import { setChartValuesThunk } from "@/store/action/action.chart";
@@ -52,14 +52,11 @@ export const ControlCenterItems = ({ setIsOpen }) => {
         </>
       )}
       <HStack className="ml-auto md:ml-0" gap="3">
-        <Button
-          className="!bg-blackest border !border-lightstar/[0.3] !text-lightstar/[0.8]"
-          onClick={handleReset}
-        >
-          Reset
+        <Button variant="black" onClick={handleReset}>
+          RESET
         </Button>
         <Button className="!bg-orange !font-semibold" onClick={handleDrawChart}>
-          Apply
+          APPLY
         </Button>
       </HStack>
 

@@ -1,11 +1,21 @@
+//components
 import { Box, VStack, Button, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { menuItems } from "./Nav";
+//react hooks
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+//thunk
+import { signoutThunk } from "@/store/action/action.user";
+
 export default function MobileHeader({ isOpen, setIsOpen }) {
   const isLogged = useSelector((state) => state.user.isLogged);
+  const dispatch = useDispatch();
+  const handleSignout = async () => {
+    dispatch(signoutThunk());
+    setIsOpen(false);
+  };
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add("no-scroll");
@@ -51,14 +61,15 @@ export default function MobileHeader({ isOpen, setIsOpen }) {
         {!isLogged && (
           <Box className="font-medium text-center">
             Existing Account?{" "}
-            <Link className="font-bold text-orange" as="span" to="/signin">
+            <Link className="font-bold text-orange" as="span" to="/sign-in">
               Signin
             </Link>
           </Box>
         )}
         <Button
           as={Link}
-          to={!isLogged ? "/auth/signup" : "/auth/signout"}
+          to={!isLogged ? "/sign-up" : "/"}
+          onClick={handleSignout}
           className="w-8/12 !bg-orange !text-black p-5 rounded-lg"
         >
           {!isLogged ? "Get Started" : "Signout"}

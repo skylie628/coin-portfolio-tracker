@@ -12,7 +12,7 @@ function labelFormat(timeRange) {
 function tooltipFormatter() {
   return (
     '<div style="color:#ccc"><b>Price</b>: ' +
-    (this.y > 1 ? this.y.toFixed(6) : this.y.toFixed(6)) +
+    (this.y > 1 ? this.y.toFixed(2) : this.y.toFixed(6)) +
     "$" +
     '</div><div style="color:#ccc"><b>Time</b>: ' +
     new Date(this.x).toDateString() +

@@ -33,6 +33,7 @@ export const PasswordField = React.forwardRef(
           <Input
             ref={ref}
             borderWidth="1px"
+            className="text-lightstar"
             borderColor="rgba(255,255,255,0.3)"
             _hover={{
               borderColor: "blue.500",

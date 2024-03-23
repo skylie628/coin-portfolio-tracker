@@ -16,8 +16,12 @@ const ButtonsGroup = ({ handleOnChange, value, values, labels }) => {
               borderRadius="8px"
               _selected={{
                 borderRadius: "8px",
+                color: "#ddd",
                 borderColor: "#888",
                 borderWidth: "1px",
+              }}
+              _hover={{
+                color: "#ddd",
               }}
             >
               {labels[index]}

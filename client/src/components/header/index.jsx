@@ -1,5 +1,6 @@
 // Components
-import { Button, Flex, HStack } from "@chakra-ui/react";
+import { Flex, HStack } from "@chakra-ui/react";
+import Button from "../ui/Button";
 import Nav from "./Nav";
 import BrandName from "../ui/BrandName";
 import Divider from "../ui/Divider";
@@ -45,8 +46,8 @@ export default function Header() {
           <BrandName size="md" />
           <Nav />{" "}
           <HStack className="!hidden md:!block">
-            {isLogged && <Button onClick={handleSignout}>Signout</Button>}
-            {!isLogged && <Button onClick={handleSignin}>Signin</Button>}
+            {isLogged && <Button onClick={handleSignout}>SIGNOUT</Button>}
+            {!isLogged && <Button onClick={handleSignin}>SIGNIN</Button>}
           </HStack>
           <HamburgerIcon
             isOpen={isHamburgerOpen}

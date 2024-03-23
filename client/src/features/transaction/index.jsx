@@ -13,11 +13,11 @@ import {
   Grid,
 } from "@chakra-ui/react";
 import clsx from "clsx";
-import BottomDrawer from "../../components/layout/BottomDrawer";
-import Price from "../../components/ui/Price";
-import Trend from "../../components/ui/Trend";
-import Stats from "../../components/ui/Stats";
-import { Button } from "@chakra-ui/react";
+import BottomDrawer from "@/components/layout/BottomDrawer";
+import Price from "@/components/ui/Price";
+import Trend from "@/components/ui/Trend";
+import Stats from "@/components/ui/Stats";
+import Button from "@/components/ui/Button";
 import { ChevronLeft } from "lucide-react";
 import { Divider } from "@chakra-ui/react";
 import TransactionModal from "./components/TransactionModal";
@@ -50,10 +50,10 @@ export default function TransactionsList() {
             <Button
               size="sm"
               fontWeight="medium"
-              className="bg-orange  font-light text-sm"
+              variant="black"
               onClick={() => setIsModalOpen(true)}
             >
-              Add
+              ADD TRANSACTION
             </Button>
           </HStack>
           <Divider width="full" borderColor="gray" size="sm" />

@@ -77,7 +77,7 @@ export default function ChartPanel() {
         {" "}
         {name.toUpperCase()} Price Chart
       </h2>
-      <Flex className="py-3 w-full justify-between items-center md:px-20">
+      <Flex className="flex-col gap-5  md:flex-row py-3 md:w-full md:justify-between md:items-center md:px-20">
         <ButtonsGroup
           value={yAxisMeasure}
           values={["price", "cap"]}

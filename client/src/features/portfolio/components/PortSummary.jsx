@@ -5,7 +5,7 @@ import { Flex, Grid, Box } from "@chakra-ui/react";
 import Stats from "@/components/ui/Stats";
 import Trend from "@/components/ui/Trend";
 import Price from "@/components/ui/Price";
-import { Button } from "@chakra-ui/react";
+import Button from "@/components/ui/Button";
 import Divider from "@/components/ui/Divider";
 //hook
 import { useSelector } from "react-redux";
@@ -82,9 +82,7 @@ export default function PortSummary({ setIsOpen }) {
             />
           </Grid>
           <Flex className="justify-between w-full">
-            <Button onClick={() => setIsOpen(true)} className="!bg-orange">
-              Add coin
-            </Button>
+            <Button onClick={() => setIsOpen(true)}>ADD ASSET</Button>
             <Box
               className="cursor-pointer"
               onClick={() => setShowStats((prev) => !prev)}
