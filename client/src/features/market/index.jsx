@@ -75,6 +75,7 @@ export default function DashBoard() {
       behavior: "smooth",
     });
   };
+
   return (
     <>
       <div className="flex-1 ">

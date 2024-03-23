@@ -27,6 +27,7 @@ export default function App() {
   if (isLogged) {
     dispatch(signinSuccess());
   }
+
   return (
     <BrowserRouter>
       <Routes>

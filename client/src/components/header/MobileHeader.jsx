@@ -33,8 +33,8 @@ export default function MobileHeader({ isOpen, setIsOpen }) {
       animate={{ opacity: isOpen ? 1 : 0 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className={`md:hidden block absolute w-full h-full text-left font-bold bg-blackest min-h-screen pt-[89px] ${
-        isOpen ? "z-[15]" : "z-0 pointer-events-none"
+      className={`md:hidden  absolute w-full h-full text-left font-bold bg-blackest h-screen  pt-[89px] ${
+        isOpen ? "z-[15] block" : "hidden z-0 pointer-events-none"
       } text-left `}
     >
       <VStack

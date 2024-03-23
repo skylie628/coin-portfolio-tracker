@@ -3,7 +3,6 @@
 @tailwind utilities;
 :root {
   font-family: "Roboto", system-ui, Avenir, Helvetica, Arial, sans-serif;
-  width: 100%;
   margin: 0 auto;
   text-align: center;
   line-height: 1.5;
@@ -16,10 +15,13 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  overscroll-behavior-y: none;
 }
 
 html {
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
+  background-color: "#020617";
+  overscroll-behavior-y: none;
 }
 * {
   box-sizing: border-box;
@@ -28,7 +30,9 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
-
+body {
+  overscroll-behavior-y: none;
+}
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -43,19 +47,6 @@ button {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }
 
 @keyframes move-background {

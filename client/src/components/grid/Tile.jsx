@@ -109,8 +109,9 @@ export default function Tile({
                     hover={hover}
                     setHover={setHover}
                     characters={
-                      (name.length > 17 ? `${name.slice(0, 17)}...` : name) ||
-                      " "
+                      (name && name.length > 17
+                        ? `${name.slice(0, 17)}...`
+                        : name) || " "
                     }
                     className="text-lg break-all"
                   />
