@@ -32,7 +32,14 @@ export default function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Navigate to="market" />} />
-          <Route path="market" element={<DashBoard />}>
+          <Route
+            path="market"
+            element={
+              <Suspense fallback={<LoadingPage />}>
+                <DashBoard />{" "}
+              </Suspense>
+            }
+          >
             <Route
               path="currencies/:coinId"
               element={
@@ -42,6 +49,7 @@ export default function App() {
               }
             />
           </Route>
+
           <Route
             path="statistics"
             element={

@@ -23,14 +23,12 @@ export default function Portfolio() {
   }, []);
   return (
     <>
-      <Suspense fallback="loading">
-        <AddCoinModal isOpen={isOpen} setIsOpen={setIsOpen} />
-        <PortSummary setIsOpen={setIsOpen} />
-        <GridSystem>
-          <PortCoins />
-        </GridSystem>
-        <Outlet />
-      </Suspense>
+      <AddCoinModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <PortSummary setIsOpen={setIsOpen} />
+      <GridSystem>
+        <PortCoins />
+      </GridSystem>
+      <Outlet />
     </>
   );
 }

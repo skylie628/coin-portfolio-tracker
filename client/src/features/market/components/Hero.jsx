@@ -23,14 +23,14 @@ export default function Hero({ scrollToTopLists }) {
                   srcSet={imagesHelper.hero_background_desktop}
                 />
                 <img
-                  className="block h-[251] md:h-[400px] z-10 relative "
+                  className="block h-[251px] sm:h-[400px] z-10 relative "
                   alt=""
                   src={imagesHelper.hero_background_mobile}
                 />
               </picture>
             </figure>
             <HStack className="  w-full z-10">
-              <Heading className="text-xl md:!text-5xl text-2xl ml-0 md:ml-20 ">
+              <Heading className="text-xl md:!text-5xl text-2xl ml-0 sm:ml-10 md:ml-20 ">
                 <Text className="leading-normal">Stay</Text>
                 <Text className="leading-normal">Up-to-date</Text>
                 <Text className="leading-normal">With</Text>

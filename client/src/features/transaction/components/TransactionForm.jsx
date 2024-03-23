@@ -27,8 +27,9 @@ import { useEffect } from "react";
 import { Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 //thunk
-import { addTransactionThunk } from "../../../store/action/action.investOption";
 import { format } from "date-fns";
+import { addTransactionThunk } from "../../../store/action/action.investOption";
+
 export default function TransactionForm({ type = "buy", setIsOpen }) {
   const scheme = yup.object().shape({
     price: yup.number().required(),

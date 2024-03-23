@@ -91,7 +91,7 @@ const SmartphoneOrTabletTopRealTimeCurrencies = ({
     </Flex>
   );
 };
-const DesktopTopRealTimeCurrencies = ({ topCurrencies, isSmartphone }) => {
+const DesktopTopRealTimeCurrencies = ({ topCurrencies }) => {
   const TheadComponent = React.forwardRef((props, ref) => (
     <Thead width="1121px" className={props.className} ref={ref}>
       {props.children}

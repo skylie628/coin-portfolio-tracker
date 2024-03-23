@@ -40,6 +40,16 @@ const Signin = () => {
   const onSubmitSignin = (data) => {
     dispatch(signinThunk({ data }));
   };
+  const onSubmitSigninDemo = (data) => {
+    dispatch(
+      signinThunk({
+        data: {
+          email: "steven@gmail.com",
+          password: "12312345",
+        },
+      })
+    );
+  };
   return (
     <form className="block" onSubmit={handleSubmit(onSubmitSignin)}>
       <Stack spacing="6">
@@ -98,6 +108,16 @@ const Signin = () => {
                 disabled={isSubmitting}
               >
                 Sign in
+              </Button>
+              <div>OR</div>
+              <Button
+                className=" !bg-dimgray !text-halfblack border border-[1px] border-[white/0.2]"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSubmitSigninDemo();
+                }}
+              >
+                Sign in with demo account
               </Button>
               {/*<HStack>
                   <Divider />
