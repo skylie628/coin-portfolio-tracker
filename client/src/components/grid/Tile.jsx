@@ -4,14 +4,50 @@ import RandomRevealText from "@/components/ui/RandomRevealText";
 import Price from "../ui/Price";
 import Trend from "../ui/Trend";
 import Image from "../ui/Image";
+import Button from "../ui/Button";
 import constants from "@/utils/constants";
+import { deleteInvestOptionThunk } from "@/store/action/action.investOption";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import Modal from "@/components/ui/Modal";
 //hooks
 import { useState } from "react";
 //others
 import { iconsHelper } from "@/config/icons";
 import clsx from "clsx";
+const ConfirmModal = ({ isOpen, setIsOpen, handleOnConfirm }) => {
+  return (
+    <Modal title="Delete Invest Option" isOpen={isOpen} setIsOpen={setIsOpen}>
+      <div className="flex flex-col gap-10 px-5 py-5">
+        <div className="text-xl text-blackest items-start">
+          Are you sure? You can't undo this action afterwards.
+        </div>
+        <Flex gap="2" className="justify-end">
+          <Button
+            onClick={() => setIsOpen(false)}
+            className=""
+            variant="orange"
+          >
+            Cancel
+          </Button>
+          <Button
+            className=""
+            variant="black"
+            onClick={() => {
+              handleOnConfirm();
+              setIsOpen(false);
+            }}
+          >
+            Delete
+          </Button>
+        </Flex>
+      </div>
+    </Modal>
+  );
+};
+
 export default function Tile({
+  id,
   variant,
   name,
   symbol,
@@ -22,6 +58,12 @@ export default function Tile({
 }) {
   const { tileType } = constants;
   const [hover, setHover] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
+  const dispatch = useDispatch();
+  const handleOnDelete = () => {
+    if (!id) return;
+    dispatch(deleteInvestOptionThunk({ id }));
+  };
   const bgColor =
     variant === tileType.trendingCategories ? "bg-black" : " bg-black ";
   const stats =
@@ -58,9 +100,23 @@ export default function Tile({
         <Flex gap="3">
           {" "}
           {variant == tileType.portOption && (
-            <div className="z-max">{iconsHelper.DeleteCircle}</div>
+            <div
+              className="z-100 relative  rounded-full hover:outline hover:outline-1 hover:outline-orange"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsDelete(true);
+              }}
+            >
+              {iconsHelper.DeleteCircle}
+            </div>
           )}{" "}
-          {iconsHelper.RightChevronCircle({ colorTheme: "dark" })}
+          <Link
+            className="z-100 relative  rounded-full hover:outline hover:outline-1 hover:outline-orange"
+            to={to}
+          >
+            {" "}
+            {iconsHelper.RightChevronCircle({ colorTheme: "dark" })}
+          </Link>
         </Flex>
       </div>
     );
@@ -70,11 +126,16 @@ export default function Tile({
       : symbol;
   return (
     <GridItem className="w-full">
-      <Link to={to} state={{ shortName: symbol }}>
+      <ConfirmModal
+        isOpen={isDelete}
+        setIsOpen={setIsDelete}
+        handleOnConfirm={() => handleOnDelete()}
+      />
+      <div>
         <Flex
           as="article"
           className="relative 
-           flex-1 flex-col hover:outline rounded-lg hover:outline-1 hover:outline-meshgrid group cursor-pointer  "
+           flex-1 flex-col hover:outline rounded-lg hover:outline-1 hover:outline-meshgrid group   "
         >
           <Tooltip label={label || name}>
             <div
@@ -86,9 +147,9 @@ export default function Tile({
                 setHover((prev) => true);
               }}
             >
-              <Flex
-                className="w-full relative   p-5  flex-col justify-start text-left cursor-pointer"
-                gap="10"
+              <Link
+                className="flex w-full relative gap-10   p-5  flex-col justify-start text-left cursor-pointer"
+                to={to}
               >
                 <Flex className="flex-row justify-between">
                   <Image
@@ -111,17 +172,17 @@ export default function Tile({
                     characters={
                       (name && name.length > 17
                         ? `${name.slice(0, 17)}...`
-                        : name) || " "
+                        : name) || "Unknown Coins"
                     }
                     className="text-lg break-all"
                   />
                 </Flex>
-              </Flex>
+              </Link>
               {footer}
             </div>
           </Tooltip>
         </Flex>
-      </Link>
+      </div>
     </GridItem>
   );
 }

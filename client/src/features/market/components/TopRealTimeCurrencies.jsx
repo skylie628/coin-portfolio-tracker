@@ -4,6 +4,7 @@ import Trend from "@/components/ui/Trend";
 import Coin from "@/components/ui/Coin";
 import Price from "@/components/ui/Price";
 import Sparkline from "@/components/ui/Sparkline";
+import { Link } from "react-router-dom";
 //useHooks
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -61,9 +62,10 @@ const SmartphoneOrTabletTopRealTimeCurrencies = ({
             price_change_percentage_24h,
             current_price,
           }) => (
-            <Flex
-              className="justify-center p-5 bg-blackest hover:bg-blacker cursor-pointer"
+            <Link
+              className=" flex justify-center p-5 bg-blackest hover:bg-blacker cursor-pointer"
               key={id}
+              to={`/market/currencies/${id}`}
             >
               <Coin
                 className="w-[100px]"
@@ -85,7 +87,7 @@ const SmartphoneOrTabletTopRealTimeCurrencies = ({
                   fallbackValue={price_change_percentage_24h}
                 />
               </Flex>
-            </Flex>
+            </Link>
           )
         )}
     </Flex>

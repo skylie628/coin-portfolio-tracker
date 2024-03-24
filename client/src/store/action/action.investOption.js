@@ -1,10 +1,12 @@
 //reducer
 import { addInvestOption } from "../reducer/reducer.portfolio";
 import { loadInvestOption } from "../reducer/reducer.investOption";
-//thun
+//thunk
+import { getPortfolioThunk } from "./action.portfolio";
 //api
 import createInvestOptionService from "../../features/portfolio/api/createInvestOption";
 import getInvestOptionDetailService from "../../features/transaction/api/getInvestOptionDetailService";
+import deleteInvestOptionService from "../../features/portfolio/api/deleteInvestOptionService";
 import addTransactionService from "../../features/transaction/api/addTransactionService";
 import { genRandomColor } from "../../utils/genRandomColor";
 //components
@@ -32,6 +34,21 @@ export const loadInvestOptionThunk =
         dispatch(loadInvestOption({ data }));
       })
       .catch((err) => {});
+  };
+
+export const deleteInvestOptionThunk =
+  ({ id }) =>
+  async (dispatch, getState) => {
+    deleteInvestOptionService({ id })
+      .then((data) => {
+        console.log("data la", data);
+        const userId = window.localStorage.getItem("id");
+        dispatch(getPortfolioThunk({ userId }));
+        toast.success("delete asset successfully!");
+      })
+      .catch((err) => {
+        toast.error("unable to delete asset!");
+      });
   };
 export const addTransactionThunk =
   ({ quantity, price, type, date, status, investid }) =>
