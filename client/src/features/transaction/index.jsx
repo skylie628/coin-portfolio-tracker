@@ -21,6 +21,7 @@ import Button from "@/components/ui/Button";
 import { ChevronLeft } from "lucide-react";
 import { Divider } from "@chakra-ui/react";
 import TransactionModal from "./components/TransactionModal";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 //hooks
 import { useDispatch, useSelector } from "react-redux";
@@ -38,15 +39,17 @@ export default function TransactionsList() {
     dispatch(loadInvestOptionThunk({ id: investOptionId }));
   }, []);
   return (
-    <BottomDrawer>
+    <BottomDrawer back="/portfolio">
       <TransactionModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
       <div className="bg-blackest overflow-scroll w-full h-full relative rounded-2xl  align-center text-lightstar border-r-0 border border-opacity-40 border-dashed border-white pb-20 ">
         <Flex className="w-full  flex-col sticky top-0 z-[60] bg-blackest">
           <HStack className="w-10/12 p-3 ml-auto mr-auto justify-between">
-            <Flex className="cursor-pointer gap-3">
-              <ChevronLeft />
-              <Text>{invest?.symbol?.toUpperCase() || ""} Transactions</Text>
-            </Flex>
+            <Link to="/portfolio">
+              <Flex className="cursor-pointer gap-2 hover:text-white">
+                <ChevronLeft />
+                <Text>{invest?.symbol?.toUpperCase() || ""} Transactions</Text>
+              </Flex>
+            </Link>
             <Button
               size="sm"
               fontWeight="medium"

@@ -7,6 +7,7 @@ export default {
     },
     extend: {
       zIndex: {
+        100: "100",
         max: "9999",
       },
       animation: {

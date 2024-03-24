@@ -49,8 +49,7 @@ function SkeletonGeneralInfo() {
 }
 export default function Currency() {
   return (
-    <BottomDrawer className="overflow-y-auto h-full">
-      
+    <BottomDrawer back="/market" className="overflow-y-auto h-full">
       <Flex className="flex-col xl:flex-row bg-blackest container mx-auto  ">
         <React.Suspense fallback={<SkeletonGeneralInfo />}>
           <GeneralInfo />
