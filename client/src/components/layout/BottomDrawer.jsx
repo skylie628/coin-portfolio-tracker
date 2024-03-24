@@ -57,7 +57,7 @@ const BottomDrawer = ({
             exit="exit"
             transition={{ ease: [0.17, 0.67, 0.83, 0.67] }}
             className={clsx(
-              "w-full !overflow-y-scroll absolute  z-50 bg-blackest rounded-2xl z-full top-10 !rounded-xl border border-white/[0.5] border-dashed  scrolling-touch touch-auto",
+              "w-full !overflow-y-scroll absolute  z-50 bg-blackest rounded-2xl z-full top-10 !rounded-xl border border-white/[0.5] border-dashed  scrolling-touch touch-auto modal",
               className
             )}
           >

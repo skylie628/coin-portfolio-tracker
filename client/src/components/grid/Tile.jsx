@@ -76,7 +76,7 @@ export default function Tile({
           className="relative 
            flex-1 flex-col hover:outline rounded-lg hover:outline-1 hover:outline-meshgrid group cursor-pointer  "
         >
-          <Tooltip label={label}>
+          <Tooltip label={label || name}>
             <div
               className={clsx(
                 "w-full hover:translate-x-3 hover:-translate-y-3 transition-transform duration-[400ms]  rounded-lg  ",

@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
+import ThreeLoadingDots from "@/components/ui/ThreeLoadingDots";
 import { PasswordField } from "@/components/ui/PasswordField";
 //use hook
 import { useForm } from "react-hook-form";
@@ -19,11 +20,12 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signinThunk } from "../../store/action/action.user";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 const Signin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.user);
   const scheme = yup.object().shape({
     email: yup.string().required("Email is require").email("Email invalid"),
     password: yup
@@ -102,12 +104,13 @@ const Signin = () => {
               </Button>
             </HStack>
             <Stack spacing="6">
-              <Button type="submit" disabled={isSubmitting}>
+              <Button type="submit" isLoading={isLoading} disabled={isLoading}>
                 SIGN-IN
               </Button>
               <div>OR</div>
               <Button
                 variant="black"
+                isLoading={isLoading}
                 onClick={(e) => {
                   e.preventDefault();
                   onSubmitSigninDemo();

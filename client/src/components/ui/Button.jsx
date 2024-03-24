@@ -1,6 +1,12 @@
 import { Button as ChakraButton } from "@chakra-ui/react";
+import ThreeLoadingDots from "./ThreeLoadingDots";
 import clsx from "clsx";
-export default function Button({ children, variant = "orange", ...props }) {
+export default function Button({
+  children,
+  isLoading,
+  variant = "orange",
+  ...props
+}) {
   return (
     <ChakraButton
       {...props}
@@ -12,6 +18,9 @@ export default function Button({ children, variant = "orange", ...props }) {
       )}
     >
       {children}
+      {isLoading && (
+        <ThreeLoadingDots color={variant === "orange" ? "black" : "white"} />
+      )}
     </ChakraButton>
   );
 }

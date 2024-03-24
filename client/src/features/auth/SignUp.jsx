@@ -15,7 +15,7 @@ import { PasswordField } from "@/components/ui/PasswordField";
 //use hook
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 //other
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -23,6 +23,7 @@ import { signupThunk } from "@/store/action/action.user";
 const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.user);
   const scheme = yup.object().shape({
     name: yup.string().required(),
     email: yup.string().required().email("Email invalid"),
@@ -100,7 +101,7 @@ const Signup = () => {
             </Stack>
             <HStack justify="space-between"></HStack>
             <Stack spacing="6">
-              <Button type="submit" disabled={isSubmitting}>
+              <Button type="submit" disabled={isLoading} isLoading={isLoading}>
                 SIGN-UP
               </Button>
             </Stack>
