@@ -14,8 +14,10 @@ export default function Button({
         variant == "orange"
           ? "!bg-orange hover:!bg-carotene text-black"
           : "hover:!bg-slate-900 !bg-black !text-lightstar !border !border-1 !border-dimgray ",
-        " !font-bold text-lg"
+        " !font-bold text-lg",
+        isLoading ? " !pointer-events-none" : " !pointer-events-auto"
       )}
+      isDisabled={isLoading}
     >
       {children}
       {isLoading && (
