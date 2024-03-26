@@ -111,6 +111,7 @@ export default function Tile({
             </div>
           )}{" "}
           <Link
+            preventScrollReset={true}
             className="z-100 relative  rounded-full hover:outline hover:outline-1 hover:outline-orange"
             to={to}
           >

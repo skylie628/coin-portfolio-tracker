@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useLayoutEffect } from "react";
 import { Suspense } from "react";
 import LoaderSpinner from "../ui/LoadingSpiner";
@@ -20,11 +20,16 @@ const BottomDrawer = ({
   setIsOpen,
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const goBack = () => {
-    setIsOpen ? setIsOpen(false) : navigate(back || -1);
+    if (location.key) {
+      setIsOpen ? setIsOpen(false) : navigate(-1);
+    }
   };
   useLayoutEffect(() => {
     document.body.classList.add("no-scroll");
+    const scrollRestoration = history.scrollRestoration;
+    console.log("scrollRestoration", scrollRestoration);
     // Clean up function
     return () => {
       document.body.classList.remove("no-scroll");

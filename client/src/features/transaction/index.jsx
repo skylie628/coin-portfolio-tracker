@@ -83,12 +83,9 @@ export default function TransactionsList() {
             />
             <Stats
               valueRender={
-                <Price
-                  className="text-lg md:text-xl"
-                  amount={invest.holding || 0}
-                  currencyCode="USD"
-                  currencyCodeClassName="hidden"
-                />
+                <span className="text-lg md:text-xl">
+                  {invest.holding || 0}
+                </span>
               }
               title="Holdings"
             />
