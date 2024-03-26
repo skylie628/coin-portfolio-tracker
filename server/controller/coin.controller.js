@@ -14,7 +14,6 @@ module.exports = {
         data,
       });
     } catch (error) {
-      console.log(error);
       res.status(400).json({
         msg: "Unable to get coins",
         isSucess: false,
@@ -31,7 +30,6 @@ module.exports = {
         data,
       });
     } catch (error) {
-      console.log(error);
       res.status(400).json({
         msg: "Unable to get coins",
         isSucess: false,
@@ -43,14 +41,12 @@ module.exports = {
   getAllCoins: async (req, res) => {
     try {
       const data = await getAllCoins();
-      console.log("allcoins data", data);
 
       res.status(200).json({
         isSuccess: true,
         data,
       });
     } catch (error) {
-      console.log(error);
       res.status(400).json({
         msg: "Unable to get coins",
         isSucess: false,
@@ -68,7 +64,6 @@ module.exports = {
         data,
       });
     } catch (error) {
-      console.error(`Error getting history: ${error}`);
       res.status(500).json({
         isSuccess: false,
         message: "Error getting history",
@@ -85,7 +80,6 @@ module.exports = {
         data,
       });
     } catch (error) {
-      console.error(`Error getting history: ${error}`);
       res.status(500).json({
         isSuccess: false,
         message: "Error getting history",

@@ -24,7 +24,7 @@ module.exports = {
   }),
   getPortfolio: expressAsyncHandler(async (req, res) => {
     const portfolio = await portfolioService.getPortfolioByUserId(
-      req.params.id
+      req.query.userId
     );
     if (!portfolio) {
       res.status(404);

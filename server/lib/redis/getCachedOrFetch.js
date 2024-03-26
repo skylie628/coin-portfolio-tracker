@@ -4,11 +4,9 @@ async function getCachedOrFetch({ params, url, expireTime = 0, tag }) {
   const cacheResult = await redis.get(tag);
   if (cacheResult) {
     // Cache hit return cache value
-    console.log("cachehit");
     return JSON.parse(cacheResult);
   } else {
     // Cache miss then refetch
-    console.log("cache miss");
     const response = await axios.get(url, {
       params: { ...params, x_cg_demo_api_key: process.env.COINGECKO_API_KEY },
     });

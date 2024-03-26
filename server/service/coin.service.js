@@ -10,34 +10,27 @@ module.exports = {
       const trendingSearch = await redis.get("topSearchTrending");
       return JSON.parse(trendingSearch);
     } catch (error) {
-      console.error(`Error getting trending search from Redis: ${error}`);
       throw new Error(error); // re-throw the error so it can be handled by the caller
     }
   },
   getTopMarketCap: async () => {
-    console.log("getTopMarketCap");
     try {
       let topMarketCap = await redis.get("topMarketCap");
       return JSON.parse(topMarketCap).slice(0, 10);
     } catch (error) {
-      console.log("error");
-      console.error(`Error getting top market cap from Redis: ${error}`);
       throw new Error(error); // re-throw the error so it can be handled by the caller
     }
   },
   getAllCoins: async () => {
     try {
       let allCoins = await redis.get("allCoins");
-      console.log("allCoins", allCoins);
       return JSON.parse(allCoins);
     } catch (error) {
-      console.error(`Error getting all coins from Redis: ${error}`);
       throw new Error(error); // re-throw the error so it can be handled by the caller
     }
   },
   getHistory: async ({ coinId, quoteCurrency, period }) => {
     let expireTime = 5 * 60;
-    console.log(period);
     const tag = `histo${period}${coinId}`;
     let days = 0;
     switch (period) {
@@ -59,7 +52,6 @@ module.exports = {
       vs_currency: quoteCurrency,
       days,
     };
-    console.log(url, params);
     try {
       /*  SELECT : let allData = await axios
         .get(
@@ -95,7 +87,6 @@ module.exports = {
       });
       return response;
     } catch (error) {
-      console.error(`Error getting history from CryptoCompare: ${error}`);
       throw new Error(error); // re-throw the error so it can be handled by the caller
     }
   },
@@ -107,7 +98,6 @@ module.exports = {
       vs_currency: quoteCurrency,
       ids: coinId,
     };
-    console.log(url, params);
     try {
       const response = await getCachedOrFetch({
         params,
@@ -117,7 +107,6 @@ module.exports = {
       });
       return response;
     } catch (error) {
-      console.error(`Error getting general from server: ${error}`);
       throw new Error(error); // re-throw the error so it can be handled by the caller
     }
   },

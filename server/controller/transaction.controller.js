@@ -49,7 +49,6 @@ module.exports = {
     if (!quantity || !price || !type || !investid) {
       res.status(400);
     }
-    console.log("param la ", quantity, price, type, date, status, investid);
     invest = await investOptionModel.findById(investid);
 
     if (!invest) {
@@ -74,7 +73,6 @@ module.exports = {
       invest.totalProceeds += proceeds;
       invest.holding -= quantity;
     }
-    console.log(quantity);
     const newtransaction = await transactionService.createTransaction({
       quantity,
       price,

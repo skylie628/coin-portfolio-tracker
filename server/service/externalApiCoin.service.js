@@ -9,9 +9,7 @@ const getTopCoin = async () => {
       // console.log(response.data.Data);
       return response.data;
     })
-    .catch(function (error) {
-      console.log(error);
-    });
+    .catch(function (error) {});
   return response;
 };
 

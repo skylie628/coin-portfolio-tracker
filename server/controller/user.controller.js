@@ -9,7 +9,6 @@ module.exports = {
     try {
       const { email, name, password } = req.body.data;
       const isUserExisted = await findUser(email);
-      console.log(isUserExisted);
       if (isUserExisted) {
         res.status(400).json({
           msg: "email already exisited",

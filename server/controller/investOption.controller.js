@@ -27,50 +27,55 @@ module.exports = {
     });
   }),
   getInvest: expressAsyncHandler(async (req, res) => {
-    console.log("id la", req.query.id);
     const invest = await investOptionService.getInvest(req.query.id);
     if (!invest) {
       res.status(404);
       throw new Error("Invest not found!");
     }
 
-    invest.populate("transactions").then(async (invest) => {
-      //invest holding, capital, proceeds đã được tính khi tạo transaction rồi
-      //curent price
-      currentPrice = await getCoinPrice(invest.symbol);
-      invest.balance = invest.holding * currentPrice;
-      //transaction pnl = 0
-      totalPnl = 0;
-      for (transaction of invest.transactions) {
-        if (transaction.pnl != null) {
-          transaction.pnl = calculatePnl(
-            transaction.quantity,
-            currentPrice,
-            transaction.price
-          );
+    invest
+      .populate({
+        path: "transactions",
+        options: { sort: { date: -1 } }, // sorts in descending order
+      })
+      .then(async (invest) => {
+        //invest holding, capital, proceeds đã được tính khi tạo transaction rồi
+        //curent price
+        currentPrice = await getCoinPrice(invest.symbol);
+        invest.balance = invest.holding * currentPrice;
+        //transaction pnl = 0
+        totalPnl = 0;
+        for (transaction of invest.transactions) {
+          if (transaction.pnl != null) {
+            transaction.pnl = calculatePnl(
+              transaction.quantity,
+              currentPrice,
+              transaction.price
+            );
+          }
+          transaction.save();
         }
-        transaction.save();
-      }
 
-      //calculate averageNetCost
-      if (!invest.totalProceeds) {
-        invest.averageNetCost = invest.holding
-          ? invest.capital / invest.holding
-          : 0;
-      } else {
-        invest.averageNetCost = invest.holding
-          ? (invest.capital - invest.totalProceeds) / invest.holding
-          : 0;
-      }
+        //calculate averageNetCost
+        if (!invest.totalProceeds) {
+          invest.averageNetCost = invest.holding
+            ? invest.capital / invest.holding
+            : 0;
+        } else {
+          invest.averageNetCost = invest.holding
+            ? (invest.capital - invest.totalProceeds) / invest.holding
+            : 0;
+        }
 
-      //calculate total pnl in invest option
-      invest.totalPnl = invest.balance - invest.averageNetCost * invest.holding;
-      invest.pnl_percentage = invest.capital
-        ? invest.totalPnl / invest.capital
-        : invest.capital;
-      invest.save();
-      res.status(200).json(invest);
-    });
+        //calculate total pnl in invest option
+        invest.totalPnl =
+          invest.balance - invest.averageNetCost * invest.holding;
+        invest.pnl_percentage = invest.capital
+          ? invest.totalPnl / invest.capital
+          : invest.capital;
+        invest.save();
+        res.status(200).json(invest);
+      });
   }),
   createInvest: expressAsyncHandler(async (req, res) => {
     const { portid, symbol } = req.body;
@@ -86,14 +91,12 @@ module.exports = {
     // const revenue = investOptionService.totoalRevenue()
     //check if asset exist
     asset = await getAssetbySymbol(symbol);
-    console.log("assets la", asset);
     if (!asset) {
       throw new Error("Asset not found with symbol:" + `${symbol}`);
     }
     //check if asset has been added to the portfolio before
     const exist = await investOptionModel.findOne({ symbol, portid }).lean();
     if (exist) {
-      console.log(exist);
       throw new Error("Asset already exist in the portfolio");
     }
     img = asset.Data.LOGO_URL;

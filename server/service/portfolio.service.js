@@ -11,7 +11,7 @@ module.exports = {
     return portfolio;
   },
   getPortfolioByUserId: async (id) => {
-    const portfolio = portfolioModel.findOne({ userId: id });
+    const portfolio = portfolioModel.findOne({ userid: id });
     return portfolio;
   },
   createPortfolio: async (body) => {
