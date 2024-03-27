@@ -130,7 +130,7 @@ export default function Tile({
       className={
         variant === tileType.coinOptions
           ? "w-full"
-          : "w-[calc(100%-200px)] sm:w-full"
+          : "w-[calc(100%-130px)] sm:w-full"
       }
     >
       <ConfirmModal
