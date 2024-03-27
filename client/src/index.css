@@ -167,3 +167,13 @@ button:focus-visible {
 .swiper-pagination-bullet {
   background-color: #9cbbff !important;
 }
+.blurry-bg {
+  background-image: url("https://sadida.s3.ap-southeast-2.amazonaws.com/blur-bg-1.png");
+  background-size: cover;
+  background-position: center;
+}
+.blurry-bg-1 {
+  background-image: url("https://sadida.s3.ap-southeast-2.amazonaws.com/blur-bg-2.png");
+  background-size: cover;
+  background-position: center;
+}

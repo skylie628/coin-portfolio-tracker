@@ -129,7 +129,7 @@ export default function Tile({
     <GridItem
       className={
         variant === tileType.coinOptions
-          ? "w-full"
+          ? "w-full "
           : "w-[calc(100%-130px)] sm:w-full"
       }
     >
@@ -142,12 +142,13 @@ export default function Tile({
         <Flex
           as="article"
           className="relative 
-           flex-1 flex-col hover:outline rounded-lg hover:outline-1 hover:outline-meshgrid group   "
+           flex-1 flex-col hover:outline rounded-lg hover:outline-1 hover:outline-meshgrid group    "
         >
           <Tooltip label={label || name}>
             <div
               className={clsx(
-                "w-full hover:translate-x-3 hover:-translate-y-3 transition-transform duration-[400ms]  rounded-lg  ",
+                "w-full hover:translate-x-3 hover:-translate-y-3 transition-transform duration-[400ms]  rounded-lg  border border-1 border-slate-700 blurry-bg-1",
+                variant === tileType.trendingCategories && "blurry-bg-1",
                 bgColor
               )}
               onMouseEnter={() => {
