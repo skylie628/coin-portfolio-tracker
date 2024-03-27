@@ -38,9 +38,10 @@ export default function PortCoins() {
         </Text>
       </div>
       <FourColumns
+        isPort
         data={data}
         renderTile={(props) => (
-          <Tile {...props} variant={constants.tileType.portOption} />
+          <Tile {...props} variant={constants.tileType.coinOptions} />
         )}
       />
       <Divider

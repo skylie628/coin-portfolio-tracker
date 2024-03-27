@@ -67,7 +67,7 @@ export default function Tile({
   const bgColor =
     variant === tileType.trendingCategories ? "bg-black" : " bg-black ";
   const stats =
-    variant === tileType.portOption ? (
+    variant === tileType.coinOptions ? (
       <Flex className="py-2 flex-col gap-2">
         <Flex gap="1" className=" flex " textAlign={"left"}>
           <Price
@@ -99,7 +99,7 @@ export default function Tile({
         <div>{data.eco}</div>
         <Flex gap="3">
           {" "}
-          {variant == tileType.portOption && (
+          {variant == tileType.coinOptions && (
             <div
               className="z-100 relative  rounded-full hover:outline hover:outline-1 hover:outline-orange"
               onClick={(e) => {
@@ -126,7 +126,13 @@ export default function Tile({
       ? `${data.market_cap_1h_change}%`
       : symbol;
   return (
-    <GridItem className="w-full">
+    <GridItem
+      className={
+        variant === tileType.coinOptions
+          ? "w-full"
+          : "w-[calc(100%-200px)] sm:w-full"
+      }
+    >
       <ConfirmModal
         isOpen={isDelete}
         setIsOpen={setIsDelete}

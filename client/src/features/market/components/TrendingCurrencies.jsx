@@ -18,9 +18,9 @@ export default function TrendingCurrencies() {
       />
       <Flex
         as="section"
-        className="z-[11] relative   px-20 py-40 flex-col gap-[100px] text-left container mx-auto"
+        className="z-[11] relative sm:px-20   py-40 flex-col gap-[100px] text-left container mx-auto"
       >
-        <Text as="h2" className="text-2xl block font-medium">
+        <Text as="h2" className="px-20 sm:px-0 text-2xl block font-medium">
           Coins of the day
         </Text>
         <FourColumns

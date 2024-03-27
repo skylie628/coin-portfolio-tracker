@@ -14,14 +14,12 @@ const LoadingPage = ({ bgClassName = "" }) => {
             bgClassName
           )}
         >
-          <div>
-            <LoaderSpinner />
-          </div>
+          <LoaderSpinner />
         </div>
       ) : (
         <div
           className={clsx(
-            "bg-stone-900 dark:bg-slate-200 min-h-screen flex flex-col justify-start items-center w-full ",
+            "bg-stone-900 dark:bg-slate-200 h-full flex flex-1  flex-col justify-center items-center w-full ",
             bgClassName
           )}
         >

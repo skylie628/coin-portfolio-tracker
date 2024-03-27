@@ -21,13 +21,13 @@ function PromptTexts() {
         <>
           <Text
             key={text}
-            className="text-xl md:text-3xl font-bold  shrink-0 text-black mt-0 tracking-wider mr-[50px]  "
+            className="text-2xl md:text-3xl font-bold  shrink-0 text-black mt-0 tracking-wider mr-[50px]  "
           >
             {text}
           </Text>
 
           {i !== 6 ? (
-            <Text className="text-xl md:text-3xl font-bold  shrink-0 text-black mt-0 tracking-wider mr-[50px]">
+            <Text className="text-2xl md:text-3xl font-bold  shrink-0 text-black mt-0 tracking-wider mr-[50px]">
               {" "}
               -
             </Text>

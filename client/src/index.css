@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 :root {
   font-family: "Roboto", system-ui, Avenir, Helvetica, Arial, sans-serif;
   margin: 0 auto;
@@ -159,4 +160,10 @@ button:focus-visible {
 }
 .modal {
   -webkit-overflow-scrolling: auto;
+}
+.swiper-pagination-bullet-active {
+  background-color: #1f519c !important;
+}
+.swiper-pagination-bullet {
+  background-color: #9cbbff !important;
 }
