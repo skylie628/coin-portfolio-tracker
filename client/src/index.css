@@ -173,7 +173,7 @@ button:focus-visible {
   background-position: center;
 }
 .blurry-bg-1 {
-  background-image: url("https://sadida.s3.ap-southeast-2.amazonaws.com/blur-bg-2.png");
+  background-image: url("https://coiportcdn.s3.ap-southeast-2.amazonaws.com/blur-bg-noise-md.jpg");
   background-size: cover;
   background-position: center;
 }
