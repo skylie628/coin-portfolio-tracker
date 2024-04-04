@@ -19,11 +19,12 @@ import useStickyTableHeader from "../hooks/useStickyTableHeader";
 const RealtimePriceCell = ({ symbol, fallbackValue }) => {
   const streamingPrice =
     useSelector((state) => state.market).streamingPrices || {};
+
   return (
     <Price
       amount={
-        streamingPrice.current
-          ? streamingPrice.current[`${symbol}usdt`.toUpperCase()] || 0
+        streamingPrice.current === "_"
+          ? streamingPrice.current[`${symbol}usdt`.toUpperCase()]
           : fallbackValue
       }
       currencyCode="USD"

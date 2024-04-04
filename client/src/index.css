@@ -177,3 +177,12 @@ button:focus-visible {
   background-size: cover;
   background-position: center;
 }
+
+.Toastify__toast-container {
+  margin-top: 64px;
+}
+@media (max-width: 768px) {
+  .Toastify__toast-container {
+    margin-top: 56px !important;
+  }
+}
