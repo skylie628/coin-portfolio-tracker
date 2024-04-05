@@ -1,6 +1,10 @@
 //reducer
 import { addInvestOption } from "../reducer/reducer.portfolio";
-import { loadInvestOption } from "../reducer/reducer.investOption";
+import {
+  loadInvestOption,
+  startLoading,
+  loadFail,
+} from "../reducer/reducer.investOption";
 //thunk
 import { getPortfolioThunk } from "./action.portfolio";
 //api
@@ -29,11 +33,14 @@ export const createInvestOptionThunk =
 export const loadInvestOptionThunk =
   ({ id }) =>
   async (dispatch, getState) => {
+    dispatch(startLoading());
     getInvestOptionDetailService({ id })
       .then((data) => {
         dispatch(loadInvestOption({ data }));
       })
-      .catch((err) => {});
+      .catch((err) => {
+        dispatch(loadFail());
+      });
   };
 
 export const deleteInvestOptionThunk =

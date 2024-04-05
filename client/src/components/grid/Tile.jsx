@@ -89,7 +89,11 @@ export default function Tile({
         </Flex>
       </Flex>
     ) : (
-      <Image alt="sparkline" className="w-full" src={data.sparkline} />
+        <Image
+          className="  w-full h-auto aspect-sparkline"
+          alt="sparkline"
+          src={data.sparkline}
+        />
     );
   const footer =
     variant === tileType.trendingCategories ? (

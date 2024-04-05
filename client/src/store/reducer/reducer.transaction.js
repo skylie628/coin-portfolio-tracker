@@ -1,12 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
+  isLoading: false,
   transactions: [],
 };
 const transactionSlice = createSlice({
   name: "transaction",
   initialState,
   reducers: {
-    loadTransaction: (state, action) => action.payload.data,
+    startLoading: (state, action) => {
+      state.isLoading = true;
+      return state;
+    },
+    loadTransaction: (state, action) => ({
+      isLoading: false,
+      ...action.payload.data,
+    }),
+    loadFail: (state, action) => {
+      state.isLoading = false;
+      return state;
+    },
     addTransaction: (state, action) => {
       if (!action.payload.data) {
         return;
@@ -29,6 +41,8 @@ const transactionSlice = createSlice({
 });
 export const {
   loadTransaction,
+  startLoading,
+  loadFail,
   addTransaction,
   deleteTransaction,
   updateTransaction,

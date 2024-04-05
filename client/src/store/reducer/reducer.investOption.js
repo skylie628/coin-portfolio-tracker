@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
+  isLoading: false,
   id: null,
   portid: null,
   symbol: null,
@@ -18,6 +19,18 @@ const investOptionSlice = createSlice({
   initialState,
   reducers: {
     loadInvestOption: (state, action) => action.payload.data,
+    startLoading: (state, action) => {
+      state.isLoading = true;
+      return state;
+    },
+    loadTransaction: (state, action) => ({
+      isLoading: false,
+      ...action.payload.data,
+    }),
+    loadFail: (state, action) => {
+      state.isLoading = false;
+      return state;
+    },
     deleteInvestOption: (state, action) => {
       const { coinId } = action.payload.data;
       if (!coinId) {
@@ -34,7 +47,9 @@ const investOptionSlice = createSlice({
   },
 });
 export const {
+  startLoading,
   loadInvestOption,
+  loadFail,
   addInvestOption,
   addTransaction,
   removeTransaction,

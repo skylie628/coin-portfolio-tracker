@@ -41,6 +41,9 @@ export default {
         "noise-pattern":
           "url('https://coiportcdn.s3.ap-southeast-2.amazonaws.com/noisy.png')",
       },
+      aspectRatio: {
+        sparkline: "135/50",
+      },
     },
   },
   plugins: [],
