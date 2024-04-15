@@ -1,3 +1,4 @@
+import * as React from "react";
 import { GridItem, VStack } from "@chakra-ui/react";
 export default function Stats({
   showStats = true,
