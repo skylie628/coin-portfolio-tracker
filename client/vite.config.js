@@ -11,6 +11,9 @@ export default defineConfig({
       plugins: [visualizer({ filename: "./stats.html" })],
     },
   },
+  server: {
+    host: true,
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
