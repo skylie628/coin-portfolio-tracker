@@ -10,6 +10,7 @@ export default {
         100: "100",
         max: "9999",
       },
+      
       animation: {
         "move-right": "moveRight 0.4s ease-out ",
       },

@@ -68,7 +68,6 @@ function TrendingCurrenciesSkeleton() {
 
 export default function DashBoard() {
   const topListRef = useRef();
-  useScrollToTop();
   const scrollToTopLists = () => {
     topListRef.current.scrollIntoView({
       block: "start",

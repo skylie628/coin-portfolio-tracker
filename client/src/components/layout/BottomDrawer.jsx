@@ -7,9 +7,9 @@ import LoaderSpinner from "../ui/LoadingSpiner";
 import { CloseIcon } from "@chakra-ui/icons";
 import clsx from "clsx";
 const animations = {
-  initial: { transform: "translateY(100%)" },
-  animate: { transform: "translateY(0)" },
-  exit: { transform: "translateY(0)" },
+  initial: { transform: "translateY(100%)", opacity: 0 },
+  animate: { transform: "translateY(0)", opacity: 100 },
+  exit: { transform: "translateY(0)", opacity: 0 },
 };
 
 const BottomDrawer = ({
@@ -66,7 +66,7 @@ const BottomDrawer = ({
               className
             )}
           >
-            <div className="relative overflow-scroll w-full h-full">
+            <div className="relative  w-full h-full">
               <Suspense
                 fallback={
                   <div className="w-full h-full flex justify-center items-center">

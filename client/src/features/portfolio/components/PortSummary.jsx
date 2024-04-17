@@ -42,8 +42,13 @@ export default function PortSummary({ setIsOpen }) {
         },
       },
     ],
+    tooltip: {
+      pointFormat: " <b>{point.percentage:.1f}%</b>",
+    },
     plotOptions: {
-      pie: { borderColor: "orange" },
+      pie: {
+        borderWidth: 0,
+      },
     },
   };
 

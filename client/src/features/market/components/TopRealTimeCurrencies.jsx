@@ -145,7 +145,7 @@ const DesktopTopRealTimeCurrencies = ({ topCurrencies }) => {
       variant="simple"
       className="relative bg-blackest z-10  bg-blackest m-auto table-fixed"
     >
-      {fixedThead}
+      {/*fixedThead*/}
       {relativeThead}
       <Tbody>
         {topCurrencies &&
@@ -247,7 +247,7 @@ const TopRealTimeCurrencies = React.forwardRef((props, ref) => {
           as="h2"
           className="text-2xl block font-medium ml-20 w-full text-left"
         >
-          Trending Categories
+          Top trending realtime
         </Text>
         {isMd ? (
           <DesktopTopRealTimeCurrencies topCurrencies={topCurrencies} />

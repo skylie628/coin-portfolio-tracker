@@ -15,8 +15,9 @@ const ChartView = forwardRef(({ coinId, timeRange, yAxisMeasure }, ref) => {
   const { currentValue, streamMode } = useSelector(
     (state) => state.streaming.currency
   );
-
+  const chartData = JSON.parse(JSON.stringify(data[yAxisMeasure]));
   useEffect(() => {
+    if(chartData.length === 0) return; 
     const chart = ref.current.chart;
     const series = chart.series[0];
     // update last point when streammode is on and yAxisMeasure is price
@@ -39,10 +40,7 @@ const ChartView = forwardRef(({ coinId, timeRange, yAxisMeasure }, ref) => {
       });
     }
   }, [currentValue, yAxisMeasure]);
-
-  const chartData = JSON.parse(JSON.stringify(data[yAxisMeasure]));
-
-  return (
+  return chartData.length > 0 ? (
     <div className="relative w-full justify-center items-center md:px-20 ">
       <HighchartsReact
         ref={ref}
@@ -52,6 +50,8 @@ const ChartView = forwardRef(({ coinId, timeRange, yAxisMeasure }, ref) => {
         containerProps={{ style: { width: "100%" } }}
       />
     </div>
+  ) : (
+    <div className ='w-full h-[300px] flex justify-center items-center' ref={ref}>Unavailable Data</div>
   );
 });
 ChartView.displayName = "ChartView";

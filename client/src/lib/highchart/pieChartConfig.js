@@ -35,7 +35,9 @@ export default function pieChartConfig(chartValues) {
       },
     },
     plotOptions: {
-      pie: { borderColor: "orange" },
+      pie: {
+        borderWidth: 0,
+      },
     },
   };
 }

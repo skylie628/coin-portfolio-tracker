@@ -50,7 +50,7 @@ function SkeletonGeneralInfo() {
 export default function Currency() {
   return (
     <BottomDrawer back="/market" className="overflow-y-auto h-full">
-      <Flex className="flex-col xl:flex-row bg-blackest container mx-auto  ">
+      <Flex className="h-full items-stretch price flex-col xl:flex-row bg-blackest container mx-auto  ">
         <React.Suspense fallback={<SkeletonGeneralInfo />}>
           <GeneralInfo />
         </React.Suspense>
@@ -61,31 +61,3 @@ export default function Currency() {
     </BottomDrawer>
   );
 }
-
-/*
-ath: 2.16
-ath_change_percentage: -60.11786
-ath_date: "2023-05-03T12:00:26.430Z"
-atl: 0.364846
-atl_change_percentage: 136.38935
-atl_date: "2023-10-19T10:40:30.078Z"
-circulating_supply: 1033262462.93308
-current_price: 0.856709
-fully_diluted_valuation: 8582335357
-high_24h: 0.885606
-id: "sui"
-image: "https://assets.coingecko.com/coins/images/26375/large/sui_asset.jpeg?1696525453"
-last_updated: "2023-12-26T11:40:39.604Z"
-low_24h: 0.735157
-market_cap: 886780497
-market_cap_change_24h: 126744933
-market_cap_change_percentage_24h: 16.67618
-market_cap_rank: 83
-max_supply: 10000000000
-name: "Sui"
-price_change_24h: 0.120216
-price_change_percentage_24h: 16.32281
-roi: null
-symbol: "sui"
-total_supply: 10000000000
-total_volume: 401831953*/

@@ -72,7 +72,7 @@ export default function ChartPanel() {
   } = detailData.currencyDetail || {};
 
   return (
-    <VStack className="w-full flex-col gap-5 h-full shrink-0  ">
+    <VStack className="w-full flex-col gap-5 h-full shrink-0  py-5 ">
       <h2 className="text-lg mr-auto md:px-20 font-bold text-metaldark">
         {" "}
         {name.toUpperCase()} Price Chart
@@ -99,7 +99,7 @@ export default function ChartPanel() {
           yAxisMeasure={yAxisMeasure}
         />
       </Suspense>
-      <Suspense fallback={<InfoBlocksSkeleton />}>
+      {/*<Suspense fallback={<InfoBlocksSkeleton />}>
         <Flex className="gap-2 justify-start items-start p-10 md:px-20 md:py-10 w-full flex-col ">
           <h3>Price Performance.</h3>
           <Flex className="py-10 flex-col gap-5 md:flex-row md:gap-20 w-full">
@@ -117,7 +117,7 @@ export default function ChartPanel() {
             />
           </Flex>
         </Flex>
-      </Suspense>
+  </Suspense>*/}
     </VStack>
   );
 }
