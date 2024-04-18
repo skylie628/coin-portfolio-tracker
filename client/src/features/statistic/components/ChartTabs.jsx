@@ -14,7 +14,7 @@ export default function ChartTabs() {
   };
   return (
     <Flex className="relative w-full border-b border-b-1 border-b-slate-700">
-      <Flex className="flex-1 flex bg-slate-900 flex-wrap w-full overflow-y-scroll">
+      <Flex className="flex-1 flex bg-slate-900 flex-wrap w-full overflow-y-auto">
         {Object.values(tabs).map((tab) => (
           <Tab
             key={tab.id}

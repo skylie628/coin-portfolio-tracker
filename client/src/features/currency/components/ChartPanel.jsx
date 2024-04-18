@@ -12,7 +12,7 @@ import { useState } from "react";
 import { useGetCurrencyDetail } from "@/features/currency/hooks/useGetCurrencyDetail";
 
 const ChartPanelSkeleton = () => (
-  <Flex className="relative w-full h-[400px] justify-center items-center md:px-20">
+  <Flex className="relative w-full h-[200px] xl:h-[400px] justify-center items-center lg:px-20 container">
     <Skeleton className="m-auto flex-1 !w-full !h-full" />
   </Flex>
 );
@@ -72,12 +72,12 @@ export default function ChartPanel() {
   } = detailData.currencyDetail || {};
 
   return (
-    <VStack className="w-full flex-col gap-5 h-full shrink-0  py-5 ">
-      <h2 className="text-lg mr-auto md:px-20 font-bold text-metaldark">
+    <VStack className="w-full flex-col gap-5 h-full shrink-0  py-5 pb-20 ">
+      <h2 className="text-lg mr-auto md:px-10 xl:px-20 font-bold text-metaldark">
         {" "}
         {name.toUpperCase()} Price Chart
       </h2>
-      <Flex className="flex-col gap-5  md:flex-row py-3 md:w-full md:justify-between md:items-center md:px-20">
+      <Flex className="flex-col gap-5  md:flex-row py-3 md:w-full md:justify-between md:items-center md:px-10 xl:px-20">
         <ButtonsGroup
           value={yAxisMeasure}
           values={["price", "cap"]}

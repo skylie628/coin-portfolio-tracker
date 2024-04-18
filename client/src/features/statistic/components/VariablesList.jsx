@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { toggleVariableThunk } from "@/store/action/action.variable";
 
 const Skeleton = () => (
-  <div className="bg-halfblack w-full p-4 border border-lightstar/[0.2] max-h-[500px] overflow-scroll ">
+  <div className="bg-halfblack w-full p-4 border border-lightstar/[0.2] max-h-[500px]  ">
     {new Array(5).fill(0).map((variable) => {
       return (
         <Flex
@@ -37,7 +37,7 @@ export default function VariablesList() {
     return <div className="text-dimgray">Portfolio is empty.</div>;
   }
   return (
-    <ul className="max-h-[300px] w-full overflow-y-scroll ">
+    <ul className="max-h-[300px] w-full overflow-y-auto ">
       {variables.map((variable) => {
         return (
           <Flex

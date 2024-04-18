@@ -41,8 +41,10 @@ function PromptTexts() {
 }
 export function CarouselFallback() {
   return (
-    <div className="p-0 bg-orange h-[52px] md:h-[64px] overflow-hidden bg-orange container mx-auto">
-      <PromptTexts />
+    <div className="w-screen bg-orange">
+      <div className="p-0 bg-orange w-screen h-[52px] md:h-[64px] overflow-hidden  container mx-auto">
+        <PromptTexts />
+      </div>
     </div>
   );
 }

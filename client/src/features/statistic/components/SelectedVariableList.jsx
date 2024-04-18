@@ -5,7 +5,7 @@ export default function SelectedVariableList() {
   const selectedVariables =
     useSelector((state) => state.variable.selectedVariables) || {};
   return (
-    <ul className="w-full h-[300px] overflow-y-scroll">
+    <ul className="w-full h-[300px] overflow-y-auto">
       {Object.values(selectedVariables).map((variable) => (
         <AnimatePresence key={selectedVariables.id}>
           <motion.div

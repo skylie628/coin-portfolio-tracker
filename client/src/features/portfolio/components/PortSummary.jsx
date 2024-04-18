@@ -7,6 +7,7 @@ import Trend from "@/components/ui/Trend";
 import Price from "@/components/ui/Price";
 import Button from "@/components/ui/Button";
 import Divider from "@/components/ui/Divider";
+import LoadingSpiner from "@/components/ui/LoadingSpiner";
 //hook
 import { useSelector } from "react-redux";
 //icons
@@ -14,6 +15,7 @@ import { iconsHelper } from "@/config/icons";
 import { useState } from "react";
 export default function PortSummary({ setIsOpen }) {
   const portfolio = useSelector((state) => state.portfolio).data;
+  const isLoading = useSelector((state) => state.portfolio).isLoading;
   const [showStats, setShowStats] = useState(false);
   const chartData = portfolio.investid || [];
   const chartOptions = {
@@ -96,13 +98,17 @@ export default function PortSummary({ setIsOpen }) {
             </Box>
           </Flex>
         </Flex>
-        {
+        {isLoading ? (
+          <div className="m-auto flex-1 h-full flex justify-center items-center">
+            <LoadingSpiner />
+          </div>
+        ) : (
           <HighchartsReact
-            className="m-auto flex-1"
+            className="m-auto flex-1 "
             highcharts={Highcharts}
             options={chartOptions}
           />
-        }
+        )}
       </Flex>
       <Divider />
     </>

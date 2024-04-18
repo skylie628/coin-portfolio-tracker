@@ -10,7 +10,7 @@ const LoadingPage = ({ bgClassName = "" }) => {
       {isMd ? (
         <div
           className={clsx(
-            "bg-halfblack  min-h-screen flex flex-col justify-center items-center w-full ",
+            "p-20 flex flex-col justify-center items-center w-full ",
             bgClassName
           )}
         >

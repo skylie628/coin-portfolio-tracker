@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const streamingSlice = createSlice({
   name: "portfolio",
   initialState: {
+    isLoading: false,
     data: {
       id: null,
       userid: null,
@@ -12,6 +13,12 @@ const streamingSlice = createSlice({
     },
   },
   reducers: {
+    startLoading: (state) => {
+      state.isLoading = true;
+    },
+    stopLoading: (state) => {
+      state.isLoading = false;
+    },
     loadPortfolio: (state, action) => {
       const {
         _id,
@@ -39,6 +46,7 @@ const streamingSlice = createSlice({
   },
 });
 
-export const { loadPortfolio, addInvestOption } = streamingSlice.actions;
+export const { startLoading, stopLoading, loadPortfolio, addInvestOption } =
+  streamingSlice.actions;
 
 export default streamingSlice.reducer;

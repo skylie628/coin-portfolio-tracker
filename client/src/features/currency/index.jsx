@@ -50,14 +50,16 @@ function SkeletonGeneralInfo() {
 export default function Currency() {
   return (
     <BottomDrawer back="/market" className=" h-full">
-      <Flex className="h-full overflow-y-scroll items-stretch price flex-col xl:flex-row bg-blackest container mx-auto  ">
-        <React.Suspense fallback={<SkeletonGeneralInfo />}>
-          <GeneralInfo />
-        </React.Suspense>
-        <Box className="w-full  xl:w-8/12 p-5 ">
-          <ChartPanel />
-        </Box>
-      </Flex>
+      <div className="h-full overflow-y-auto">
+        <Flex className="max-w-[600px] lg:container  mx-auto h-full  items-stretch flex-col lg:flex-row bg-blackest   ">
+          <React.Suspense fallback={<SkeletonGeneralInfo />}>
+            <GeneralInfo />
+          </React.Suspense>
+          <Box className="w-full xl:w-8/12 p-5 ">
+            <ChartPanel />
+          </Box>
+        </Flex>
+      </div>
     </BottomDrawer>
   );
 }
