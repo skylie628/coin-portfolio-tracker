@@ -12,6 +12,7 @@ import getPortfolioService from "../../features/portfolio/api/getPortfolio";
 export const fetchVariablesThunk =
   ({ userId }) =>
   async (dispatch) => {
+    dispatch(fetchVariables());
     getPortfolioService({ userId })
       .then((rs) => {
         const variableData =

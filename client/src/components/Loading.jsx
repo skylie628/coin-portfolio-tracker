@@ -10,7 +10,7 @@ const LoadingPage = ({ bgClassName = "" }) => {
       {isMd ? (
         <div
           className={clsx(
-            "p-20 flex flex-col justify-center items-center w-full ",
+            "p-10 flex flex-col  items-center w-full  ",
             bgClassName
           )}
         >
@@ -19,7 +19,7 @@ const LoadingPage = ({ bgClassName = "" }) => {
       ) : (
         <div
           className={clsx(
-            "bg-stone-900 dark:bg-slate-200 h-full flex flex-1  flex-col justify-center items-center w-full ",
+            "pt-10 bg-stone-900 dark:bg-slate-200 h-full flex flex-1  flex-col  w-full items-center",
             bgClassName
           )}
         >

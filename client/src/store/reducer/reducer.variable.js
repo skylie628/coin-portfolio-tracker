@@ -12,10 +12,7 @@ const variableSlice = createSlice({
   initialState,
   reducers: {
     fetchVariables: (state) => {
-      return {
-        ...state,
-        isFetching: true,
-      };
+      state.isFetching = true;
     },
     fetchVariablesSuccess: (state, action) => {
       return {

@@ -21,6 +21,5 @@ export const getPortfolioThunk =
       })
       .catch((err) => {
         dispatch(stopLoading());
-        toast.error("unable to fetch portfolio!");
       });
   };

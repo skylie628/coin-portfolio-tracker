@@ -2,7 +2,7 @@ import { Flex, Checkbox, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { toggleVariableThunk } from "@/store/action/action.variable";
-
+import LoadingSpiner from "@/components/ui/LoadingSpiner";
 const Skeleton = () => (
   <div className="bg-halfblack w-full p-4 border border-lightstar/[0.2] max-h-[500px]  ">
     {new Array(5).fill(0).map((variable) => {
@@ -24,7 +24,7 @@ export default function VariablesList() {
   const {
     queriedVariables: variables,
     selectedVariables,
-    isLoading,
+    isFetching,
   } = useSelector((state) => {
     return state.variable;
   });
@@ -32,7 +32,12 @@ export default function VariablesList() {
   const handleToggleVariable = (variable) => {
     dispatch(toggleVariableThunk({ variable }));
   };
-  if (isLoading) return <Skeleton />;
+  if (isFetching)
+    return (
+      <div className="w-full flex items-center justify-center">
+        <LoadingSpiner />
+      </div>
+    );
   if (variables.length == 0) {
     return <div className="text-dimgray">Portfolio is empty.</div>;
   }

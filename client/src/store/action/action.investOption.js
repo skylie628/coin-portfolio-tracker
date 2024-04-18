@@ -48,10 +48,10 @@ export const deleteInvestOptionThunk =
   async (dispatch, getState) => {
     deleteInvestOptionService({ id })
       .then((data) => {
-        console.log("data la", data);
         const userId = window.localStorage.getItem("id");
-        dispatch(getPortfolioThunk({ userId }));
-        toast.success("delete asset successfully!");
+        dispatch(getPortfolioThunk({ userId })).then(() => {
+          toast.success("delete asset successfully!");
+        });
       })
       .catch((err) => {
         toast.error("unable to delete asset!");
