@@ -10,7 +10,7 @@ const LoadingPage = ({ bgClassName = "" }) => {
       {isMd ? (
         <div
           className={clsx(
-            "p-10 flex flex-col  items-center w-full  ",
+            "flex flex-1  justify-center items-center flex-col   w-full  ",
             bgClassName
           )}
         >
@@ -19,11 +19,11 @@ const LoadingPage = ({ bgClassName = "" }) => {
       ) : (
         <div
           className={clsx(
-            "pt-10 bg-stone-900 dark:bg-slate-200 h-full flex flex-1  flex-col  w-full items-center",
+            "bg-stone-900 dark:bg-slate-200 h-full flex flex-1  flex-col  w-full justify-center items-center",
             bgClassName
           )}
         >
-          <div className="mt-20">
+          <div>
             <LoaderSpinner />
           </div>
         </div>

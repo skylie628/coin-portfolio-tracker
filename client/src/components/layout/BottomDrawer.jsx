@@ -69,7 +69,7 @@ const BottomDrawer = ({
             <div className="relative  w-full h-full">
               <Suspense
                 fallback={
-                  <div className="p-10 flex justify-center">
+                  <div className=" flex w-full h-full items-center justify-center">
                     <LoaderSpinner />
                   </div>
                 }

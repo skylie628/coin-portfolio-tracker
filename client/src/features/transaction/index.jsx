@@ -64,7 +64,9 @@ export default function TransactionsList() {
           <Divider width="full" borderColor="gray" size="sm" />
         </Flex>
         {invest.isLoading ? (
+          <div className = "flex w-full h-full justify-center items-center">
           <LoadingPage />
+          </div>
         ) : (
           <VStack className="w-10/12 p-3 ml-auto mr-auto">
             <Grid

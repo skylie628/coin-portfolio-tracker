@@ -46,7 +46,6 @@ export default function Hero({ scrollToTopLists }) {
           </div>
         </HStack>
       </section>
-      <Divider />
     </>
   );
 }
